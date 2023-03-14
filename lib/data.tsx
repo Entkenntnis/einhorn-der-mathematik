@@ -122,10 +122,27 @@ export const storyData: { [key: number]: StoryData } = {
     deps: [1],
     render: () => (
       <>
-        <p>Hi</p>
+        <p>
+          &quot;22 Uhr, 23 Uhr, 24 Uhr, 25 Uhr ... &quot;, so murmelt Teo vor
+          sich hin.
+        </p>
+        <p>
+          Als verantwortungsvoll Schwester korrigiere ich ihn: &quot;Hey Teo, es
+          gibt kein 25 Uhr. Das ist dann wieder 1 Uhr&quot;
+        </p>
+        <p>
+          Aber natürlich ignoriert er mich. Und er macht vergnügt weiter, jetzt
+          extra um mich zu ärgern:
+        </p>
+        <p>&quot;26 Uhr, 27 Uhr, 28 Uhr, 29 Uhr ... &quot;</p>
+        <p>
+          Nach einer Weile ist er bei 100 Uhr angekommen. Da interessiert es
+          mich schon: Welcher echten Uhrzeit entspricht das? Schreibe die
+          Antwort als Zahl, z.b. <code>10</code>.
+        </p>
       </>
     ),
-    submit: () => {},
+    submit: ignoreCaseSolution('4'),
   },
 }
 
@@ -150,5 +167,13 @@ function genericSubmitHandler(
         text: `"${value}" ist falsch`,
       }
     })
+  }
+}
+
+function ignoreCaseSolution(answer: string) {
+  return (props: Parameters<StoryData['submit']>[0]) => {
+    const value = props.value.trim().toLowerCase()
+    const isCorrect = answer.toLowerCase().trim() == value
+    genericSubmitHandler(value, isCorrect, props.mut, props.id)
   }
 }
