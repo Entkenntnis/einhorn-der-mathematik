@@ -1,5 +1,5 @@
 import produce, { Immutable, Draft } from 'immer'
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import { storyData } from '../lib/data'
 import { InputBox } from './InputBox'
 
@@ -36,7 +36,7 @@ export default function App() {
             {Object.entries(storyData).map(([id, data]) => {
               if (isVisible(parseInt(id))) {
                 return (
-                  <>
+                  <Fragment key={id}>
                     {data.deps.map((dep) => {
                       if (isVisible(dep)) {
                         return (
@@ -54,7 +54,7 @@ export default function App() {
                         return null
                       }
                     })}
-                  </>
+                  </Fragment>
                 )
               }
               return null
@@ -66,9 +66,19 @@ export default function App() {
               : null
           )}
         </div>
+        <div className="absolute right-1 bottom-1 text-sm text-gray-300">
+          Hintergrund:{' '}
+          <a
+            href="https://www.wallpaperflare.com/pink-and-blue-sky-sky-clouds-nature-wallpaper-275895"
+            className="underline"
+            target="_blank"
+          >
+            wallpaperflare
+          </a>
+        </div>
         <style jsx global>
           {`
-            body {
+            html {
               background-image: url('/wallpaper.jpg');
               background-repeat: no-repeat;
               background-size: cover;
@@ -149,6 +159,7 @@ export default function App() {
             c.storyFeedback = null
           })
         }}
+        key={id}
       >
         <button className="text-lg bg-gray-100/70 px-1 py-0.5 rounded group-hover:bg-white/80 pointer-events-auto">
           {title}

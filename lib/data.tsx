@@ -26,8 +26,8 @@ export const storyData: { [key: number]: StoryData } = {
       <>
         <p>Herzlich Willkommen! Schön, dass du hier bist :)</p>
         <p>
-          Und hat dir schon jemand gesagt, dass du heute wunderbare Augen hast?
-          Love them.
+          Und hat dir schon jemand gesagt, dass du wunderbare Augen hast? Love
+          them.
         </p>
         <p>
           Mein Name ist Tina und ich bin eine Einhorn-Dame. Okay, ich bin erst
