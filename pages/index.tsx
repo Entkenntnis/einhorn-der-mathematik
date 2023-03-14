@@ -1,20 +1,27 @@
 import clsx from 'clsx'
-import produce, { Draft, Immutable } from 'immer'
+import produce, { Draft, enableMapSet, Immutable } from 'immer'
 import Head from 'next/head'
 import { useState } from 'react'
+import { InputBox } from '../components/InputBox'
 
 type State = Immutable<{
   showStory: number
-  solved: number[]
+  storyFeedback: { correct: boolean; text: string } | null
+  solved: Set<number>
   name: string
 }>
+
+enableMapSet()
 
 interface StoryData {
   title: string
   x: number
   y: number
   deps: number[]
-  render: () => JSX.Element
+  render: (props: {
+    mut: (fn: (draft: Draft<State>) => void) => void
+    id: number
+  }) => JSX.Element
 }
 
 const storyData: { [key: number]: StoryData } = {
@@ -23,7 +30,7 @@ const storyData: { [key: number]: StoryData } = {
     x: 100,
     y: 100,
     deps: [],
-    render: () => (
+    render: ({ mut, id }) => (
       <>
         <p>Herzlich Willkommen! Schön, dass du hier bist :)</p>
         <p>
@@ -49,15 +56,23 @@ const storyData: { [key: number]: StoryData } = {
           welp, ich könnte dort sterben.
         </p>
         <p>So viel zu mir. Nun, sage mir, wie darf ich dich nennen?</p>
-        <input
-          type="text"
-          className={clsx(
-            'bg-gray-50 border-gray-300 text-gray-900 rounded-lg outline-none mt-8 -ml-1',
-            ' focus:ring-pink-500 focus:border-pink-500 border-2 p-1 w-[300px]'
-          )}
-          maxLength={40}
+        <InputBox
+          className="mt-8 -ml-1"
+          submit={(val) => {
+            if (val) {
+              const trimmed = val.trim()
+              if (trimmed) {
+                mut((c) => {
+                  c.storyFeedback = {
+                    correct: true,
+                    text: `Dein Name "${trimmed}" wurde gespeichert.`,
+                  }
+                  c.solved.add(id)
+                })
+              }
+            }
+          }}
         />
-        <button className="ml-4">los</button>
       </>
     ),
   },
@@ -66,7 +81,8 @@ const storyData: { [key: number]: StoryData } = {
 export default function Index() {
   const [core, setCore] = useState<State>({
     showStory: -1,
-    solved: [],
+    storyFeedback: null,
+    solved: new Set(),
     name: '',
   })
 
@@ -87,7 +103,7 @@ export default function Index() {
         </h1>
         <div className="mt-4 ml-4 w-[1200px] h-[600px] relative">
           {Object.entries(storyData).map(([id, data]) =>
-            renderStoryIcon(data.title, data.x, data.y, id)
+            renderStoryIcon(data.title, data.x, data.y, parseInt(id))
           )}
         </div>
         <style jsx global>
@@ -112,17 +128,40 @@ export default function Index() {
         </h1>
         <div className="max-w-[800px] mx-auto bg-pink-50 rounded p-3 mt-6">
           <h2 className="mt-3 text-xl font-bold">{data.title}</h2>
-          <button
-            className="mt-3 text-pink-500 hover:underline hover:text-pink-600"
-            onClick={() => {
-              mut((c) => {
-                c.showStory = -1
-              })
-            }}
-          >
-            zurück
-          </button>
-          <div className="mt-8 [&>p]:mt-4">{data.render()}</div>
+
+          {core.storyFeedback && core.storyFeedback.correct ? (
+            <>
+              <div className="mt-10 text-green-600">
+                {core.storyFeedback.text}
+              </div>
+              <button
+                className="mt-8 text-pink-500 hover:underline hover:text-pink-600"
+                onClick={() => {
+                  mut((c) => {
+                    c.showStory = -1
+                  })
+                }}
+              >
+                weiter
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                className="mt-3 text-pink-500 hover:underline hover:text-pink-600"
+                onClick={() => {
+                  mut((c) => {
+                    c.showStory = -1
+                  })
+                }}
+              >
+                zurück
+              </button>
+              <div className="mt-8 [&>p]:mt-4">
+                {data.render({ mut, id: core.showStory })}
+              </div>
+            </>
+          )}
         </div>
       </>
     )
@@ -136,6 +175,7 @@ export default function Index() {
         onClick={() => {
           mut((c) => {
             c.showStory = id
+            c.storyFeedback = null
           })
         }}
       >
@@ -152,6 +192,6 @@ export default function Index() {
   }
 
   function mut(fn: (draft: Draft<State>) => void) {
-    setCore(produce(core, fn))
+    setCore((core) => produce(core, fn))
   }
 }
