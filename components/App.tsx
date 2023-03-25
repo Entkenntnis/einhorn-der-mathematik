@@ -1,6 +1,7 @@
 import produce, { Immutable, Draft } from 'immer'
 import { Fragment, useState } from 'react'
 import { storyData } from '../lib/data'
+import { AboutModal } from './AboutModal'
 import { InputBox } from './InputBox'
 
 export type State = Immutable<{
@@ -8,6 +9,7 @@ export type State = Immutable<{
   storyFeedback: { correct: boolean; text: string } | null
   solved: Set<number>
   name: string | null
+  showImpressum: boolean
 }>
 
 export default function App() {
@@ -16,6 +18,7 @@ export default function App() {
     storyFeedback: null,
     solved: new Set(),
     name: null,
+    showImpressum: false,
   })
 
   return <>{core.showStory == -1 ? renderOverview() : renderStory()}</>
@@ -67,7 +70,17 @@ export default function App() {
           )}
         </div>
         <div className="fixed right-1 bottom-1 text-sm text-gray-300">
-          Hintergrund:{' '}
+          <button
+            className="hover:underline"
+            onClick={() => {
+              mut((c) => {
+                c.showImpressum = true
+              })
+            }}
+          >
+            Impressum/Datenschutz
+          </button>{' '}
+          | Hintergrund:{' '}
           <a
             href="https://www.wallpaperflare.com/pink-and-blue-sky-sky-clouds-nature-wallpaper-275895"
             className="underline"
@@ -76,6 +89,15 @@ export default function App() {
             wallpaperflare
           </a>
         </div>
+        {core.showImpressum && (
+          <AboutModal
+            onClose={() => {
+              mut((c) => {
+                c.showImpressum = false
+              })
+            }}
+          />
+        )}
         <style jsx global>
           {`
             html {
