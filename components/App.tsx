@@ -27,7 +27,7 @@ export default function App() {
           Einhorn der Mathematik
         </h1>
         {core.name && (
-          <div className="absolute top-2 right-2 px-1 bg-white/50 rounded">
+          <div className="fixed top-2 right-2 px-1 bg-white/50 rounded">
             Name: <strong>{core.name}</strong>
           </div>
         )}
@@ -66,7 +66,7 @@ export default function App() {
               : null
           )}
         </div>
-        <div className="absolute right-1 bottom-1 text-sm text-gray-300">
+        <div className="fixed right-1 bottom-1 text-sm text-gray-300">
           Hintergrund:{' '}
           <a
             href="https://www.wallpaperflare.com/pink-and-blue-sky-sky-clouds-nature-wallpaper-275895"
@@ -78,6 +78,9 @@ export default function App() {
         </div>
         <style jsx global>
           {`
+            html {
+              min-height: 100%;
+            }
             html {
               background-image: url('/wallpaper.jpg');
               background-repeat: no-repeat;
@@ -133,7 +136,7 @@ export default function App() {
                 </div>
               )}
               <div className="mt-8 [&>p]:mt-4 [&_code]:text-pink-400 [&_code]:font-bold [&>img]:my-6">
-                {data.render()}
+                {data.render({ core })}
                 <InputBox
                   className="mt-8 -ml-1"
                   submit={(value) => {

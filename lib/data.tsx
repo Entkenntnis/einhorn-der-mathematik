@@ -7,7 +7,7 @@ interface StoryData {
   x: number
   y: number
   deps: number[]
-  render: () => JSX.Element
+  render: (props: { core: State }) => JSX.Element
   submit: (props: {
     value: string
     mut: (fn: (draft: Draft<State>) => void) => void
@@ -54,7 +54,7 @@ export const storyData: { [key: number]: StoryData } = {
           mut((c) => {
             c.storyFeedback = {
               correct: false,
-              text: 'Du hast bereits einen Namen eingefügt.',
+              text: 'Du hast bereits einen Namen eingegeben.',
             }
           })
         } else {
@@ -81,7 +81,13 @@ export const storyData: { [key: number]: StoryData } = {
     render: () => (
       <>
         <p>
-          Die Summe der Augenzahlen auf einem Würfel muss auf gegenüberliegenden
+          Schau dir deine Hände an: so wunderschön zart und feinfühlig. Manchmal
+          wünschte ich, ich hätte statt meiner Hufen auch Hände wie du!
+        </p>
+        <p>
+          Aber auch mit Hufen kann ich gut mit Würfeln umgehen und ich denke mir
+          gerne kleine Spiele damit aus. Eine Regel erfüllen alle Würfel: Die
+          Summe der Augenzahlen auf einem Würfel muss auf gegenüberliegenden
           Seiten immer 7 betragen. Das weißt du bestimmt schon.
         </p>
         <p>
@@ -123,22 +129,28 @@ export const storyData: { [key: number]: StoryData } = {
     render: () => (
       <>
         <p>
-          &quot;22 Uhr, 23 Uhr, 24 Uhr, 25 Uhr ... &quot;, so murmelt Teo vor
-          sich hin.
+          Du siehst aus wie eine Person, die sich gut um Menschen kümmern kann!
+          Ich habe leider nicht so viel Geduld und Teo weißt das
+          unglücklicherweise.
+        </p>
+        <p>Ein ganz normaler Nachmittag:</p>
+        <p>
+          &quot;22 Uhr, 23 Uhr, 24 Uhr, 25 Uhr ... &quot;, murmelt Teo vor sich
+          hin, während er seine Hausaufgaben macht.
         </p>
         <p>
           Als verantwortungsvoll Schwester korrigiere ich ihn: &quot;Hey Teo, es
           gibt kein 25 Uhr. Das ist dann wieder 1 Uhr&quot;
         </p>
         <p>
-          Aber natürlich ignoriert er mich. Und er macht vergnügt weiter, jetzt
-          extra um mich zu ärgern:
+          Natürlich ignoriert er mich und ärgert mich extra, indem er vergnügt
+          weitermacht:
         </p>
         <p>&quot;26 Uhr, 27 Uhr, 28 Uhr, 29 Uhr ... &quot;</p>
         <p>
-          Nach einer Weile ist er bei 100 Uhr angekommen. Da interessiert es
-          mich schon: Welcher echten Uhrzeit entspricht das? Schreibe die
-          Antwort als Zahl, z.b. <code>10</code>.
+          Nach einer Weile ist er bei <strong>100 Uhr</strong> angekommen. Da
+          interessiert es mich schon: Welcher echten Uhrzeit entspricht das?
+          Schreibe die Antwort als Zahl, z.b. <code>10</code>.
         </p>
       </>
     ),
