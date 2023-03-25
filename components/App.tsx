@@ -1,5 +1,6 @@
 import produce, { Immutable, Draft } from 'immer'
 import { Fragment, useState } from 'react'
+import shortid from 'shortid'
 import { storyData } from '../lib/data'
 import { AboutModal } from './AboutModal'
 import { InputBox } from './InputBox'
@@ -10,6 +11,7 @@ export type State = Immutable<{
   solved: Set<number>
   name: string | null
   showImpressum: boolean
+  userId: string
 }>
 
 export default function App() {
@@ -19,6 +21,7 @@ export default function App() {
     solved: new Set(),
     name: null,
     showImpressum: false,
+    userId: shortid.generate(),
   })
 
   return <>{core.showStory == -1 ? renderOverview() : renderStory()}</>

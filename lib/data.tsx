@@ -1,6 +1,7 @@
 import { Draft } from 'immer'
 import { State } from '../components/App'
 import { InputBox } from '../components/InputBox'
+import { submit_event } from './submit'
 
 interface StoryData {
   title: string
@@ -65,9 +66,9 @@ export const storyData: { [key: number]: StoryData } = {
                 correct: true,
                 text: `Dein Name "${trimmed}" wurde gespeichert.`,
               }
-              c.solved.add(id)
               c.name = trimmed
             })
+            addSolved(mut, core.userId, id)
           }
         }
       }
@@ -104,7 +105,7 @@ export const storyData: { [key: number]: StoryData } = {
         </p>
       </>
     ),
-    submit: ({ value, mut, id }) => {
+    submit: ({ value, mut, id, core }) => {
       const letters = new Set(
         value
           .toLowerCase()
@@ -118,7 +119,7 @@ export const storyData: { [key: number]: StoryData } = {
         letters.has('d') &&
         letters.has('e')
 
-      genericSubmitHandler(value, isCorrect, mut, id)
+      genericSubmitHandler(value, isCorrect, mut, id, core)
     },
   },
   3: {
@@ -162,7 +163,8 @@ function genericSubmitHandler(
   value: string,
   isCorrect: boolean,
   mut: (fn: (draft: Draft<State>) => void) => void,
-  id: number
+  id: number,
+  core: State
 ) {
   if (isCorrect) {
     mut((c) => {
@@ -170,8 +172,8 @@ function genericSubmitHandler(
         correct: true,
         text: `"${value}" ist richtig`,
       }
-      c.solved.add(id)
     })
+    addSolved(mut, core.userId, id)
   } else {
     mut((c) => {
       c.storyFeedback = {
@@ -186,6 +188,17 @@ function ignoreCaseSolution(answer: string) {
   return (props: Parameters<StoryData['submit']>[0]) => {
     const value = props.value.trim().toLowerCase()
     const isCorrect = answer.toLowerCase().trim() == value
-    genericSubmitHandler(value, isCorrect, props.mut, props.id)
+    genericSubmitHandler(value, isCorrect, props.mut, props.id, props.core)
   }
+}
+
+function addSolved(
+  mut: (fn: (draft: Draft<State>) => void) => void,
+  userId: string,
+  storyId: number
+) {
+  mut((c) => {
+    c.solved.add(storyId)
+  })
+  submit_event(userId, storyId)
 }

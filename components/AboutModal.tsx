@@ -31,8 +31,10 @@ export function AboutModal({ onClose }: AboutModalProps) {
           </p>
           <p className="ml-4 font-bold text-lg mt-2 mb-4">Datenschutz</p>
           <p className="mx-4 mb-4">
-            Diese Webseite verwendet keine Cookies und speichert keinerlei Daten
-            bei der Nutzung.
+            Diese Website wird auf einem Uberspace gehostet. Es werden
+            Aufrufstatistiken angelegt, dabei werden keine persönlichen Daten
+            verarbeitet. Die Website speichert auf dem Gerät keine Daten. Alle
+            Daten werden innerhalb von Deutschland verarbeitet.
           </p>
         </div>
         <p className="text-center mb-5 mt-3">

@@ -16,12 +16,14 @@
     "immer": "^9.0.5",
     "next": "13",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "shortid": "^2.2.16"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^13.0.0",
     "@types/node": "^18.0.0",
     "@types/react": "^18.0.5",
+    "@types/shortid": "^0.0.29",
     "autoprefixer": "^10.4.4",
     "cross-env": "^7.0.3",
     "eslint": "^8.13.0",
