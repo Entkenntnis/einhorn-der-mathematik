@@ -1,6 +1,7 @@
 import { Draft } from 'immer'
+import { useState } from 'react'
+import Clock from 'react-clock'
 import { State } from '../components/App'
-import { InputBox } from '../components/InputBox'
 import { submit_event } from './submit'
 
 interface StoryData {
@@ -8,7 +9,12 @@ interface StoryData {
   x: number
   y: number
   deps: number[]
-  render: (props: { core: State }) => JSX.Element
+  render: (props: {
+    core: State
+    mut: (fn: (draft: Draft<State>) => void) => void
+    onSubmit: (val: string) => void
+  }) => JSX.Element
+  hideSubmit?: boolean
   submit: (props: {
     value: string
     mut: (fn: (draft: Draft<State>) => void) => void
@@ -19,59 +25,53 @@ interface StoryData {
 
 export const storyData: { [key: number]: StoryData } = {
   1: {
-    title: 'Hallo!',
+    title: 'Hallo',
     x: 100,
     y: 100,
     deps: [],
-    render: () => (
-      <>
-        <p>Herzlich Willkommen! Schön, dass du hier bist :)</p>
-        <p>
-          Und hat dir schon jemand gesagt, dass du wunderbare Augen hast? Love
-          them.
-        </p>
-        <p>
-          Mein Name ist Tina und ich bin eine Einhorn-Dame. Okay, ich bin erst
-          13 Jahre alt, aber ich fühle mich schon richtig erwachsen. Im
-          Gegensatz zu meinem putzigen Bruder Teo, er ist erst 7 Jahre alt.
-        </p>
-        <p>
-          Das Leben ist nicht easy als Einhorn in unserer Gesellschaft. Es gibt
-          nicht viele von uns und wir haben doch manchmal ... andere
-          Bedürfnisse.
-        </p>
-        <p>
-          Und manchmal fühle ich mich auch etwas alleine - aber in solchen
-          Momenten versuche ich mich abzulenken, zum Beispiel durch das
-          Ausdenken von kleinen Mathe-Rätseln. Ich hoffe, diese machen dir
-          genauso viel Spaß wie mir.
-        </p>
-        <p>So viel zu mir. Nun, sage mir, wie darf ich dich nennen?</p>
-      </>
-    ),
-    submit: ({ value, mut, id, core }) => {
-      if (value) {
-        if (core.name) {
-          mut((c) => {
-            c.storyFeedback = {
-              correct: false,
-              text: 'Du hast bereits einen Namen eingegeben.',
-            }
-          })
-        } else {
-          const trimmed = value.trim()
-          if (trimmed) {
-            mut((c) => {
-              c.storyFeedback = {
-                correct: true,
-                text: `Dein Name "${trimmed}" wurde gespeichert.`,
-              }
-              c.name = trimmed
-            })
-            addSolved(mut, core.userId, id)
-          }
-        }
+    render: ({ core, mut }) => {
+      if (!core.name && core.modal != 'name') {
+        mut((c) => {
+          c.modal = 'name'
+        })
       }
+      return (
+        <>
+          <p>
+            Hallo {core.name ? <strong>{core.name}</strong> : ''}! Schön, dass
+            du hier bist :)
+          </p>
+          <p>
+            Und hat dir schon jemand gesagt, dass du wunderbare Augen hast? Love
+            them.
+          </p>
+          <p>
+            Mein Name ist Tina und ich bin eine Einhorn-Dame. Okay, ich bin erst
+            13 Jahre alt, aber ich fühle mich schon richtig erwachsen. Im
+            Gegensatz zu meinem putzigen Bruder Teo, er ist erst 7 Jahre alt.
+          </p>
+          <p>
+            Das Leben ist nicht easy als Einhorn in unserer Gesellschaft. Es
+            gibt nicht viele von uns und wir werden manchmal komisch angeschaut
+            😢
+          </p>
+          <p>
+            Aber darum soll es hier nicht gehen. Ich denke mir gerne kleine
+            Mathe-Rätsel aus. Ich hoffe, diese machen dir genauso viel Spaß wie
+            mir!
+          </p>
+          <p>Dein erstes Rätsel: Wie viele Buchstaben hat dein Name?</p>
+        </>
+      )
+    },
+    submit: ({ value, mut, id, core }) => {
+      genericSubmitHandler(
+        value,
+        parseInt(value) == core.name?.length,
+        mut,
+        id,
+        core
+      )
     },
   },
   2: {
@@ -127,35 +127,31 @@ export const storyData: { [key: number]: StoryData } = {
     x: 180,
     y: 220,
     deps: [1],
-    render: () => (
+    render: ({ onSubmit }) => (
       <>
         <p>
-          Du siehst aus wie eine Person, die sich gut um Menschen kümmern kann!
-          Ich habe leider nicht so viel Geduld und Teo weißt das
-          unglücklicherweise.
-        </p>
-        <p>Ein ganz normaler Nachmittag:</p>
-        <p>
-          &quot;22 Uhr, 23 Uhr, 24 Uhr, 25 Uhr ... &quot;, murmelt Teo vor sich
+          &quot;22 Uhr, 23 Uhr, 24 Uhr, 25 Uhr ...&quot;, murmelt Teo vor sich
           hin, während er seine Hausaufgaben macht.
         </p>
         <p>
-          Als verantwortungsvoll Schwester korrigiere ich ihn: &quot;Hey Teo, es
-          gibt kein 25 Uhr. Das ist dann wieder 1 Uhr&quot;
+          Ich korrigiere ihn: &quot;Hey Teo, es gibt kein 25 Uhr. Das ist wieder
+          1 Uhr.&quot;
         </p>
         <p>
           Natürlich ignoriert er mich und ärgert mich extra, indem er vergnügt
           weitermacht:
         </p>
-        <p>&quot;26 Uhr, 27 Uhr, 28 Uhr, 29 Uhr ... &quot;</p>
+        <p>&quot;26 Uhr, 27 Uhr, 28 Uhr, 29 Uhr ...&quot;</p>
         <p>
           Nach einer Weile ist er bei <strong>100 Uhr</strong> angekommen. Da
-          interessiert es mich schon: Welcher echten Uhrzeit entspricht das?
-          Schreibe die Antwort als Zahl, z.b. <code>10</code>.
+          interessiert es mich schon: Welcher Uhrzeit entspricht das? Verschiebe
+          den Regler, um die Uhrzeit einzustellen:
         </p>
+        <ClockInput onSubmit={onSubmit} />
       </>
     ),
-    submit: ignoreCaseSolution('4'),
+    hideSubmit: true,
+    submit: ignoreCaseSolution('4 Uhr'),
   },
 }
 
@@ -201,4 +197,47 @@ function addSolved(
     c.solved.add(storyId)
   })
   submit_event(userId, storyId)
+}
+
+interface ClockInputProps {
+  onSubmit: (val: string) => void
+}
+
+function ClockInput({ onSubmit }: ClockInputProps) {
+  const [val, setVal] = useState(12)
+  return (
+    <>
+      <p>
+        <input
+          type="range"
+          min={0}
+          max={24}
+          step={1}
+          className="w-full"
+          value={val}
+          onInput={(e) =>
+            setVal(parseInt((e.target as HTMLInputElement).value))
+          }
+        />
+      </p>
+      <Clock
+        className="mx-auto"
+        value={new Date(2023, 0, 1, val)}
+        renderSecondHand={false}
+        renderMinuteHand={false}
+        hourHandLength={70}
+      />
+      <p className="text-center">{val} Uhr</p>
+      <p className="text-center">
+        <button
+          className="px-3 py-1 rounded bg-pink-300 hover:bg-pink-400"
+          onClick={() => {
+            onSubmit(`${val} Uhr`)
+          }}
+        >
+          Los
+        </button>
+      </p>
+    </>
+  )
 }

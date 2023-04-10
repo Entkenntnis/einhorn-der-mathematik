@@ -4,13 +4,14 @@ import shortid from 'shortid'
 import { storyData } from '../lib/data'
 import { AboutModal } from './AboutModal'
 import { InputBox } from './InputBox'
+import { NameModal } from './NameModal'
 
 export type State = Immutable<{
   showStory: number
   storyFeedback: { correct: boolean; text: string } | null
   solved: Set<number>
   name: string | null
-  showImpressum: boolean
+  modal: 'impressum' | 'name' | null
   userId: string
 }>
 
@@ -20,7 +21,7 @@ export default function App() {
     storyFeedback: null,
     solved: new Set(),
     name: null,
-    showImpressum: false,
+    modal: null,
     userId: shortid.generate(),
   })
 
@@ -77,7 +78,7 @@ export default function App() {
             className="hover:underline"
             onClick={() => {
               mut((c) => {
-                c.showImpressum = true
+                c.modal = 'impressum'
               })
             }}
           >
@@ -92,11 +93,11 @@ export default function App() {
             wallpaperflare
           </a>
         </div>
-        {core.showImpressum && (
+        {core.modal == 'impressum' && (
           <AboutModal
             onClose={() => {
               mut((c) => {
-                c.showImpressum = false
+                c.modal = null
               })
             }}
           />
@@ -161,17 +162,41 @@ export default function App() {
                 </div>
               )}
               <div className="mt-8 [&>p]:mt-4 [&_code]:text-pink-400 [&_code]:font-bold [&>img]:my-6">
-                {data.render({ core })}
-                <InputBox
-                  className="mt-8 -ml-1"
-                  submit={(value) => {
+                {data.render({
+                  core,
+                  mut,
+                  onSubmit: (value) => {
                     data.submit({ value, mut, id: core.showStory, core })
-                  }}
-                />
+                  },
+                })}
+                {!data.hideSubmit && (
+                  <InputBox
+                    className="mt-8 -ml-1"
+                    submit={(value) => {
+                      data.submit({ value, mut, id: core.showStory, core })
+                    }}
+                  />
+                )}
               </div>
             </>
           )}
         </div>
+        {core.modal == 'name' && (
+          <NameModal
+            onClose={() => {
+              mut((c) => {
+                c.modal = null
+                c.showStory = -1
+              })
+            }}
+            setUserName={(name) => {
+              mut((c) => {
+                c.name = name
+                c.modal = null
+              })
+            }}
+          />
+        )}
       </>
     )
   }
