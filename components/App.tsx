@@ -29,7 +29,7 @@ export default function App() {
 
   function renderOverview() {
     return (
-      <>
+      <div className="overflow-auto min-h-full main-container">
         <h1 className="mx-auto px-4 py-2 rounded-lg bg-pink-400 w-fit mt-6 text-2xl">
           Einhorn der Mathematik
         </h1>
@@ -38,7 +38,7 @@ export default function App() {
             Name: <strong>{core.name}</strong>
           </div>
         )}
-        <div className="mt-4 ml-4 w-[1200px] h-[600px] relative">
+        <div className="mt-4 ml-4 w-[1600px] h-[600px] relative">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600">
             {Object.entries(storyData).map(([id, data]) => {
               if (isVisible(parseInt(id))) {
@@ -104,17 +104,19 @@ export default function App() {
         )}
         <style jsx global>
           {`
-            html {
-              min-height: 100%;
+            html,
+            body,
+            #__next {
+              height: 100%;
             }
-            html {
+            .main-container {
               background-image: url('/wallpaper.jpg');
               background-repeat: no-repeat;
               background-size: cover;
             }
           `}
         </style>
-      </>
+      </div>
     )
   }
 
