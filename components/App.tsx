@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import produce, { Immutable, Draft } from 'immer'
 import { Fragment, useState } from 'react'
 import shortid from 'shortid'
@@ -158,11 +159,6 @@ export default function App() {
               >
                 zurück
               </button>
-              {core.storyFeedback && (
-                <div className="mt-8 text-rose-600">
-                  {core.storyFeedback.text}
-                </div>
-              )}
               <div className="mt-8 [&>p]:mt-4 [&_code]:text-pink-400 [&_code]:font-bold [&>img]:my-6">
                 {data.render({
                   core,
@@ -170,14 +166,26 @@ export default function App() {
                   onSubmit: (value) => {
                     data.submit({ value, mut, id: core.showStory, core })
                   },
+                  feedback: core.storyFeedback ? (
+                    <div className="mt-6 text-yellow-600">
+                      {core.storyFeedback.text}
+                    </div>
+                  ) : null,
                 })}
                 {!data.hideSubmit && (
-                  <InputBox
-                    className="mt-8 -ml-1"
-                    submit={(value) => {
-                      data.submit({ value, mut, id: core.showStory, core })
-                    }}
-                  />
+                  <>
+                    {core.storyFeedback && (
+                      <div className="mt-6 text-yellow-600">
+                        {core.storyFeedback.text}
+                      </div>
+                    )}
+                    <InputBox
+                      className="mt-8 -ml-1"
+                      submit={(value) => {
+                        data.submit({ value, mut, id: core.showStory, core })
+                      }}
+                    />
+                  </>
                 )}
               </div>
             </>
@@ -206,7 +214,10 @@ export default function App() {
   function renderStoryIcon(title: string, x: number, y: number, id: number) {
     return (
       <div
-        className="flex items-center flex-col w-fit cursor-pointer group absolute pointer-events-none"
+        className={clsx(
+          'flex items-center flex-col w-fit cursor-pointer group absolute pointer-events-none',
+          core.solved.has(id) && 'pt-2'
+        )}
         style={{ left: `${x}px`, top: `${y}px` }}
         onClick={() => {
           mut((c) => {
@@ -220,7 +231,7 @@ export default function App() {
           {title}
         </button>
         {core.solved.has(id) ? (
-          <div className="w-16 pt-5 flex justify-center items-center">
+          <div className="w-16 pt-3 flex justify-center items-center">
             <div className="bg-pink-200 rounded-full w-6 h-6 pointer-events-auto"></div>
           </div>
         ) : (

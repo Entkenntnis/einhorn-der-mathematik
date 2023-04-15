@@ -41,7 +41,7 @@ export function NameModal({ onClose, setUserName }: NameModalProps) {
                   setUserName(name.trim())
                 }
               }}
-              className="mt-4 text-3xl border-blue-500 border-2 rounded text-center"
+              className="mt-4 text-3xl border-pink-500 border-2 rounded text-center outline-none"
               maxLength={30}
             />
           </p>

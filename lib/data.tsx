@@ -1,5 +1,5 @@
 import { Draft } from 'immer'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import Clock from 'react-clock'
 import { State } from '../components/App'
 import { submit_event } from './submit'
@@ -13,6 +13,7 @@ interface StoryData {
     core: State
     mut: (fn: (draft: Draft<State>) => void) => void
     onSubmit: (val: string) => void
+    feedback: React.ReactNode
   }) => JSX.Element
   hideSubmit?: boolean
   submit: (props: {
@@ -38,12 +39,12 @@ export const storyData: { [key: number]: StoryData } = {
       return (
         <>
           <p>
-            Hallo {core.name ? <strong>{core.name}</strong> : ''}! Schön, dass
+            Hallo{core.name ? <strong> {core.name}</strong> : ''}! Schön, dass
             du hier bist :)
           </p>
           <p>
-            Und hat dir schon jemand gesagt, dass du wunderbare Augen hast? Love
-            them.
+            Und hat dir schon jemand gesagt, dass du wunderbare ✨Augen✨ hast?
+            Love them.
           </p>
           <p>
             Mein Name ist Tina und ich bin eine Einhorn-Dame. Okay, ich bin erst
@@ -127,7 +128,7 @@ export const storyData: { [key: number]: StoryData } = {
     x: 180,
     y: 220,
     deps: [1],
-    render: ({ onSubmit }) => (
+    render: ({ onSubmit, feedback }) => (
       <>
         <p>
           &quot;22 Uhr, 23 Uhr, 24 Uhr, 25 Uhr ...&quot;, murmelt Teo vor sich
@@ -144,10 +145,10 @@ export const storyData: { [key: number]: StoryData } = {
         <p>&quot;26 Uhr, 27 Uhr, 28 Uhr, 29 Uhr ...&quot;</p>
         <p>
           Nach einer Weile ist er bei <strong>100 Uhr</strong> angekommen. Da
-          interessiert es mich schon: Welcher Uhrzeit entspricht das? Verschiebe
-          den Regler, um die Uhrzeit einzustellen:
+          interessiert es mich schon: Welcher Uhrzeit entspricht das ⌚?
+          Verschiebe den Regler, um die Uhrzeit einzustellen:
         </p>
-        <ClockInput onSubmit={onSubmit} />
+        <ClockInput onSubmit={onSubmit} feedback={feedback} />
       </>
     ),
     hideSubmit: true,
@@ -184,7 +185,13 @@ function ignoreCaseSolution(answer: string) {
   return (props: Parameters<StoryData['submit']>[0]) => {
     const value = props.value.trim().toLowerCase()
     const isCorrect = answer.toLowerCase().trim() == value
-    genericSubmitHandler(value, isCorrect, props.mut, props.id, props.core)
+    genericSubmitHandler(
+      props.value.trim(),
+      isCorrect,
+      props.mut,
+      props.id,
+      props.core
+    )
   }
 }
 
@@ -201,34 +208,34 @@ function addSolved(
 
 interface ClockInputProps {
   onSubmit: (val: string) => void
+  feedback: React.ReactNode
 }
 
-function ClockInput({ onSubmit }: ClockInputProps) {
+function ClockInput({ onSubmit, feedback }: ClockInputProps) {
   const [val, setVal] = useState(12)
   return (
     <>
-      <p>
-        <input
-          type="range"
-          min={0}
-          max={24}
-          step={1}
-          className="w-full"
-          value={val}
-          onInput={(e) =>
-            setVal(parseInt((e.target as HTMLInputElement).value))
-          }
-        />
-      </p>
       <Clock
-        className="mx-auto"
+        className="mt-6"
         value={new Date(2023, 0, 1, val)}
         renderSecondHand={false}
         renderMinuteHand={false}
         hourHandLength={70}
       />
-      <p className="text-center">{val} Uhr</p>
-      <p className="text-center">
+      <p className="ml-12">{val} Uhr</p>
+      {feedback}
+      <div className="flex mt-4">
+        <input
+          type="range"
+          min={0}
+          max={24}
+          step={1}
+          className="w-64 mr-4 inline-block"
+          value={val}
+          onInput={(e) =>
+            setVal(parseInt((e.target as HTMLInputElement).value))
+          }
+        />
         <button
           className="px-3 py-1 rounded bg-pink-300 hover:bg-pink-400"
           onClick={() => {
@@ -237,7 +244,7 @@ function ClockInput({ onSubmit }: ClockInputProps) {
         >
           Los
         </button>
-      </p>
+      </div>
     </>
   )
 }
