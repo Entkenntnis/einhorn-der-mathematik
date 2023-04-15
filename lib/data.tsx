@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { Draft } from 'immer'
 import React, { useState } from 'react'
 import Clock from 'react-clock'
@@ -80,48 +81,28 @@ export const storyData: { [key: number]: StoryData } = {
     x: 250,
     y: 70,
     deps: [1],
-    render: () => (
+    render: ({ onSubmit, feedback }) => (
       <>
         <p>
-          Schau dir deine Hände an: so wunderschön zart und feinfühlig. Manchmal
-          wünschte ich, ich hätte statt meiner Hufen auch Hände wie du!
+          Teo hat heute in Schule Würfel gebastelt. Stolz zeigt er mir seine
+          Ergebnisse.
         </p>
+
         <p>
-          Aber auch mit Hufen kann ich gut mit Würfeln umgehen und ich denke mir
-          gerne kleine Spiele damit aus. Eine Regel erfüllen alle Würfel: Die
-          Summe der Augenzahlen auf einem Würfel muss auf gegenüberliegenden
-          Seiten immer 7 betragen. Das weißt du bestimmt schon.
+          Er hat die Augenzahlen frei nach Lust und Laune aufgezeichnet. Aber du
+          und ich wissen, dass man darauf achten muss, dass die Summe auf
+          gegenüberliegenden Seiten immer 7 ergibt.
         </p>
+
         <p>
-          Mein Bruder Teo weiß das noch nicht. Er hat heute in der Schule eine
-          handvoll Würfel gebastelt und auf dem ersten Blick sehe ich schon,
-          dass einige falsch sind.
+          Welche der 4 Würfel müssen sicher korrigiert werden? Wähle sie aus.
         </p>
-        <img src="/story2.jpg" alt="5 Würfel" />
-        <p>
-          Das sage ich ihm natürlich nicht, sondern lobe ihn für seine Mühe :)
-          Aber mir kannst du das sagen: Welche Würfel sind sicherlich falsch?
-          Gib die entsprechenden Buchstaben als Antwort ein, z.B.{' '}
-          <code>a b c</code>.
-        </p>
+
+        <DiceInput onSubmit={onSubmit} feedback={feedback} />
       </>
     ),
-    submit: ({ value, mut, id, core }) => {
-      const letters = new Set(
-        value
-          .toLowerCase()
-          .split('')
-          .map((x) => x.trim())
-          .filter(Boolean)
-      )
-      const isCorrect =
-        letters.size == 3 &&
-        letters.has('a') &&
-        letters.has('d') &&
-        letters.has('e')
-
-      genericSubmitHandler(value, isCorrect, mut, id, core)
-    },
+    hideSubmit: true,
+    submit: ignoreCaseSolution('A D'),
   },
   3: {
     title: 'Uhrzeit',
@@ -247,4 +228,61 @@ function ClockInput({ onSubmit, feedback }: ClockInputProps) {
       </div>
     </>
   )
+}
+
+interface DiceInputProps {
+  onSubmit: (val: string) => void
+  feedback: React.ReactNode
+}
+
+function DiceInput({ onSubmit, feedback }: DiceInputProps) {
+  const [selected, setSelected] = useState<number[]>([])
+  return (
+    <>
+      <div className="flex flex-wrap mt-3">
+        {renderDice('/story2_1.png', 'Würfel mit Augenzahlen 1, 2, 6', 0)}
+        {renderDice('/story2_2.png', 'Würfel mit Augenzahlen 1, 2, 4', 1)}
+        {renderDice('/story2_3.png', 'Würfel mit Augenzahlen 3, 5, 6', 2)}
+        {renderDice('/story2_4.png', 'Würfel mit Augenzahlen 2, 4, 5', 3)}
+      </div>
+      <div className="ml-2 -mt-2">{feedback}</div>
+      <div className="mt-4 ml-2">
+        <button
+          className="px-3 py-1 rounded bg-pink-300 hover:bg-pink-400"
+          onClick={() => {
+            const letters = ['A', 'B', 'C', 'D']
+            onSubmit(
+              letters
+                .filter((letter) => selected.includes(letters.indexOf(letter)))
+                .join(' ')
+            )
+          }}
+        >
+          Los
+        </button>
+      </div>
+    </>
+  )
+
+  function renderDice(src: string, alt: string, id: number) {
+    return (
+      <div>
+        <img
+          src={src}
+          alt={alt}
+          className={clsx(
+            'w-40 m-2 border-2 cursor-pointer',
+            selected.includes(id) ? 'border-pink-500' : 'border-transparent'
+          )}
+          onClick={() => {
+            if (selected.includes(id)) {
+              setSelected(selected.filter((s) => s != id))
+            } else {
+              setSelected([...selected, id])
+            }
+          }}
+        />
+      </div>
+    )
+  }
 }
