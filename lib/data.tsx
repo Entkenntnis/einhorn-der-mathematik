@@ -135,6 +135,54 @@ export const storyData: { [key: number]: StoryData } = {
     hideSubmit: true,
     submit: ignoreCaseSolution('4 Uhr'),
   },
+  4: {
+    title: 'TODO',
+    x: 333,
+    y: 164,
+    deps: [2, 3],
+    render: ({ onSubmit, feedback }) => (
+      <>
+        <p>TODO</p>
+      </>
+    ),
+    submit: ignoreCaseSolution('42'),
+  },
+  5: {
+    title: 'TODO',
+    x: 286,
+    y: 277,
+    deps: [3],
+    render: ({ onSubmit, feedback }) => (
+      <>
+        <p>TODO</p>
+      </>
+    ),
+    submit: ignoreCaseSolution('42'),
+  },
+  6: {
+    title: 'TODO',
+    x: 370,
+    y: 51,
+    deps: [2],
+    render: ({ onSubmit, feedback }) => (
+      <>
+        <p>TODO</p>
+      </>
+    ),
+    submit: ignoreCaseSolution('42'),
+  },
+  7: {
+    title: 'TODO',
+    x: 183,
+    y: 346,
+    deps: [3],
+    render: ({ onSubmit, feedback }) => (
+      <>
+        <p>TODO</p>
+      </>
+    ),
+    submit: ignoreCaseSolution('42'),
+  },
 }
 
 function genericSubmitHandler(

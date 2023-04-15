@@ -125,7 +125,14 @@ export default function App() {
     const data = storyData[core.showStory]
     return (
       <>
-        <h1 className="mx-auto px-4 py-2 rounded-lg bg-pink-400 w-fit mt-6 text-2xl">
+        <h1
+          className="mx-auto px-4 py-2 rounded-lg bg-pink-400 w-fit mt-6 text-2xl cursor-pointer"
+          onClick={() => {
+            mut((c) => {
+              c.showStory = -1
+            })
+          }}
+        >
           Einhorn der Mathematik
         </h1>
         <div className="max-w-[800px] mx-auto bg-pink-50 rounded p-3 mt-6">
