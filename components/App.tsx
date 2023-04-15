@@ -38,7 +38,7 @@ export default function App() {
             Name: <strong>{core.name}</strong>
           </div>
         )}
-        <div className="mt-4 ml-4 w-[1600px] h-[600px] relative">
+        <div className="mt-4 ml-4 w-[1200px] h-[600px] relative">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600">
             {Object.entries(storyData).map(([id, data]) => {
               if (isVisible(parseInt(id))) {
