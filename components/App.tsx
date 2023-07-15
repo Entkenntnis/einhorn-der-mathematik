@@ -6,6 +6,8 @@ import { storyData } from '../lib/data'
 import { AboutModal } from './AboutModal'
 import { InputBox } from './InputBox'
 import { NameModal } from './NameModal'
+import { FaIcon } from './FaIcon'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
 
 export type State = Immutable<{
   showStory: number
@@ -244,7 +246,9 @@ export default function App() {
         </button>
         {core.solved.has(id) ? (
           <div className="w-16 pt-3 flex justify-center items-center">
-            <div className="bg-pink-200 rounded-full w-6 h-6 pointer-events-auto"></div>
+            <div className="bg-pink-200 rounded-full w-6 h-6 pointer-events-auto">
+              <FaIcon icon={faCheck} className="ml-[5px] text-pink-400" />
+            </div>
           </div>
         ) : (
           <img
