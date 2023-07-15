@@ -9,6 +9,7 @@ interface StoryData {
   title: string
   x: number
   y: number
+  xCorrection?: number
   deps: number[]
   render: (props: {
     core: State
@@ -136,31 +137,48 @@ export const storyData: { [key: number]: StoryData } = {
     submit: ignoreCaseSolution('4 Uhr'),
   },
   4: {
-    title: 'TODO',
+    title: 'Telepathie',
     x: 333,
+    xCorrection: -12,
     y: 164,
     deps: [2, 3],
     render: ({ onSubmit, feedback }) => (
       <>
-        <p>TODO</p>
+        <p>Spielen wir ein Spiel!</p>
+        <p>
+          Ich denke mir eine Zahl aus und halbiere sie. Dann ziehe 11 davon ab.
+          Ich multipliziere das Ergebnis mit 10 und erhalte <strong>100</strong>
+          !
+        </p>
+        <p>Welche Zahl habe ich mir ausgedacht?</p>
       </>
     ),
     submit: ignoreCaseSolution('42'),
   },
   5: {
-    title: 'TODO',
+    title: 'Figur',
     x: 286,
     y: 277,
     deps: [3],
     render: ({ onSubmit, feedback }) => (
       <>
-        <p>TODO</p>
+        <p>
+          Teo mag zeichnen! Wir spielen manchmal ein Spiel bei dem er mir ein
+          Bild mit Worten beschreiben muss und ich muss es nachzeichnen.
+        </p>
+        <p>
+          Heute drehen wir es um und ich darf mal beschreiben. Da stelle ich ihm
+          natürlich gleich ein Rätsel: Ein unsichtbarer Punkt regiert unendlich
+          viele sichtbare Punkte. Doch der unsichtbare Punkt ist ganz alleine,
+          von allen anderen Punkten gleich weit entfernt.
+        </p>
+        <p>Wie heißt diese Figur?</p>
       </>
     ),
-    submit: ignoreCaseSolution('42'),
+    submit: ignoreCaseSolution('kreis'),
   },
   6: {
-    title: 'TODO',
+    title: 'next up',
     x: 370,
     y: 51,
     deps: [2],

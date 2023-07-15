@@ -70,7 +70,12 @@ export default function App() {
           </svg>
           {Object.entries(storyData).map(([id, data]) =>
             data.deps.length == 0 || data.deps.some((d) => core.solved.has(d))
-              ? renderStoryIcon(data.title, data.x, data.y, parseInt(id))
+              ? renderStoryIcon(
+                  data.title,
+                  data.x + (data.xCorrection ?? 0),
+                  data.y,
+                  parseInt(id)
+                )
               : null
           )}
         </div>
