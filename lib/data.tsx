@@ -178,19 +178,33 @@ export const storyData: { [key: number]: StoryData } = {
     submit: ignoreCaseSolution('kreis'),
   },
   6: {
-    title: 'next up',
+    title: 'Dreiecke',
     x: 370,
     y: 51,
     deps: [2],
     render: ({ onSubmit, feedback }) => (
       <>
-        <p>TODO</p>
+        <p>
+          Ich schaue Teo zu, wie er zwei Dreiecke einzeichnet. Für sein Alter
+          kann er ziemlich ordentlich mit dem Lineal umgehen.
+        </p>
+        <img
+          src="story6.png"
+          alt="Ein großes Dreieck mit einem eingeschlossenen kleinen Dreieck"
+        ></img>
+        <p>
+          Er deutet auf das Bild und sagt: &quot;Schau mal, zwei Dreiecke!&quot;
+        </p>
+        <p>
+          Ich muss schmunzeln, denn es sind mehr als zwei Dreiecke. Wie viele
+          Dreiecke kannst du sehen?
+        </p>
       </>
     ),
-    submit: ignoreCaseSolution('42'),
+    submit: ignoreCaseSolution('5'),
   },
   7: {
-    title: 'TODO',
+    title: 'final',
     x: 183,
     y: 346,
     deps: [3],
