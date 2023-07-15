@@ -204,16 +204,26 @@ export const storyData: { [key: number]: StoryData } = {
     submit: ignoreCaseSolution('5'),
   },
   7: {
-    title: 'final',
+    title: 'Pfoten',
     x: 183,
     y: 346,
     deps: [3],
     render: ({ onSubmit, feedback }) => (
       <>
-        <p>TODO</p>
+        <p>Bei uns Zuhause hängt dieses Bild an der Wand:</p>
+        <img src="story7.png" alt="viele Pfoten" />
+        <p>
+          Eines Tages fängt Teo an, die Pfoten zu zählen und fängt in der ersten
+          Reihe an: 1, 2, 3, ...
+        </p>
+        <p>
+          Wenige Sekunden später habe ich das Ergebnis bereits im Kopf und
+          schaue meinem Bruder beim Zählen zu. Wie viele Pfoten sind im Bild zu
+          sehen?
+        </p>
       </>
     ),
-    submit: ignoreCaseSolution('42'),
+    submit: ignoreCaseSolution('32'),
   },
 }
 
