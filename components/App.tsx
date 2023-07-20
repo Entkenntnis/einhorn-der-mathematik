@@ -16,6 +16,11 @@ export type State = Immutable<{
   name: string | null
   modal: 'impressum' | 'name' | null
   userId: string
+  analyze?: {
+    players: number
+    medianSeconds: number
+    storyStats: { [key: string]: { reachable: number; solved: number } }
+  }
 }>
 
 export default function App() {
@@ -43,6 +48,65 @@ export default function App() {
         state.name = username
       })
     }
+    if (window.location.hash == '#analyze') {
+      const password =
+        sessionStorage.getItem('einhorn_der_mathematik_analyze_pw') ||
+        prompt('Passwort') ||
+        '0'
+      void (async () => {
+        const res = await fetch('https://stats-einhorn.arrrg.de/export', {
+          method: 'POST',
+          body: new URLSearchParams({
+            password,
+          }),
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        })
+        const data = (await res.json()) as {
+          userId: string
+          storyId: number
+          createdAt: string
+        }[]
+        sessionStorage.setItem('einhorn_der_mathematik_analyze_pw', password)
+        const stories = new Set()
+        const users = data.reduce((res, obj) => {
+          const key = obj.userId
+          const entry = (res[key] = res[key] || { solved: new Set(), ts: [] })
+          entry.solved.add(obj.storyId)
+          stories.add(obj.storyId)
+          entry.ts.push(new Date(obj.createdAt).getTime())
+          return res
+        }, {} as { [key: string]: { solved: Set<number>; ts: number[] } })
+        const times = Object.values(users).map((user) => {
+          const minTime = Math.min(...user.ts)
+          const maxTime = Math.max(...user.ts)
+          return maxTime - minTime
+        })
+        times.sort((a, b) => a - b)
+        const storyStats: {
+          [key: string]: { reachable: number; solved: number }
+        } = {}
+        Array.from(stories).forEach((storyId) => {
+          const reachable = Object.values(users).filter(
+            (user) =>
+              storyId == 1 ||
+              storyData[storyId as number].deps.some((dep) =>
+                user.solved.has(dep)
+              )
+          ).length
+          const solved = Object.values(users).filter((user) =>
+            user.solved.has(storyId as number)
+          ).length
+          storyStats[storyId as string] = { reachable, solved }
+        })
+        mut((state) => {
+          state.analyze = {
+            players: Object.keys(users).length,
+            medianSeconds: Math.round(median(times) / 1000),
+            storyStats,
+          }
+        })
+      })()
+    }
   }, [])
 
   return <>{core.showStory == -1 ? renderOverview() : renderStory()}</>
@@ -56,6 +120,14 @@ export default function App() {
         {core.name && (
           <div className="fixed top-2 right-2 px-1 bg-white/50 rounded">
             Name: <strong>{core.name}</strong>
+          </div>
+        )}
+        {core.analyze && (
+          <div className="my-4 bg-white p-3">
+            Anzahl SpielerInnen: {core.analyze.players}
+            <br />
+            <br />
+            Median Spielzeit: {core.analyze.medianSeconds}s
           </div>
         )}
         <div className="mt-4 ml-4 w-[1200px] h-[600px] relative">
@@ -274,6 +346,20 @@ export default function App() {
             className="w-16 pointer-events-auto pt-2"
           ></img>
         )}
+        {core.analyze && core.analyze.storyStats[id] && (
+          <small>
+            {core.analyze.storyStats[id].reachable} /{' '}
+            {core.analyze.storyStats[id].solved} /{' '}
+            <strong>
+              {Math.round(
+                (core.analyze.storyStats[id].solved /
+                  core.analyze.storyStats[id].reachable) *
+                  100
+              )}{' '}
+              %
+            </strong>
+          </small>
+        )}
       </div>
     )
   }
@@ -287,5 +373,14 @@ export default function App() {
       storyData[id].deps.length == 0 ||
       storyData[id].deps.some((d) => core.solved.has(d))
     )
+  }
+
+  function median(arr: number[]) {
+    const middle = Math.floor(arr.length / 2)
+    if (arr.length % 2 === 0) {
+      return (arr[middle - 1] + arr[middle]) / 2
+    } else {
+      return arr[middle]
+    }
   }
 }

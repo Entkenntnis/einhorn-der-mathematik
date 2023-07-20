@@ -249,8 +249,7 @@ export const storyData: { [key: number]: StoryData } = {
         />
         <p>
           Jedes Mal goldwert, wenn Teo beim Nachmessen feststellt, dass ich
-          total Recht habe. Jetzt bist du dran: Wie groß ist der fehlende
-          Winkel?
+          Recht habe. Jetzt bist du dran: Wie groß ist der fehlende Winkel?
         </p>
       </>
     ),
