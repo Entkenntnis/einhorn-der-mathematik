@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import produce, { Immutable, Draft } from 'immer'
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import shortid from 'shortid'
 import { storyData } from '../lib/data'
 import { AboutModal } from './AboutModal'
@@ -27,6 +27,23 @@ export default function App() {
     modal: null,
     userId: shortid.generate(),
   })
+
+  useEffect(() => {
+    const previousStorage = JSON.parse(
+      sessionStorage.getItem('einhorn_der_mathematik_solved') ?? '[]'
+    )
+    previousStorage.forEach((id: number) => {
+      mut((state) => {
+        state.solved.add(id)
+      })
+    })
+    const username = sessionStorage.getItem('einhorn_der_mathematik_name')
+    if (username) {
+      mut((state) => {
+        state.name = username
+      })
+    }
+  }, [])
 
   return <>{core.showStory == -1 ? renderOverview() : renderStory()}</>
 

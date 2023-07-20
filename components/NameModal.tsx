@@ -50,7 +50,9 @@ export function NameModal({ onClose, setUserName }: NameModalProps) {
           <button
             className="px-2 py-0.5 bg-pink-200 hover:bg-pink-300 rounded disabled:bg-gray-200 disabled:text-gray-700"
             onClick={() => {
-              setUserName(name.trim())
+              const trimmedName = name.trim()
+              setUserName(trimmedName)
+              sessionStorage.setItem('einhorn_der_mathematik_name', trimmedName)
             }}
             disabled={!name.trim()}
           >
