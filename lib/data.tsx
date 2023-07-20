@@ -168,9 +168,12 @@ export const storyData: { [key: number]: StoryData } = {
         </p>
         <p>
           Heute drehen wir es um und ich darf mal beschreiben. Da stelle ich ihm
-          natürlich gleich ein Rätsel: Ein unsichtbarer Punkt regiert unendlich
-          viele sichtbare Punkte. Doch der unsichtbare Punkt ist ganz alleine,
-          von allen anderen Punkten gleich weit entfernt.
+          natürlich gleich ein Rätsel:
+        </p>
+        <p className="pl-4 border-l-4 border-l-pink-600">
+          Ein unsichtbarer Punkt regiert unendlich viele sichtbare Punkte. Doch
+          der unsichtbare Punkt ist ganz alleine, von allen anderen Punkten
+          gleich weit entfernt.
         </p>
         <p>Wie heißt diese Figur?</p>
       </>
@@ -225,6 +228,67 @@ export const storyData: { [key: number]: StoryData } = {
     ),
     submit: ignoreCaseSolution('32'),
   },
+  8: {
+    title: 'Neu 1',
+    x: 490,
+    y: 71,
+    deps: [6],
+    render: ({ onSubmit, feedback }) => (
+      <>
+        <p>TODO</p>
+      </>
+    ),
+    submit: ignoreCaseSolution('32'),
+  },
+  9: {
+    title: 'Neu 2',
+    x: 450,
+    y: 170,
+    deps: [4, 6],
+    render: ({ onSubmit, feedback }) => (
+      <>
+        <p>TODO</p>
+      </>
+    ),
+    submit: ignoreCaseSolution('43'),
+  },
+  10: {
+    title: 'Pyramide',
+    x: 460,
+    xCorrection: -15,
+    y: 280,
+    deps: [4, 5],
+    render: ({ onSubmit, feedback }) => (
+      <>
+        <p>
+          Ich schaue Teo gerne bei seinen Hausaufgaben zu, weil er so putzig ist
+          und seine Aufgaben so leicht sind.
+        </p>
+        <p>
+          Heute gibt es eine Zahlenpyramide zur Addition. Als große Schwester
+          schaffe ich es natürlich im Kopf!
+        </p>
+        <img
+          alt="Zahlenpyramide mit Grundreihe 6, 4, 8, 1 und Addition"
+          src="story10.png"
+        />
+        <p>Welche Zahl steht im obersten Feld?</p>
+      </>
+    ),
+    submit: ignoreCaseSolution('43'),
+  },
+  11: {
+    title: 'Neu 4',
+    x: 580,
+    y: 240,
+    deps: [9, 10],
+    render: ({ onSubmit, feedback }) => (
+      <>
+        <p>TODO</p>
+      </>
+    ),
+    submit: ignoreCaseSolution('32'),
+  },
 }
 
 function genericSubmitHandler(
@@ -274,6 +338,16 @@ function addSolved(
   mut((c) => {
     c.solved.add(storyId)
   })
+  const previousStorage = JSON.parse(
+    sessionStorage.getItem('einhorn_der_mathematik_solved') ?? '[]'
+  )
+  if (!previousStorage.includes(storyId)) {
+    previousStorage.push(storyId)
+    sessionStorage.setItem(
+      'einhorn_der_mathematik_solved',
+      JSON.stringify(previousStorage)
+    )
+  }
   submit_event(userId, storyId)
 }
 
