@@ -229,16 +229,32 @@ export const storyData: { [key: number]: StoryData } = {
     submit: ignoreCaseSolution('32'),
   },
   8: {
-    title: 'Neu 1',
+    title: 'Winkel',
     x: 490,
     y: 71,
     deps: [6],
     render: ({ onSubmit, feedback }) => (
       <>
-        <p>TODO</p>
+        <p>
+          Teo hat das Geo-Dreieck entdeckt und kann damit schon Winkel messen.
+        </p>
+        <p>
+          Mit meinen Mathe-Kenntnissen überrasche ich ihn total gerne. Zum
+          Beispiel kann ich den fehlenden Winkel ohne Messen ganz genau
+          bestimmen!
+        </p>
+        <img
+          src="story8.png"
+          alt="Ein Dreieck mit Innenwinkel 46 und 60 Grad"
+        />
+        <p>
+          Jedes Mal goldwert, wenn Teo beim Nachmessen feststellt, dass ich
+          total Recht habe. Jetzt bist du dran: Wie groß ist der fehlende
+          Winkel?
+        </p>
       </>
     ),
-    submit: ignoreCaseSolution('32'),
+    submit: ignoreCaseSolution('74', ['74°', '74 °', '74 grad']),
   },
   9: {
     title: 'Neu 2',
@@ -316,10 +332,13 @@ function genericSubmitHandler(
   }
 }
 
-function ignoreCaseSolution(answer: string) {
+function ignoreCaseSolution(answer: string, alternatives?: string[]) {
   return (props: Parameters<StoryData['submit']>[0]) => {
     const value = props.value.trim().toLowerCase()
-    const isCorrect = answer.toLowerCase().trim() == value
+    const isCorrect =
+      (answer.toLowerCase().trim() == value ||
+        alternatives?.some((alt) => alt.toLowerCase().trim() == value)) ??
+      false
     genericSubmitHandler(
       props.value.trim(),
       isCorrect,
