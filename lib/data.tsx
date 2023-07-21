@@ -326,6 +326,54 @@ export const storyData: { [key: number]: StoryData } = {
     ),
     submit: ignoreCaseSolution('500', ['500kg', '500 kg']),
   },
+  12: {
+    title: 'Neu 1',
+    x: 370,
+    y: 360,
+    deps: [5, 7],
+    render: ({ onSubmit, feedback }) => (
+      <>
+        <p>TODO</p>
+      </>
+    ),
+    submit: ignoreCaseSolution('500'),
+  },
+  13: {
+    title: 'Neu 2',
+    x: 280,
+    y: 440,
+    deps: [7],
+    render: ({ onSubmit, feedback }) => (
+      <>
+        <p>TODO</p>
+      </>
+    ),
+    submit: ignoreCaseSolution('500'),
+  },
+  14: {
+    title: 'Neu 3',
+    x: 420,
+    y: 460,
+    deps: [12, 13],
+    render: ({ onSubmit, feedback }) => (
+      <>
+        <p>TODO</p>
+      </>
+    ),
+    submit: ignoreCaseSolution('500'),
+  },
+  15: {
+    title: 'Neu 4',
+    x: 520,
+    y: 360,
+    deps: [10, 12],
+    render: ({ onSubmit, feedback }) => (
+      <>
+        <p>TODO</p>
+      </>
+    ),
+    submit: ignoreCaseSolution('500'),
+  },
 }
 
 function genericSubmitHandler(
