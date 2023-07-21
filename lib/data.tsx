@@ -256,16 +256,27 @@ export const storyData: { [key: number]: StoryData } = {
     submit: ignoreCaseSolution('74', ['74°', '74 °', '74 grad']),
   },
   9: {
-    title: 'Neu 2',
+    title: 'Sudoku',
     x: 450,
+    xCorrection: -5,
     y: 170,
     deps: [4, 6],
     render: ({ onSubmit, feedback }) => (
       <>
-        <p>TODO</p>
+        <p>
+          Ich löse manchmal Sudoku, wenn mir langweilig ist. Heute schaut mir
+          Teo zu und er fragt mich natürlich, was die Regeln sind.
+        </p>
+        <p>
+          Ich weiß nicht, wie viel Chancen ich habe, einem 7-jährigen Sudoku zu
+          erklären 😅. Ich versuche es aber. Und am Ende konnte er das markierte
+          Feld ausfüllen.
+        </p>
+        <img src="story9.png" alt="ein Sudoku" />
+        <p>Welche Zahl kommt in das Feld?</p>
       </>
     ),
-    submit: ignoreCaseSolution('43'),
+    submit: ignoreCaseSolution('3'),
   },
   10: {
     title: 'Pyramide',
@@ -293,16 +304,27 @@ export const storyData: { [key: number]: StoryData } = {
     submit: ignoreCaseSolution('43'),
   },
   11: {
-    title: 'Neu 4',
+    title: 'Melonen',
     x: 580,
+    xCorrection: -10,
     y: 240,
     deps: [9, 10],
     render: ({ onSubmit, feedback }) => (
       <>
-        <p>TODO</p>
+        <p>
+          Das ist eines meiner Lieblings-Matherätsel. Es ist leider etwas zu
+          kompliziert für Teo, aber hoffentlich nicht für dich. Man muss dafür
+          ein wenig Nachdenken.
+        </p>
+        <p className="pl-4 border-l-4 border-l-pink-600">
+          Wassermelonen enthalten 99% Wasser. Ein Melonen-Händler lagert an
+          einem heißen Tag 1000kg Melonen. Am Ende des Tages ist der
+          Wassergehalt der Melonen auf 98% gesunken.
+        </p>
+        <p>Wie viel Kilogramm Melonen hat der Händler am Ende des Tages?</p>
       </>
     ),
-    submit: ignoreCaseSolution('32'),
+    submit: ignoreCaseSolution('500', ['500kg', '500 kg']),
   },
 }
 
