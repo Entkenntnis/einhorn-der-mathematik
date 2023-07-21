@@ -1,3 +1,3 @@
 # Einhorn der Mathematik
 
-Mathe-Knobeleien, Cyberpunk
+Mathe-Knobeleien mit viel Cuteness
