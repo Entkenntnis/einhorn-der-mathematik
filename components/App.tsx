@@ -48,6 +48,14 @@ export default function App() {
         state.name = username
       })
     }
+    const userId = sessionStorage.getItem('einhorn_der_mathematik_userid')
+    if (userId) {
+      mut((state) => {
+        state.userId = userId
+      })
+    } else {
+      sessionStorage.setItem('einhorn_der_mathematik_userid', core.userId)
+    }
     if (window.location.hash == '#analyze') {
       const password =
         sessionStorage.getItem('einhorn_der_mathematik_analyze_pw') ||
@@ -107,6 +115,7 @@ export default function App() {
         })
       })()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return <>{core.showStory == -1 ? renderOverview() : renderStory()}</>
