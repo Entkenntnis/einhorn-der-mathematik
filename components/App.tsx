@@ -57,6 +57,7 @@ export default function App() {
       sessionStorage.setItem('einhorn_der_mathematik_userid', core.userId)
     }
     if (window.location.hash == '#analyze') {
+      const cutOff = new Date(2023, 6, 23)
       const password =
         sessionStorage.getItem('einhorn_der_mathematik_analyze_pw') ||
         prompt('Passwort') ||
@@ -77,6 +78,7 @@ export default function App() {
         sessionStorage.setItem('einhorn_der_mathematik_analyze_pw', password)
         const stories = new Set()
         const users = data.reduce((res, obj) => {
+          if (new Date(obj.createdAt).getTime() < cutOff.getTime()) return res
           const key = obj.userId
           const entry = (res[key] = res[key] || { solved: new Set(), ts: [] })
           entry.solved.add(obj.storyId)
@@ -170,7 +172,9 @@ export default function App() {
               })}
             </svg>
             {Object.entries(storyData).map(([id, data]) =>
-              data.deps.length == 0 || data.deps.some((d) => core.solved.has(d))
+              data.deps.length == 0 ||
+              data.deps.some((d) => core.solved.has(d)) ||
+              core.analyze
                 ? renderStoryIcon(data.title, data.x, data.y, parseInt(id))
                 : null
             )}
@@ -339,7 +343,7 @@ export default function App() {
         <button className="text-lg bg-gray-100/70 px-1 py-0.5 rounded group-hover:bg-white/80 pointer-events-auto">
           {title}
         </button>
-        {core.solved.has(id) ? (
+        {core.solved.has(id) || core.analyze ? (
           <div className="w-16 pt-3 flex justify-center items-center">
             <div className="bg-pink-200 rounded-full w-6 h-6 pointer-events-auto">
               <FaIcon icon={faCheck} className="ml-[5px] text-pink-400" />
@@ -377,7 +381,8 @@ export default function App() {
   function isVisible(id: number) {
     return (
       storyData[id].deps.length == 0 ||
-      storyData[id].deps.some((d) => core.solved.has(d))
+      storyData[id].deps.some((d) => core.solved.has(d)) ||
+      core.analyze
     )
   }
 
