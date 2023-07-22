@@ -281,7 +281,7 @@ export const storyData: { [key: number]: StoryData } = {
   10: {
     title: 'Pyramide',
     x: 460,
-    xCorrection: -15,
+    xCorrection: -11,
     y: 280,
     deps: [4, 5],
     render: ({ onSubmit, feedback }) => (
@@ -327,28 +327,60 @@ export const storyData: { [key: number]: StoryData } = {
     submit: ignoreCaseSolution('500', ['500kg', '500 kg']),
   },
   12: {
-    title: 'Neu 1',
+    title: 'Freunde',
     x: 370,
+    xCorrection: -3,
     y: 360,
     deps: [5, 7],
     render: ({ onSubmit, feedback }) => (
       <>
-        <p>TODO</p>
+        <p>
+          Freunde finden ist gar nicht so einfach! Ich versuche gerade
+          auszurechnen, wie viele Personen ich begegnen muss um eine
+          Einhorn-Freundin zu finden.
+        </p>
+        <p>
+          Auf der Welt ist eine von 1000 Personen ein Einhorn. Eines von 5
+          Einhörnern spricht meine Sprache. Mit einem von 100 Einhörnern freunde
+          ich mich an.
+        </p>
+        <p>
+          Wie viele Personen muss ich also begegnen, um eine Freundin zu finden?
+        </p>
       </>
     ),
-    submit: ignoreCaseSolution('500'),
+    submit: ignoreCaseSolution('500000'),
   },
   13: {
-    title: 'Neu 2',
+    title: 'Zahlenfolge',
     x: 280,
+    xCorrection: -11,
     y: 440,
     deps: [7],
     render: ({ onSubmit, feedback }) => (
       <>
-        <p>TODO</p>
+        <p>
+          Mein Vater hat mich gebeten, mit Teo für seinen nächsten Mathe-Test zu
+          üben. Ein Thema darin sind Zahlenfolgen.
+        </p>
+        <p>
+          Aber das sind keine interessanten Folgen, sein nur langweilige wie 2,
+          4, 6, 8, ... oder 11, 22, 33, ... Mein Vater hat mir verboten, ihm zu
+          schwere Sachen zu geben.
+        </p>
+        <p>
+          Ich kann es natürlich nicht verkneifen, am Ende doch eine halbwegs
+          interessante Aufgabe zu stellen:
+        </p>
+        <img src="story13.png" alt="1, 1, 2, 3, 5, ?" />
+        <p>
+          Teo kommen die Tränen, als er die Folge nicht lösen kann. Mein Vater
+          schaut prüfend zu mir und ich wische die Folge schnell weg. Kannst du
+          mir die nächste Zahl der Folge sagen?
+        </p>
       </>
     ),
-    submit: ignoreCaseSolution('500'),
+    submit: ignoreCaseSolution('8'),
   },
   14: {
     title: 'Neu 3',
@@ -363,16 +395,27 @@ export const storyData: { [key: number]: StoryData } = {
     submit: ignoreCaseSolution('500'),
   },
   15: {
-    title: 'Neu 4',
+    title: 'Körper',
     x: 520,
+    xCorrection: -2,
     y: 360,
     deps: [10, 12],
     render: ({ onSubmit, feedback }) => (
       <>
-        <p>TODO</p>
+        <p>
+          Ich bastle heute mit Teo Würfel und wir schneiden dafür eine
+          Faltvorlage aus - du kannst dir sicher vorstellen, wie diese aussehen.
+        </p>
+        <p>
+          Als große Schwester möchte ich zeigen, dass es neben dem Würfel auch
+          andere Körper gibt. Und frage deshalb Teo, ob er sich vorstellen kann,
+          welchen Körper man aus diesem Netz falten kann:
+        </p>
+        <img src="story15.png" alt="Körpernetz mit Rechteck und zwei Kreisen" />
+        <p>Er kommt leider nicht dran. Kennst du den Namen dieses Körpers?</p>
       </>
     ),
-    submit: ignoreCaseSolution('500'),
+    submit: ignoreCaseSolution('zylinder'),
   },
 }
 
