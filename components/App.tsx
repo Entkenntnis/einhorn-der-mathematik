@@ -122,106 +122,103 @@ export default function App() {
 
   function renderOverview() {
     return (
-      <div className="overflow-auto min-h-full main-container">
-        <h1 className="mx-auto px-4 py-2 rounded-lg bg-pink-400 w-fit mt-6 text-2xl">
-          Einhorn der Mathematik
-        </h1>
-        {core.name && (
-          <div className="fixed top-2 right-2 px-1 bg-white/50 rounded">
-            Name: <strong>{core.name}</strong>
-          </div>
-        )}
-        {core.analyze && (
-          <div className="my-4 bg-white p-3">
-            Anzahl SpielerInnen: {core.analyze.players}
-            <br />
-            <br />
-            Median Spielzeit: {core.analyze.medianSeconds}s
-          </div>
-        )}
-        <div className="mt-4 ml-4 w-[1200px] h-[600px] relative">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600">
-            {Object.entries(storyData).map(([id, data]) => {
-              if (isVisible(parseInt(id))) {
-                return (
-                  <Fragment key={id}>
-                    {data.deps.map((dep) => {
-                      if (isVisible(dep)) {
-                        return (
-                          <line
-                            key={`connect-${id}-${dep}`}
-                            x1={data.x + 32}
-                            y1={data.y + 64}
-                            x2={storyData[dep].x + 32}
-                            y2={storyData[dep].y + 64}
-                            strokeWidth="10"
-                            stroke="gray"
-                          />
-                        )
-                      } else {
-                        return null
-                      }
-                    })}
-                  </Fragment>
-                )
-              }
-              return null
-            })}
-          </svg>
-          {Object.entries(storyData).map(([id, data]) =>
-            data.deps.length == 0 || data.deps.some((d) => core.solved.has(d))
-              ? renderStoryIcon(
-                  data.title,
-                  data.x + (data.xCorrection ?? 0),
-                  data.y,
-                  parseInt(id)
-                )
-              : null
+      <div className="overflow-auto h-full">
+        <div className="min-h-full main-container pt-6 min-w-fit">
+          <h1 className="mx-auto px-4 py-2 rounded-lg bg-pink-400 w-fit text-2xl">
+            Einhorn der Mathematik
+          </h1>
+          {core.name && (
+            <div className="fixed top-2 right-2 px-1 bg-white/50 rounded">
+              Name: <strong>{core.name}</strong>
+            </div>
           )}
+          {core.analyze && (
+            <div className="my-4 bg-white p-3">
+              Anzahl SpielerInnen: {core.analyze.players}
+              <br />
+              <br />
+              Median Spielzeit: {core.analyze.medianSeconds}s
+            </div>
+          )}
+          <div className="mt-4 ml-4 w-[1200px] h-[600px] relative">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600">
+              {Object.entries(storyData).map(([id, data]) => {
+                if (isVisible(parseInt(id))) {
+                  return (
+                    <Fragment key={id}>
+                      {data.deps.map((dep) => {
+                        if (isVisible(dep)) {
+                          return (
+                            <line
+                              key={`connect-${id}-${dep}`}
+                              x1={data.x + 32}
+                              y1={data.y + 64}
+                              x2={storyData[dep].x + 32}
+                              y2={storyData[dep].y + 64}
+                              strokeWidth="10"
+                              stroke="gray"
+                            />
+                          )
+                        } else {
+                          return null
+                        }
+                      })}
+                    </Fragment>
+                  )
+                }
+                return null
+              })}
+            </svg>
+            {Object.entries(storyData).map(([id, data]) =>
+              data.deps.length == 0 || data.deps.some((d) => core.solved.has(d))
+                ? renderStoryIcon(data.title, data.x, data.y, parseInt(id))
+                : null
+            )}
+          </div>
+          <div className="fixed right-4 bottom-4 text-sm text-gray-300">
+            <button
+              className="hover:underline"
+              onClick={() => {
+                mut((c) => {
+                  c.modal = 'impressum'
+                })
+              }}
+            >
+              Impressum/Datenschutz
+            </button>{' '}
+            | Hintergrund:{' '}
+            <a
+              href="https://www.wallpaperflare.com/pink-and-blue-sky-sky-clouds-nature-wallpaper-275895"
+              className="underline"
+              target="_blank"
+            >
+              wallpaperflare
+            </a>
+          </div>
+          {core.modal == 'impressum' && (
+            <AboutModal
+              onClose={() => {
+                mut((c) => {
+                  c.modal = null
+                })
+              }}
+            />
+          )}
+          <style jsx global>
+            {`
+              html,
+              body,
+              #__next {
+                height: 100%;
+              }
+              .main-container {
+                background-image: url('/wallpaper.jpg');
+                background-repeat: no-repeat;
+                background-size: cover;
+              }
+            `}
+          </style>
         </div>
-        <div className="fixed right-1 bottom-1 text-sm text-gray-300">
-          <button
-            className="hover:underline"
-            onClick={() => {
-              mut((c) => {
-                c.modal = 'impressum'
-              })
-            }}
-          >
-            Impressum/Datenschutz
-          </button>{' '}
-          | Hintergrund:{' '}
-          <a
-            href="https://www.wallpaperflare.com/pink-and-blue-sky-sky-clouds-nature-wallpaper-275895"
-            className="underline"
-            target="_blank"
-          >
-            wallpaperflare
-          </a>
-        </div>
-        {core.modal == 'impressum' && (
-          <AboutModal
-            onClose={() => {
-              mut((c) => {
-                c.modal = null
-              })
-            }}
-          />
-        )}
-        <style jsx global>
-          {`
-            html,
-            body,
-            #__next {
-              height: 100%;
-            }
-            .main-container {
-              background-image: url('/wallpaper.jpg');
-              background-repeat: no-repeat;
-              background-size: cover;
-            }
-          `}
-        </style>
       </div>
     )
   }
@@ -327,7 +324,7 @@ export default function App() {
     return (
       <div
         className={clsx(
-          'flex items-center flex-col w-fit cursor-pointer group absolute pointer-events-none',
+          'flex items-center flex-col w-[64px] cursor-pointer group absolute pointer-events-none',
           core.solved.has(id) && 'pt-2'
         )}
         style={{ left: `${x}px`, top: `${y}px` }}

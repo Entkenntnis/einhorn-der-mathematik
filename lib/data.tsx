@@ -9,7 +9,6 @@ interface StoryData {
   title: string
   x: number
   y: number
-  xCorrection?: number
   deps: number[]
   render: (props: {
     core: State
@@ -85,18 +84,19 @@ export const storyData: { [key: number]: StoryData } = {
     render: ({ onSubmit, feedback }) => (
       <>
         <p>
-          Teo hat heute in Schule Würfel gebastelt. Stolz zeigt er mir seine
+          Teo hat heute in der Schule Würfel gebastelt. Stolz zeigt er mir seine
           Ergebnisse.
         </p>
 
         <p>
           Er hat die Augenzahlen frei nach Lust und Laune aufgezeichnet. Aber du
-          und ich wissen, dass man darauf achten muss, dass die Summe auf
-          gegenüberliegenden Seiten immer 7 ergibt.
+          und ich wissen, dass man aufpassen muss: Die Summe auf
+          gegenüberliegenden Seiten ergibt immer 7.
         </p>
 
         <p>
-          Welche der 4 Würfel müssen sicher korrigiert werden? Wähle sie aus.
+          Welche der 4 Würfel müssen sicher korrigiert werden? Wähle sie aus und
+          klicke auf sie.
         </p>
 
         <DiceInput onSubmit={onSubmit} feedback={feedback} />
@@ -139,7 +139,6 @@ export const storyData: { [key: number]: StoryData } = {
   4: {
     title: 'Telepathie',
     x: 333,
-    xCorrection: -12,
     y: 164,
     deps: [2, 3],
     render: ({ onSubmit, feedback }) => (
@@ -147,8 +146,7 @@ export const storyData: { [key: number]: StoryData } = {
         <p>Spielen wir ein Spiel!</p>
         <p>
           Ich denke mir eine Zahl aus und halbiere sie. Dann ziehe 11 davon ab.
-          Ich multipliziere das Ergebnis mit 10 und erhalte <strong>100</strong>
-          !
+          Ich multipliziere das Ergebnis mit 5 und erhalte <strong>50</strong>!
         </p>
         <p>Welche Zahl habe ich mir ausgedacht?</p>
       </>
@@ -168,7 +166,7 @@ export const storyData: { [key: number]: StoryData } = {
         </p>
         <p>
           Heute drehen wir es um und ich darf mal beschreiben. Da stelle ich ihm
-          natürlich gleich ein Rätsel:
+          gleich ein Rätsel:
         </p>
         <p className="pl-4 border-l-4 border-l-pink-600">
           Ein unsichtbarer Punkt regiert unendlich viele sichtbare Punkte. Doch
@@ -258,7 +256,6 @@ export const storyData: { [key: number]: StoryData } = {
   9: {
     title: 'Sudoku',
     x: 450,
-    xCorrection: -5,
     y: 170,
     deps: [4, 6],
     render: ({ onSubmit, feedback }) => (
@@ -281,7 +278,6 @@ export const storyData: { [key: number]: StoryData } = {
   10: {
     title: 'Pyramide',
     x: 460,
-    xCorrection: -11,
     y: 280,
     deps: [4, 5],
     render: ({ onSubmit, feedback }) => (
@@ -306,7 +302,6 @@ export const storyData: { [key: number]: StoryData } = {
   11: {
     title: 'Melonen',
     x: 580,
-    xCorrection: -10,
     y: 240,
     deps: [9, 10],
     render: ({ onSubmit, feedback }) => (
@@ -329,7 +324,6 @@ export const storyData: { [key: number]: StoryData } = {
   12: {
     title: 'Freunde',
     x: 370,
-    xCorrection: -3,
     y: 360,
     deps: [5, 7],
     render: ({ onSubmit, feedback }) => (
@@ -340,13 +334,11 @@ export const storyData: { [key: number]: StoryData } = {
           Einhorn-Freundin zu finden.
         </p>
         <p>
-          Auf der Welt ist eine von 1000 Personen ein Einhorn. Eines von 5
-          Einhörnern spricht meine Sprache. Mit einem von 100 Einhörnern freunde
-          ich mich an.
+          Auf der Welt ist eine von 1000 Personen ein Einhorn. Eine von 5
+          Einhörnern spricht meine Sprache. Bei einer von 100 Einhörnern gelingt
+          es, Freunde zu werden (grob geschätzt).
         </p>
-        <p>
-          Wie viele Personen muss ich also begegnen, um eine Freundin zu finden?
-        </p>
+        <p>Wie viele Personen muss ich begegnen, um eine Freundin zu finden?</p>
       </>
     ),
     submit: ignoreCaseSolution('500000'),
@@ -354,7 +346,6 @@ export const storyData: { [key: number]: StoryData } = {
   13: {
     title: 'Zahlenfolge',
     x: 280,
-    xCorrection: -11,
     y: 440,
     deps: [7],
     render: ({ onSubmit, feedback }) => (
@@ -364,19 +355,19 @@ export const storyData: { [key: number]: StoryData } = {
           üben. Ein Thema darin sind Zahlenfolgen.
         </p>
         <p>
-          Aber das sind keine interessanten Folgen, sein nur langweilige wie 2,
-          4, 6, 8, ... oder 11, 22, 33, ... Mein Vater hat mir verboten, ihm zu
-          schwere Sachen zu geben.
+          Aber das sind keine interessanten Folgen, sondern nur langweilige wie
+          2, 4, 6, 8, ... oder 11, 22, 33, ... Mein Vater hat mir verboten, ihm
+          zu schwere Aufgaben zu stellen.
         </p>
         <p>
-          Ich kann es natürlich nicht verkneifen, am Ende doch eine halbwegs
-          interessante Aufgabe zu stellen:
+          Ich kann es natürlich nicht verkneifen, am Ende doch folgende Aufgabe
+          zu stellen:
         </p>
         <img src="story13.png" alt="1, 1, 2, 3, 5, ?" />
         <p>
           Teo kommen die Tränen, als er die Folge nicht lösen kann. Mein Vater
-          schaut prüfend zu mir und ich wische die Folge schnell weg. Kannst du
-          mir die nächste Zahl der Folge sagen?
+          schaut prüfend zu mir und ich wische die Folge schnell weg. Wie lautet
+          die nächste Zahl der Folge?
         </p>
       </>
     ),
@@ -402,8 +393,8 @@ export const storyData: { [key: number]: StoryData } = {
         <img src="story14.png" alt="Deko: zwei Würfel" />
         <p>
           Das sieht anders aus, wenn man mit zwei Würfel gleichzeitig würfelt
-          und sich die Summe anschaut. Dann gibt es tatsächlich eine Zahl, die
-          häufiger vorkommt als alle anderen. Welche ist es?
+          und sich die Summe anschaut. Dann gibt es eine Zahl, die häufiger
+          vorkommt als alle anderen. Welche ist es?
         </p>
       </>
     ),
@@ -412,22 +403,22 @@ export const storyData: { [key: number]: StoryData } = {
   15: {
     title: 'Körper',
     x: 520,
-    xCorrection: -2,
     y: 360,
     deps: [10, 12],
     render: ({ onSubmit, feedback }) => (
       <>
         <p>
           Ich bastle heute mit Teo Würfel und wir schneiden dafür eine
-          Faltvorlage aus - du kannst dir sicher vorstellen, wie diese aussehen.
+          Faltvorlage aus.
         </p>
         <p>
-          Als große Schwester möchte ich zeigen, dass es neben dem Würfel auch
-          andere Körper gibt. Und frage deshalb Teo, ob er sich vorstellen kann,
-          welchen Körper man aus diesem Netz falten kann:
+          Würfelnetze sind die bekanntesten Netze. Aber auch andere Körper haben
+          Netze. Als wir fertig sind, zeichne ich folgende Skizze. Ich frage
+          Teo, ob er sich vorstellen kann, welchen Körper man aus diesem Netz
+          falten kann:
         </p>
         <img src="story15.png" alt="Körpernetz mit Rechteck und zwei Kreisen" />
-        <p>Er kommt leider nicht dran. Kennst du den Namen dieses Körpers?</p>
+        <p>Er kommt leider nicht drauf. Kennst du den Namen dieses Körpers?</p>
       </>
     ),
     submit: ignoreCaseSolution('zylinder'),
