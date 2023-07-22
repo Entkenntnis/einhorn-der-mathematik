@@ -383,16 +383,31 @@ export const storyData: { [key: number]: StoryData } = {
     submit: ignoreCaseSolution('8'),
   },
   14: {
-    title: 'Neu 3',
+    title: 'Zufall',
     x: 420,
     y: 460,
     deps: [12, 13],
     render: ({ onSubmit, feedback }) => (
       <>
-        <p>TODO</p>
+        <p>
+          Ich spiele mit Teo immer wieder &quot;Mensch ärgere dich nicht!&quot;.
+          Und wenn man Teo fragt, welche Zahl beim Würfel am häufigsten ist,
+          dann sagt er: &quot;Die 1 kommt am häufigsten! Der Würfel ist immer so
+          unfair!&quot;.
+        </p>
+        <p>
+          Ich schmunzle, denn die Mathematik hat da eine andere Antwort: Alle
+          Zahlen von 1 bis 6 kommen gleich oft vor.
+        </p>
+        <img src="story14.png" alt="Deko: zwei Würfel" />
+        <p>
+          Das sieht anders aus, wenn man mit zwei Würfel gleichzeitig würfelt
+          und sich die Summe anschaut. Dann gibt es tatsächlich eine Zahl, die
+          häufiger vorkommt als alle anderen. Welche ist es?
+        </p>
       </>
     ),
-    submit: ignoreCaseSolution('500'),
+    submit: ignoreCaseSolution('7'),
   },
   15: {
     title: 'Körper',
