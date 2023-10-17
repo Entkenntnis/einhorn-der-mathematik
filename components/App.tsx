@@ -20,6 +20,7 @@ export type State = Immutable<{
     players: number
     medianSeconds: number
     storyStats: { [key: string]: { reachable: number; solved: number } }
+    inputs: { [key: string]: string[] }
   }
 }>
 
@@ -70,11 +71,25 @@ export default function App() {
           }),
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         })
-        const data = (await res.json()).event as {
+        const jsonResp = await res.json()
+        const data = jsonResp.event as {
           userId: string
           storyId: number
           createdAt: string
         }[]
+        const inputs = (
+          jsonResp.input as {
+            userId: string
+            storyId: number
+            createdAt: string
+            value: string
+          }[]
+        ).reduce((res, obj) => {
+          const key = obj.storyId
+          const entry = (res[key] = res[key] || [])
+          entry.push(obj.value)
+          return res
+        }, {} as { [key: string]: string[] })
         sessionStorage.setItem('einhorn_der_mathematik_analyze_pw', password)
         const stories = new Set()
         const users = data.reduce((res, obj) => {
@@ -108,11 +123,13 @@ export default function App() {
           ).length
           storyStats[storyId as string] = { reachable, solved }
         })
+        console.log(inputs)
         mut((state) => {
           state.analyze = {
             players: Object.keys(users).length,
             medianSeconds: Math.round(median(times) / 1000),
             storyStats,
+            inputs: {},
           }
         })
       })()
