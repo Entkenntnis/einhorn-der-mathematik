@@ -58,7 +58,7 @@ export default function App() {
       sessionStorage.setItem('einhorn_der_mathematik_userid', core.userId)
     }
     if (window.location.hash == '#analyze') {
-      const cutOff = new Date(2023, 6, 23)
+      const cutOff = new Date('2023-10-18')
       const password =
         sessionStorage.getItem('einhorn_der_mathematik_analyze_pw') ||
         prompt('Passwort') ||
@@ -85,6 +85,7 @@ export default function App() {
             value: string
           }[]
         ).reduce((res, obj) => {
+          if (new Date(obj.createdAt).getTime() < cutOff.getTime()) return res
           const key = obj.storyId
           const entry = (res[key] = res[key] || [])
           entry.push(obj.value)
@@ -129,7 +130,7 @@ export default function App() {
             players: Object.keys(users).length,
             medianSeconds: Math.round(median(times) / 1000),
             storyStats,
-            inputs: {},
+            inputs,
           }
         })
       })()
@@ -157,6 +158,9 @@ export default function App() {
               <br />
               <br />
               Median Spielzeit: {core.analyze.medianSeconds}s
+              <br />
+              <br />
+              Namen: {core.analyze.inputs['-1']?.join(', ')}
             </div>
           )}
           <div className="mt-4 ml-4 w-[1200px] h-[600px] relative">
@@ -316,6 +320,11 @@ export default function App() {
                       }}
                     />
                   </>
+                )}
+                {core.analyze && (
+                  <div>
+                    Eingaben: {core.analyze.inputs[core.showStory]?.join(', ')}
+                  </div>
                 )}
               </div>
             </>
