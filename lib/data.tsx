@@ -78,9 +78,9 @@ export const storyData: { [key: number]: StoryData } = {
   },
   2: {
     title: 'Würfel',
-    x: 250,
-    y: 70,
-    deps: [1],
+    x: 280,
+    y: 440,
+    deps: [14],
     render: ({ onSubmit, feedback }) => (
       <>
         <p>
@@ -105,10 +105,8 @@ export const storyData: { [key: number]: StoryData } = {
     hideSubmit: true,
     submit: ignoreCaseSolution('A D'),
   },
-  3: {
+  /*3: {
     title: 'Uhrzeit',
-    x: 180,
-    y: 220,
     deps: [1],
     render: ({ onSubmit, feedback }) => (
       <>
@@ -138,8 +136,7 @@ export const storyData: { [key: number]: StoryData } = {
   },
   4: {
     title: 'Telepathie',
-    x: 333,
-    y: 164,
+   
     deps: [2, 3],
     render: ({ onSubmit, feedback }) => (
       <>
@@ -155,8 +152,6 @@ export const storyData: { [key: number]: StoryData } = {
   },
   5: {
     title: 'Figur',
-    x: 286,
-    y: 277,
     deps: [3],
     render: ({ onSubmit, feedback }) => (
       <>
@@ -177,12 +172,12 @@ export const storyData: { [key: number]: StoryData } = {
       </>
     ),
     submit: ignoreCaseSolution('kreis'),
-  },
+  },*/
   6: {
     title: 'Dreiecke',
-    x: 370,
-    y: 51,
-    deps: [2],
+    x: 250,
+    y: 70,
+    deps: [1],
     render: ({ onSubmit, feedback }) => (
       <>
         <p>
@@ -197,18 +192,18 @@ export const storyData: { [key: number]: StoryData } = {
           Er deutet auf das Bild und sagt: &quot;Schau mal, zwei Dreiecke!&quot;
         </p>
         <p>
-          Ich muss schmunzeln, denn es sind mehr als zwei Dreiecke. Wie viele
-          Dreiecke kannst du sehen?
+          Ich muss schmunzeln, denn es sind viel mehr als zwei Dreiecke. Wie
+          viele Dreiecke kannst du sehen?
         </p>
       </>
     ),
-    submit: ignoreCaseSolution('5'),
+    submit: ignoreCaseSolution('8'),
   },
   7: {
     title: 'Pfoten',
-    x: 183,
-    y: 346,
-    deps: [3],
+    x: 180,
+    y: 220,
+    deps: [1],
     render: ({ onSubmit, feedback }) => (
       <>
         <p>Bei uns Zuhause hängt dieses Bild an der Wand:</p>
@@ -228,26 +223,32 @@ export const storyData: { [key: number]: StoryData } = {
   },
   8: {
     title: 'Winkel',
-    x: 490,
-    y: 71,
-    deps: [6],
+    // x: 490,
+    // y: 71,
+    x: 370,
+    y: 360,
+    deps: [10, 14],
     render: ({ onSubmit, feedback }) => (
       <>
         <p>
-          Teo hat das Geo-Dreieck entdeckt und kann damit schon Winkel messen.
-        </p>
-        <p>
-          Mit meinen Mathe-Kenntnissen überrasche ich ihn total gerne. Zum
-          Beispiel kann ich den fehlenden Winkel ohne Messen ganz genau
-          bestimmen!
+          Teo ist erst in der 1. Klasse. Es ist mir gelungen, ihm beizubringen,
+          wie man mit dem Geo-Dreieck Winkel misst. In diesem Dreieck hat er
+          schon zwei Winkel gemessen.
         </p>
         <img
           src="story8.png"
           alt="Ein Dreieck mit Innenwinkel 46 und 60 Grad"
         />
         <p>
-          Jedes Mal goldwert, wenn Teo beim Nachmessen feststellt, dass ich
-          Recht habe. Jetzt bist du dran: Wie groß ist der fehlende Winkel?
+          Jetzt möchte ich ihn mit meinen Mathe-Kenntnissen überraschen. Ich
+          sage ihm: &quot;Ich kann den Winkel mit bloßen Augen ablesen!&quot;
+          und flüstere ihm das Ergebnis.
+        </p>
+        <p>
+          Nachdem Teo den Winkel gemessen hat, ist er ganz erstaunt wie genau
+          ich den Winkel geschätzt habe. Dabei habe ich gar nicht schätzen
+          müssen, sondern konnte den Winkel ausrechnen. Wie groß ist der
+          fehlende Winkel?
         </p>
       </>
     ),
@@ -255,9 +256,11 @@ export const storyData: { [key: number]: StoryData } = {
   },
   9: {
     title: 'Sudoku',
-    x: 450,
-    y: 170,
-    deps: [4, 6],
+    // x: 450,
+    // y: 170,
+    x: 460,
+    y: 280,
+    deps: [10, 13],
     render: ({ onSubmit, feedback }) => (
       <>
         <p>
@@ -266,8 +269,9 @@ export const storyData: { [key: number]: StoryData } = {
         </p>
         <p>
           Ich weiß nicht, wie viel Chancen ich habe, einem 7-jährigen Sudoku zu
-          erklären 😅. Ich versuche es aber. Und am Ende konnte er das markierte
-          Feld ausfüllen.
+          erklären 😅. Ich versuche es aber (in jede Reihe, Spalte und 3x3-Feld
+          muss jeder Ziffer von 1 bis 9 genau einmal vorkommen). Und am Ende
+          konnte er das markierte Feld ausfüllen.
         </p>
         <img src="story9.png" alt="ein Sudoku" />
         <p>Welche Zahl kommt in das Feld?</p>
@@ -276,10 +280,10 @@ export const storyData: { [key: number]: StoryData } = {
     submit: ignoreCaseSolution('3'),
   },
   10: {
-    title: 'Pyramide',
-    x: 460,
-    y: 280,
-    deps: [4, 5],
+    title: 'Rechenmauer',
+    x: 286,
+    y: 277,
+    deps: [7],
     render: ({ onSubmit, feedback }) => (
       <>
         <p>
@@ -287,19 +291,21 @@ export const storyData: { [key: number]: StoryData } = {
           und seine Aufgaben so leicht sind.
         </p>
         <p>
-          Heute gibt es eine Zahlenpyramide zur Addition. Als große Schwester
-          schaffe ich es natürlich im Kopf!
+          Heute gibt es eine Rechenmauer. Dabei addiert man immer die zwei
+          Zahlen unterhalb eines Felds. Als große Schwester schaffe ich es
+          natürlich im Kopf!
         </p>
         <img
           alt="Zahlenpyramide mit Grundreihe 6, 4, 8, 1 und Addition"
           src="story10.png"
+          className="w-[300px]"
         />
         <p>Welche Zahl steht im obersten Feld?</p>
       </>
     ),
     submit: ignoreCaseSolution('43'),
   },
-  11: {
+  /*11: {
     title: 'Melonen',
     x: 580,
     y: 240,
@@ -323,8 +329,6 @@ export const storyData: { [key: number]: StoryData } = {
   },
   12: {
     title: 'Freunde',
-    x: 370,
-    y: 360,
     deps: [5, 7],
     render: ({ onSubmit, feedback }) => (
       <>
@@ -342,12 +346,12 @@ export const storyData: { [key: number]: StoryData } = {
       </>
     ),
     submit: ignoreCaseSolution('500000'),
-  },
+  },*/
   13: {
     title: 'Zahlenfolge',
-    x: 280,
-    y: 440,
-    deps: [7],
+    x: 333,
+    y: 164,
+    deps: [6, 7],
     render: ({ onSubmit, feedback }) => (
       <>
         <p>
@@ -375,15 +379,17 @@ export const storyData: { [key: number]: StoryData } = {
   },
   14: {
     title: 'Zufall',
-    x: 420,
-    y: 460,
-    deps: [12, 13],
+    // x: 420,
+    // y: 460,
+    x: 183,
+    y: 346,
+    deps: [7],
     render: ({ onSubmit, feedback }) => (
       <>
         <p>
-          Ich spiele mit Teo immer wieder &quot;Mensch ärgere dich nicht!&quot;.
-          Und wenn man Teo fragt, welche Zahl beim Würfel am häufigsten ist,
-          dann sagt er: &quot;Die 1 kommt am häufigsten! Der Würfel ist immer so
+          Ich spiele mit Teo immer &quot;Mensch ärgere dich nicht!&quot;. Und
+          wenn man Teo fragt, welche Zahl beim Würfel am häufigsten ist, dann
+          sagt er: &quot;Die 1 kommt am häufigsten! Der Würfel ist immer so
           unfair!&quot;.
         </p>
         <p>
@@ -402,23 +408,26 @@ export const storyData: { [key: number]: StoryData } = {
   },
   15: {
     title: 'Körper',
-    x: 520,
-    y: 360,
-    deps: [10, 12],
+    // x: 520,
+    // y: 360,
+    x: 370,
+    y: 51,
+    deps: [6],
     render: ({ onSubmit, feedback }) => (
       <>
         <p>
-          Ich bastle heute mit Teo Würfel und wir schneiden dafür eine
-          Faltvorlage aus.
+          Heute schaut ausnahmsweise Teo mir bei den Hausaufgaben zu. Viel lesen
+          kann er noch nicht, aber folgendes Bild weckt seine Aufmerksamkeit.
         </p>
-        <p>
-          Würfelnetze sind die bekanntesten Netze. Aber auch andere Körper haben
-          Netze. Als wir fertig sind, zeichne ich folgende Skizze. Ich frage
-          Teo, ob er sich vorstellen kann, welchen Körper man aus diesem Netz
-          falten kann:
-        </p>
+
         <img src="story15.png" alt="Körpernetz mit Rechteck und zwei Kreisen" />
-        <p>Er kommt leider nicht drauf. Kennst du den Namen dieses Körpers?</p>
+        <p>
+          Er fragt: &quot;Was ist das?&quot; Ich erkläre: &quot;Stell dir vor,
+          du schneidest das mit Papier aus und faltest es. Dann kommt ein ganz
+          bestimmter Körper heraus.&quot; Ich zeige mit den Handen, wie es
+          ungefähr aussieht.
+        </p>
+        <p>Wie lautet der Name dieses Körpers?</p>
       </>
     ),
     submit: ignoreCaseSolution('zylinder'),

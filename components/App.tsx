@@ -262,7 +262,7 @@ export default function App() {
         >
           Einhorn der Mathematik
         </h1>
-        <div className="max-w-[800px] mx-auto bg-pink-50 rounded p-3 mt-6">
+        <div className="max-w-[800px] mx-auto bg-pink-50 rounded p-3 mt-6 mb-12">
           <h2 className="mt-3 text-xl font-bold">{data.title}</h2>
 
           {core.storyFeedback && core.storyFeedback.correct ? (
