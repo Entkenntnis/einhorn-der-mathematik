@@ -105,9 +105,11 @@ export const storyData: { [key: number]: StoryData } = {
     hideSubmit: true,
     submit: ignoreCaseSolution('A D'),
   },
-  /*3: {
+  3: {
     title: 'Uhrzeit',
-    deps: [1],
+    x: 520,
+    y: 360,
+    deps: [8, 9],
     render: ({ onSubmit, feedback }) => (
       <>
         <p>
@@ -136,33 +138,38 @@ export const storyData: { [key: number]: StoryData } = {
   },
   4: {
     title: 'Telepathie',
-   
-    deps: [2, 3],
+    x: 450,
+    y: 170,
+    deps: [13, 15],
     render: ({ onSubmit, feedback }) => (
       <>
-        <p>Spielen wir ein Spiel!</p>
         <p>
-          Ich denke mir eine Zahl aus und halbiere sie. Dann ziehe 11 davon ab.
-          Ich multipliziere das Ergebnis mit 5 und erhalte <strong>50</strong>!
+          Leider kann ich nicht Gedanken lesen. Aber mit bisschen Mathematik
+          kann ich so tun, als ob ich das kann!
         </p>
-        <p>Welche Zahl habe ich mir ausgedacht?</p>
+        <p>
+          Ich sage Teo, dass er sich eine Zahl ausdenken soll. Diese Zahl soll
+          er halbieren, davon 11 abziehen und dann das Ergebnis mit 5
+          multiplizieren. Nach viel Nachdenken kommt er auf die Antwort{' '}
+          <strong>50</strong>.
+        </p>
+        <p>Welche Zahl hat Teo sich ausgedacht?</p>
       </>
     ),
     submit: ignoreCaseSolution('42'),
   },
   5: {
     title: 'Figur',
-    deps: [3],
+    x: 490,
+    y: 71,
+    deps: [15],
     render: ({ onSubmit, feedback }) => (
       <>
         <p>
-          Teo mag zeichnen! Wir spielen manchmal ein Spiel bei dem er mir ein
-          Bild mit Worten beschreiben muss und ich muss es nachzeichnen.
+          Teo mag zeichnen! Wir spielen oft ein Spiel, bei dem er mir ein Bild
+          mit Worten beschreibt und ich versuche es nachzuzeichnen.
         </p>
-        <p>
-          Heute drehen wir es um und ich darf mal beschreiben. Da stelle ich ihm
-          gleich ein Rätsel:
-        </p>
+        <p>Heute beschreibe ich. Ich gebe ihm diesen Hinweis:</p>
         <p className="pl-4 border-l-4 border-l-pink-600">
           Ein unsichtbarer Punkt regiert unendlich viele sichtbare Punkte. Doch
           der unsichtbare Punkt ist ganz alleine, von allen anderen Punkten
@@ -172,7 +179,7 @@ export const storyData: { [key: number]: StoryData } = {
       </>
     ),
     submit: ignoreCaseSolution('kreis'),
-  },*/
+  },
   6: {
     title: 'Dreiecke',
     x: 250,
@@ -223,8 +230,6 @@ export const storyData: { [key: number]: StoryData } = {
   },
   8: {
     title: 'Winkel',
-    // x: 490,
-    // y: 71,
     x: 370,
     y: 360,
     deps: [10, 14],
@@ -256,8 +261,6 @@ export const storyData: { [key: number]: StoryData } = {
   },
   9: {
     title: 'Sudoku',
-    // x: 450,
-    // y: 170,
     x: 460,
     y: 280,
     deps: [10, 13],
@@ -305,17 +308,16 @@ export const storyData: { [key: number]: StoryData } = {
     ),
     submit: ignoreCaseSolution('43'),
   },
-  /*11: {
+  11: {
     title: 'Melonen',
     x: 580,
     y: 240,
-    deps: [9, 10],
+    deps: [4, 9],
     render: ({ onSubmit, feedback }) => (
       <>
         <p>
           Das ist eines meiner Lieblings-Matherätsel. Es ist leider etwas zu
-          kompliziert für Teo, aber hoffentlich nicht für dich. Man muss dafür
-          ein wenig Nachdenken.
+          kompliziert für Teo. Man muss dafür ein wenig Nachdenken.
         </p>
         <p className="pl-4 border-l-4 border-l-pink-600">
           Wassermelonen enthalten 99% Wasser. Ein Melonen-Händler lagert an
@@ -329,7 +331,9 @@ export const storyData: { [key: number]: StoryData } = {
   },
   12: {
     title: 'Freunde',
-    deps: [5, 7],
+    x: 420,
+    y: 460,
+    deps: [2, 8],
     render: ({ onSubmit, feedback }) => (
       <>
         <p>
@@ -346,7 +350,7 @@ export const storyData: { [key: number]: StoryData } = {
       </>
     ),
     submit: ignoreCaseSolution('500000'),
-  },*/
+  },
   13: {
     title: 'Zahlenfolge',
     x: 333,
@@ -379,8 +383,6 @@ export const storyData: { [key: number]: StoryData } = {
   },
   14: {
     title: 'Zufall',
-    // x: 420,
-    // y: 460,
     x: 183,
     y: 346,
     deps: [7],
@@ -408,8 +410,6 @@ export const storyData: { [key: number]: StoryData } = {
   },
   15: {
     title: 'Körper',
-    // x: 520,
-    // y: 360,
     x: 370,
     y: 51,
     deps: [6],
