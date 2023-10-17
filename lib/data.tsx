@@ -432,6 +432,7 @@ function genericSubmitHandler(
   id: number,
   core: State
 ) {
+  submit_event(core.userId, id, value)
   if (isCorrect) {
     mut((c) => {
       c.storyFeedback = {

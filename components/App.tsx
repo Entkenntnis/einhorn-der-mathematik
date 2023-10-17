@@ -70,7 +70,7 @@ export default function App() {
           }),
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         })
-        const data = (await res.json()) as {
+        const data = (await res.json()).event as {
           userId: string
           storyId: number
           createdAt: string
@@ -318,6 +318,7 @@ export default function App() {
                 c.modal = null
               })
             }}
+            userId={core.userId}
           />
         )}
       </>
@@ -358,14 +359,13 @@ export default function App() {
         )}
         {core.analyze && core.analyze.storyStats[id] && (
           <small>
-            {core.analyze.storyStats[id].reachable} /{' '}
             {core.analyze.storyStats[id].solved} /{' '}
             <strong>
               {Math.round(
                 (core.analyze.storyStats[id].solved /
                   core.analyze.storyStats[id].reachable) *
                   100
-              )}{' '}
+              )}
               %
             </strong>
           </small>

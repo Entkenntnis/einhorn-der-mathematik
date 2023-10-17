@@ -1,13 +1,15 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 import { FaIcon } from './FaIcon'
+import { submit_event } from '../lib/submit'
 
 interface NameModalProps {
   onClose: () => void
   setUserName: (name: string) => void
+  userId: string
 }
 
-export function NameModal({ onClose, setUserName }: NameModalProps) {
+export function NameModal({ onClose, setUserName, userId }: NameModalProps) {
   const [name, setName] = useState('')
   return (
     <div className="bg-black/20 fixed inset-0 flex justify-center items-center z-[150]">
@@ -38,7 +40,7 @@ export function NameModal({ onClose, setUserName }: NameModalProps) {
               }}
               onKeyDown={(e) => {
                 if (e.code == 'Enter' && name.trim()) {
-                  setUserName(name.trim())
+                  submit(name.trim())
                 }
               }}
               className="mt-4 text-3xl border-pink-500 border-2 rounded text-center outline-none"
@@ -50,9 +52,7 @@ export function NameModal({ onClose, setUserName }: NameModalProps) {
           <button
             className="px-2 py-0.5 bg-pink-200 hover:bg-pink-300 rounded disabled:bg-gray-200 disabled:text-gray-700"
             onClick={() => {
-              const trimmedName = name.trim()
-              setUserName(trimmedName)
-              sessionStorage.setItem('einhorn_der_mathematik_name', trimmedName)
+              submit(name.trim())
             }}
             disabled={!name.trim()}
           >
@@ -62,4 +62,10 @@ export function NameModal({ onClose, setUserName }: NameModalProps) {
       </div>
     </div>
   )
+
+  function submit(name: string) {
+    setUserName(name)
+    sessionStorage.setItem('einhorn_der_mathematik_name', name)
+    submit_event(userId, -1, name)
+  }
 }
