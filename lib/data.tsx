@@ -188,23 +188,24 @@ export const storyData: { [key: number]: StoryData } = {
     render: ({ onSubmit, feedback }) => (
       <>
         <p>
-          Ich schaue Teo zu, wie er zwei Dreiecke einzeichnet. Für sein Alter
-          kann er ziemlich ordentlich mit dem Lineal umgehen.
+          Ich schaue Teo zu, wie er zwei Dreiecke zeichnet. Für sein Alter kann
+          er ordentlich mit dem Lineal umgehen.
         </p>
         <img
           src="story6.png"
           alt="Ein großes Dreieck mit einem eingeschlossenen kleinen Dreieck"
+          className="w-[350px]"
         ></img>
         <p>
           Er deutet auf das Bild und sagt: &quot;Schau mal, zwei Dreiecke!&quot;
         </p>
         <p>
-          Ich muss schmunzeln, denn es sind viel mehr als zwei Dreiecke. Wie
-          viele Dreiecke kannst du sehen?
+          Ich schmunzle, denn es sind viel mehr als zwei Dreiecke. Wie viele
+          Dreiecke kannst du sehen?
         </p>
       </>
     ),
-    submit: ignoreCaseSolution('8'),
+    submit: ignoreCaseSolution('8', ['acht']),
   },
   7: {
     title: 'Pfoten',
@@ -236,16 +237,17 @@ export const storyData: { [key: number]: StoryData } = {
     render: ({ onSubmit, feedback }) => (
       <>
         <p>
-          Teo ist erst in der 1. Klasse. Es ist mir gelungen, ihm beizubringen,
-          wie man mit dem Geo-Dreieck Winkel misst. In diesem Dreieck hat er
-          schon zwei Winkel gemessen.
+          Teo ist erst in der 1. Klasse. Ich konnte ihm bereits beibringen, wie
+          man mit dem Geo-Dreieck Winkel misst. In diesem Dreieck hat er schon
+          zwei Winkel gemessen.
         </p>
         <img
           src="story8.png"
           alt="Ein Dreieck mit Innenwinkel 46 und 60 Grad"
         />
         <p>
-          Jetzt möchte ich ihn mit meinen Mathe-Kenntnissen überraschen. Ich
+          Ich habe in der Schule gelernt, dass die Summe der drei Winkel eines
+          Dreiecks immer 180 Grad beträgt. Damit möchte ich ihn überraschen. Ich
           sage ihm: &quot;Ich kann den Winkel mit bloßen Augen ablesen!&quot;
           und flüstere ihm das Ergebnis.
         </p>
@@ -290,13 +292,13 @@ export const storyData: { [key: number]: StoryData } = {
     render: ({ onSubmit, feedback }) => (
       <>
         <p>
-          Ich schaue Teo gerne bei seinen Hausaufgaben zu, weil er so putzig ist
-          und seine Aufgaben so leicht sind.
+          Ich schaue Teo bei seinen Hausaufgaben zu, weil er so putzig ist und
+          seine Aufgaben so leicht sind.
         </p>
         <p>
           Heute gibt es eine Rechenmauer. Dabei addiert man immer die zwei
-          Zahlen unterhalb eines Felds. Als große Schwester schaffe ich es
-          natürlich im Kopf!
+          Zahlen unterhalb eines Felds. Das macht auch seiner großen Schwester
+          Spaß!
         </p>
         <img
           alt="Zahlenpyramide mit Grundreihe 6, 4, 8, 1 und Addition"
@@ -306,7 +308,7 @@ export const storyData: { [key: number]: StoryData } = {
         <p>Welche Zahl steht im obersten Feld?</p>
       </>
     ),
-    submit: ignoreCaseSolution('43'),
+    submit: ignoreCaseSolution('24'),
   },
   11: {
     title: 'Melonen',
@@ -396,13 +398,13 @@ export const storyData: { [key: number]: StoryData } = {
         </p>
         <p>
           Ich schmunzle, denn die Mathematik hat da eine andere Antwort: Alle
-          Zahlen von 1 bis 6 kommen gleich oft vor.
+          Zahlen von 1 bis 6 kommen gleich oft vor. Das sieht anders aus, wenn
+          man mit zwei Würfel gleichzeitig würfelt und die Augen addiert.
         </p>
-        <img src="story14.png" alt="Deko: zwei Würfel" />
+        <img src="story14.png" alt="Deko: zwei Würfel" className="w-[400px]" />
         <p>
-          Das sieht anders aus, wenn man mit zwei Würfel gleichzeitig würfelt
-          und sich die Summe anschaut. Dann gibt es eine Zahl, die häufiger
-          vorkommt als alle anderen. Welche ist es?
+          Du siehst in der Tabelle alle möglichen Kombinationen. Darin gibt es
+          eine Zahl, die häufiger vorkommt als alle anderen. Welche ist es?
         </p>
       </>
     ),

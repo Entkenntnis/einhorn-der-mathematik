@@ -58,7 +58,7 @@ export default function App() {
       sessionStorage.setItem('einhorn_der_mathematik_userid', core.userId)
     }
     if (window.location.hash == '#analyze') {
-      const cutOff = new Date('2023-10-18')
+      const cutOff = new Date('2023-10-20')
       const password =
         sessionStorage.getItem('einhorn_der_mathematik_analyze_pw') ||
         prompt('Passwort') ||
@@ -321,15 +321,15 @@ export default function App() {
                     />
                   </>
                 )}
-                {core.analyze && (
-                  <div>
-                    Eingaben: {core.analyze.inputs[core.showStory]?.join(', ')}
-                  </div>
-                )}
               </div>
             </>
           )}
         </div>
+        {core.analyze && (
+          <div className="mt-24 mx-4 text-gray-500">
+            Eingaben: {core.analyze.inputs[core.showStory]?.join(', ')}
+          </div>
+        )}
         {core.modal == 'name' && (
           <NameModal
             onClose={() => {
