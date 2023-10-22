@@ -348,7 +348,7 @@ export default function App() {
               >
                 zurück
               </button>
-              <div className="mt-8 [&>p]:mt-4 [&_code]:text-pink-400 [&_code]:font-bold [&>img]:my-6">
+              <div className="mt-8 [&>p]:mt-4 [&_code]:text-pink-400 [&_code]:font-bold [&>img]:my-6 [&_a]:underline [&_a]:text-blue-600 [&_a]:hover:text-blue-700">
                 {data.render({
                   core,
                   mut,
@@ -422,7 +422,7 @@ export default function App() {
         }}
         key={id}
       >
-        <button className="text-lg bg-gray-100/70 px-1 py-0.5 rounded group-hover:bg-white/80 pointer-events-auto">
+        <button className="text-lg bg-gray-100/70 px-1 py-0.5 rounded group-hover:bg-white/80 pointer-events-auto whitespace-nowrap">
           {title}
         </button>
         {core.solved.has(id) || core.analyze ? (
