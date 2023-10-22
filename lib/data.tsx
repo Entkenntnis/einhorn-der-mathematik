@@ -8,7 +8,7 @@ import { story3 } from './stories/03-uhrzeit'
 import { story4 } from './stories/04-telepathie'
 import { story5 } from './stories/05-figur'
 import { story6 } from './stories/06-dreiecke'
-import { story7 } from './stories/07-pfoten'
+import { story7 } from './stories/07-hufeisen'
 import { story8 } from './stories/08-winkel'
 import { story9 } from './stories/09-sudoku'
 import { story10 } from './stories/10-rechenmauer'
@@ -17,6 +17,13 @@ import { story12 } from './stories/12-freunde'
 import { story13 } from './stories/13-zahlenfolge'
 import { story14 } from './stories/14-zufall'
 import { story15 } from './stories/15-koerper'
+import { story16 } from './stories/16-todo'
+import { story17 } from './stories/17-todo'
+import { story18 } from './stories/18-todo'
+import { story19 } from './stories/19-todo'
+import { story20 } from './stories/20-todo'
+import { story21 } from './stories/21-todo'
+import { story22 } from './stories/22-todo'
 
 export interface StoryData {
   title: string
@@ -54,6 +61,13 @@ export const storyData: { [key: number]: StoryData } = {
   13: story13,
   14: story14,
   15: story15,
+  16: story16,
+  17: story17,
+  18: story18,
+  19: story19,
+  20: story20,
+  21: story21,
+  22: story22,
 }
 
 export function genericSubmitHandler(
