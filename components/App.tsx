@@ -28,6 +28,7 @@ export type State = Immutable<{
     inputs: { [key: string]: string[] }
     playerInfo: PlayerInfo[]
   }
+  editorMode: boolean
 }>
 
 export default function App() {
@@ -38,6 +39,7 @@ export default function App() {
     name: null,
     modal: null,
     userId: shortid.generate(),
+    editorMode: false,
   })
 
   const cutOff = new Date('2023-10-20')
@@ -72,6 +74,11 @@ export default function App() {
         for (const id in storyData) {
           state.solved.add(parseInt(id))
         }
+      })
+    }
+    if (window.location.hash == '#editor') {
+      mut((state) => {
+        state.editorMode = true
       })
     }
     if (window.location.hash == '#analyze' && !runAnalyse.current) {
@@ -242,7 +249,8 @@ export default function App() {
             {Object.entries(storyData).map(([id, data]) =>
               data.deps.length == 0 ||
               data.deps.some((d) => core.solved.has(d)) ||
-              core.analyze
+              core.analyze ||
+              core.editorMode
                 ? renderStoryIcon(data.title, data.x, data.y, parseInt(id))
                 : null
             )}
@@ -455,7 +463,8 @@ export default function App() {
     return (
       storyData[id].deps.length == 0 ||
       storyData[id].deps.some((d) => core.solved.has(d)) ||
-      core.analyze
+      core.analyze ||
+      core.editorMode
     )
   }
 
