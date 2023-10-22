@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import produce, { Immutable, Draft } from 'immer'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import shortid from 'shortid'
 import { storyData } from '../lib/data'
 import { AboutModal } from './AboutModal'
@@ -9,6 +9,11 @@ import { NameModal } from './NameModal'
 import { FaIcon } from './FaIcon'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 
+interface PlayerInfo {
+  name: string
+  solved: number
+  id: string
+}
 export type State = Immutable<{
   showStory: number
   storyFeedback: { correct: boolean; text: string } | null
@@ -21,6 +26,7 @@ export type State = Immutable<{
     medianSeconds: number
     storyStats: { [key: string]: { reachable: number; solved: number } }
     inputs: { [key: string]: string[] }
+    playerInfo: PlayerInfo[]
   }
 }>
 
@@ -33,6 +39,10 @@ export default function App() {
     modal: null,
     userId: shortid.generate(),
   })
+
+  const cutOff = new Date('2023-10-20')
+
+  const runAnalyse = useRef(false)
 
   useEffect(() => {
     const previousStorage = JSON.parse(
@@ -57,8 +67,8 @@ export default function App() {
     } else {
       sessionStorage.setItem('einhorn_der_mathematik_userid', core.userId)
     }
-    if (window.location.hash == '#analyze') {
-      const cutOff = new Date('2023-10-20')
+    if (window.location.hash == '#analyze' && !runAnalyse.current) {
+      runAnalyse.current = true
       const password =
         sessionStorage.getItem('einhorn_der_mathematik_analyze_pw') ||
         prompt('Passwort') ||
@@ -77,6 +87,7 @@ export default function App() {
           storyId: number
           createdAt: string
         }[]
+        const playerInfo: PlayerInfo[] = []
         const inputs = (
           jsonResp.input as {
             userId: string
@@ -86,6 +97,10 @@ export default function App() {
           }[]
         ).reduce((res, obj) => {
           if (new Date(obj.createdAt).getTime() < cutOff.getTime()) return res
+          if (obj.storyId == -1) {
+            playerInfo.push({ name: obj.value, id: obj.userId, solved: -1 })
+            return res
+          }
           const key = obj.storyId
           const entry = (res[key] = res[key] || [])
           entry.push(obj.value)
@@ -111,6 +126,12 @@ export default function App() {
         const storyStats: {
           [key: string]: { reachable: number; solved: number }
         } = {}
+        for (const userId in users) {
+          const player = playerInfo.find((p) => p.id == userId)
+          if (player) {
+            player.solved = users[userId].solved.size
+          }
+        }
         Array.from(stories).forEach((storyId) => {
           const reachable = Object.values(users).filter(
             (user) =>
@@ -124,13 +145,13 @@ export default function App() {
           ).length
           storyStats[storyId as string] = { reachable, solved }
         })
-        console.log(inputs)
         mut((state) => {
           state.analyze = {
             players: Object.keys(users).length,
             medianSeconds: Math.round(median(times) / 1000),
             storyStats,
             inputs,
+            playerInfo,
           }
         })
       })()
@@ -154,13 +175,27 @@ export default function App() {
           )}
           {core.analyze && (
             <div className="my-4 bg-white p-3">
+              Cut-Off: {cutOff.toISOString().substring(0, 10)}
+              <br />
+              <br />
               Anzahl SpielerInnen: {core.analyze.players}
               <br />
               <br />
               Median Spielzeit: {core.analyze.medianSeconds}s
               <br />
               <br />
-              Namen: {core.analyze.inputs['-1']?.join(', ')}
+              Namen:{' '}
+              {core.analyze.playerInfo.map(({ name, solved, id }) =>
+                solved == -1 ? (
+                  <span key={id} className="inline-block mr-4 text-gray-400">
+                    <i>{name}</i>
+                  </span>
+                ) : (
+                  <span key={id} className="inline-block mr-4">
+                    {name} <span className="text-gray-600">({solved})</span>
+                  </span>
+                )
+              )}
             </div>
           )}
           <div className="mt-4 ml-4 w-[1200px] h-[600px] relative">
