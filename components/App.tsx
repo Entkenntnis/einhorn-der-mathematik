@@ -182,7 +182,7 @@ export default function App() {
           )}
           {core.analyze && (
             <div className="my-4 bg-white p-3">
-              Cut-Off: {cutOff.toISOString().substring(0, 10)}
+              Daten ab {cutOff.toISOString().substring(0, 10)}
               <br />
               <br />
               Anzahl SpielerInnen: {core.analyze.players}
@@ -205,7 +205,7 @@ export default function App() {
               )}
             </div>
           )}
-          <div className="mt-4 ml-4 w-[1200px] h-[600px] relative">
+          <div className="mt-4 mx-auto w-[1200px] h-[700px] relative">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600">
               {Object.entries(storyData).map(([id, data]) => {
                 if (isVisible(parseInt(id))) {
