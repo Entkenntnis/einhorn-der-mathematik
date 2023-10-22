@@ -67,6 +67,13 @@ export default function App() {
     } else {
       sessionStorage.setItem('einhorn_der_mathematik_userid', core.userId)
     }
+    if (window.location.hash == '#demo') {
+      mut((state) => {
+        for (const id in storyData) {
+          state.solved.add(parseInt(id))
+        }
+      })
+    }
     if (window.location.hash == '#analyze' && !runAnalyse.current) {
       runAnalyse.current = true
       const password =
@@ -227,6 +234,11 @@ export default function App() {
                 return null
               })}
             </svg>
+            <img
+              src="/shooting-star.png"
+              alt="Sternschnuppe"
+              className="w-[60px] absolute left-[1000px] top-[500px]"
+            />
             {Object.entries(storyData).map(([id, data]) =>
               data.deps.length == 0 ||
               data.deps.some((d) => core.solved.has(d)) ||
