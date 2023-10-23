@@ -22,7 +22,7 @@ import { story17 } from './stories/17-pizza'
 import { story18 } from './stories/18-mathe-video'
 import { story19 } from './stories/19-spielbrett'
 import { story20 } from './stories/20-100-nullen'
-import { story21 } from './stories/21-todo'
+import { story21 } from './stories/21-erdumfang'
 import { story22 } from './stories/22-todo'
 
 export interface StoryData {
@@ -67,7 +67,7 @@ export const storyData: { [key: number]: StoryData } = {
   19: story19,
   20: story20,
   21: story21,
-  22: story22,
+  /*22: story22,*/
 }
 
 export function genericSubmitHandler(
