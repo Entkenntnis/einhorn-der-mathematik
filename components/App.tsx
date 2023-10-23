@@ -42,7 +42,7 @@ export default function App() {
     editorMode: false,
   })
 
-  const cutOff = new Date('2023-10-20')
+  const cutOff = new Date('2023-10-24')
 
   const runAnalyse = useRef(false)
 
