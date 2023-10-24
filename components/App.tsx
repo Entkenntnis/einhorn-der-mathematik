@@ -13,6 +13,8 @@ interface PlayerInfo {
   name: string
   solved: number
   id: string
+  createdAt: string
+  mins?: string
 }
 export type State = Immutable<{
   showStory: number
@@ -112,7 +114,12 @@ export default function App() {
         ).reduce((res, obj) => {
           if (new Date(obj.createdAt).getTime() < cutOff.getTime()) return res
           if (obj.storyId == -1) {
-            playerInfo.push({ name: obj.value, id: obj.userId, solved: -1 })
+            playerInfo.push({
+              name: obj.value,
+              id: obj.userId,
+              solved: -1,
+              createdAt: obj.createdAt,
+            })
             return res
           }
           const key = obj.storyId
@@ -131,9 +138,13 @@ export default function App() {
           entry.ts.push(new Date(obj.createdAt).getTime())
           return res
         }, {} as { [key: string]: { solved: Set<number>; ts: number[] } })
-        const times = Object.values(users).map((user) => {
+        const times = Object.entries(users).map(([id, user]) => {
           const minTime = Math.min(...user.ts)
           const maxTime = Math.max(...user.ts)
+          const player = playerInfo.find((p) => p.id == id)
+          if (player) {
+            player.mins = ((maxTime - minTime) / 1000 / 60).toFixed(0)
+          }
           return maxTime - minTime
         })
         times.sort((a, b) => a - b)
@@ -199,16 +210,23 @@ export default function App() {
               <br />
               <br />
               Namen:{' '}
-              {core.analyze.playerInfo.map(({ name, solved, id }) =>
-                solved == -1 ? (
-                  <span key={id} className="inline-block mr-4 text-gray-400">
-                    <i>{name}</i>
-                  </span>
-                ) : (
-                  <span key={id} className="inline-block mr-4">
-                    {name} <span className="text-gray-600">({solved})</span>
-                  </span>
-                )
+              {core.analyze.playerInfo.map(
+                ({ name, solved, id, createdAt, mins }) =>
+                  solved == -1 ? (
+                    <span key={id} className="inline-block mr-4 text-gray-400">
+                      <i>{name}</i>
+                    </span>
+                  ) : (
+                    <span
+                      key={id}
+                      className="inline-block mr-4"
+                      title={
+                        new Date(createdAt).toString() + ' / ' + mins + 'min'
+                      }
+                    >
+                      {name} <span className="text-gray-600">({solved})</span>
+                    </span>
+                  )
               )}
             </div>
           )}
