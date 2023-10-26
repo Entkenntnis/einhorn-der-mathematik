@@ -21,5 +21,5 @@ export const story20: StoryData = {
       <p>Wie heißt diese Zahl?</p>
     </>
   ),
-  submit: ignoreCaseSolution('googel'),
+  submit: ignoreCaseSolution('googol'),
 }
