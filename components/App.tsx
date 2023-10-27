@@ -7,7 +7,7 @@ import { AboutModal } from './AboutModal'
 import { InputBox } from './InputBox'
 import { NameModal } from './NameModal'
 import { FaIcon } from './FaIcon'
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faUser } from '@fortawesome/free-solid-svg-icons'
 
 interface PlayerInfo {
   name: string
@@ -31,6 +31,7 @@ export type State = Immutable<{
     playerInfo: PlayerInfo[]
   }
   editorMode: boolean
+  loggedIn: boolean
 }>
 
 export default function App() {
@@ -42,6 +43,7 @@ export default function App() {
     modal: null,
     userId: shortid.generate(),
     editorMode: false,
+    loggedIn: false,
   })
 
   const cutOff = new Date('2023-10-27')
@@ -193,9 +195,15 @@ export default function App() {
           <h1 className="mx-auto px-4 py-2 rounded-lg bg-pink-400 w-fit text-2xl">
             Einhorn der Mathematik
           </h1>
-          {core.name && (
+          {core.loggedIn ? (
             <div className="fixed top-2 right-2 px-1 bg-white/50 rounded">
               Name: <strong>{core.name}</strong>
+            </div>
+          ) : (
+            <div className="fixed top-2 right-2 px-2 py-1 bg-white/50 rounded">
+              <button>
+                <FaIcon icon={faUser} /> Login
+              </button>
             </div>
           )}
           {core.analyze && (
