@@ -1,7 +1,8 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FaIcon } from './FaIcon'
 import { submit_event } from '../lib/submit'
+import { makePost } from '../lib/make-post'
 
 interface NameModalProps {
   onClose: () => void
@@ -11,11 +12,34 @@ interface NameModalProps {
 
 export function NameModal({ onClose, setUserName, userId }: NameModalProps) {
   const [name, setName] = useState('')
+  const [pw, setPw] = useState('')
   const [showPw, setShowPw] = useState(false)
+  const [checkStatus, setCheckStatus] = useState<'pending' | 'ok' | 'taken'>(
+    'pending'
+  )
+
+  const isReady =
+    name.trim().length >= 3 && pw.length >= 4 && checkStatus == 'ok'
+
+  useEffect(() => {
+    void (async () => {
+      // todo sync
+      setCheckStatus('pending')
+      const response = await makePost('/check', { name })
+      if (response.ok) {
+        if (response.userExists) {
+          setCheckStatus('taken')
+        } else {
+          setCheckStatus('ok')
+        }
+      }
+    })()
+  }, [name])
+
   return (
     <div className="bg-black/20 fixed inset-0 flex justify-center items-center z-[150]">
       <div
-        className="h-[400px] sm:w-[500px] w-full bg-white z-[200] rounded-xl relative mx-3"
+        className="h-[420px] sm:w-[500px] w-full bg-white z-[200] rounded-xl relative mx-3"
         onClick={(e) => {
           e.stopPropagation()
         }}
@@ -44,8 +68,8 @@ export function NameModal({ onClose, setUserName, userId }: NameModalProps) {
                   setName(e.target.value)
                 }}
                 onKeyDown={(e) => {
-                  if (e.code == 'Enter' && name.trim()) {
-                    submit(name.trim())
+                  if (e.code == 'Enter') {
+                    submit()
                   }
                 }}
                 className="text-2xl border-pink-500 border-2 rounded outline-none px-1 w-full py-0.5"
@@ -53,10 +77,12 @@ export function NameModal({ onClose, setUserName, userId }: NameModalProps) {
               />
             </p>
             <p className="mx-2 text-sm mt-1">
-              {name.length > 0 && name.length < 3 ? (
+              {name.length > 0 && name.trim().length < 3 ? (
                 <span className="text-pink-600">Mindestens 3 Zeichen</span>
               ) : name.length > 30 ? (
                 <span className="text-pink-600">Höchstens 30 Zeichen</span>
+              ) : checkStatus == 'taken' ? (
+                <span className="text-pink-600">Name ist bereits vergeben</span>
               ) : null}
             </p>
             <p className="mx-2 flex justify-between mt-6">
@@ -75,8 +101,22 @@ export function NameModal({ onClose, setUserName, userId }: NameModalProps) {
             <p className="mx-2">
               <input
                 type={showPw ? 'text' : 'password'}
+                value={pw}
+                onChange={(e) => {
+                  setPw(e.target.value)
+                }}
+                onKeyDown={(e) => {
+                  if (e.code == 'Enter') {
+                    submit()
+                  }
+                }}
                 className="text-2xl border-pink-500 border-2 rounded outline-none px-1 w-full py-0.5"
               />
+            </p>{' '}
+            <p className="mx-2 text-sm mt-1">
+              {pw.length > 0 && pw.length < 4 ? (
+                <span className="text-pink-600">Mindestens 4 Zeichen</span>
+              ) : null}
             </p>
           </div>
         </div>
@@ -84,9 +124,9 @@ export function NameModal({ onClose, setUserName, userId }: NameModalProps) {
           <button
             className="px-2 py-0.5 bg-pink-200 hover:bg-pink-300 rounded disabled:bg-gray-200 disabled:text-gray-700"
             onClick={() => {
-              submit(name.trim())
+              submit()
             }}
-            disabled={!name.trim()}
+            disabled={!isReady}
           >
             Loslegen!
           </button>
@@ -95,9 +135,21 @@ export function NameModal({ onClose, setUserName, userId }: NameModalProps) {
     </div>
   )
 
-  function submit(name: string) {
-    setUserName(name)
-    sessionStorage.setItem('einhorn_der_mathematik_name', name)
-    submit_event(userId, -1, name)
+  function submit() {
+    if (!isReady) return
+
+    makePost('/register', { name, password: pw }).then((res) => {
+      if (res.ok) {
+        alert('Registrierung erfolgreich')
+        // TODO move on
+        setUserName(name)
+      } else {
+        alert(
+          'Es ist ein Fehler aufgetreten:' +
+            res.reason +
+            '\n\nProbiere es erneut.'
+        )
+      }
+    })
   }
 }
