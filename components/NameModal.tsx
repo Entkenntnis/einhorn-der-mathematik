@@ -1,16 +1,16 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from 'react'
 import { FaIcon } from './FaIcon'
-import { submit_event } from '../lib/submit'
 import { makePost } from '../lib/make-post'
+import { Draft } from 'immer'
+import { State } from './App'
 
 interface NameModalProps {
   onClose: () => void
-  setUserName: (name: string) => void
-  userId: string
+  mut: (fn: (draft: Draft<State>) => void) => void
 }
 
-export function NameModal({ onClose, setUserName, userId }: NameModalProps) {
+export function NameModal({ onClose, mut }: NameModalProps) {
   const [name, setName] = useState('')
   const [pw, setPw] = useState('')
   const [showPw, setShowPw] = useState(false)
@@ -63,7 +63,9 @@ export function NameModal({ onClose, setUserName, userId }: NameModalProps) {
             <p className="mx-2 mt-8">Dein Name</p>
             <p className="mx-2">
               <input
+                tabIndex={1}
                 value={name}
+                placeholder="Bitte Name eingeben"
                 onChange={(e) => {
                   setName(e.target.value)
                 }}
@@ -89,6 +91,7 @@ export function NameModal({ onClose, setUserName, userId }: NameModalProps) {
               <span>Passwort</span>
               <label className="select-none">
                 <input
+                  tabIndex={3}
                   type="checkbox"
                   className="mr-1"
                   onChange={(e) => {
@@ -100,8 +103,10 @@ export function NameModal({ onClose, setUserName, userId }: NameModalProps) {
             </p>{' '}
             <p className="mx-2">
               <input
+                tabIndex={2}
                 type={showPw ? 'text' : 'password'}
                 value={pw}
+                placeholder="Bitte Passwort eingeben"
                 onChange={(e) => {
                   setPw(e.target.value)
                 }}
@@ -122,6 +127,7 @@ export function NameModal({ onClose, setUserName, userId }: NameModalProps) {
         </div>
         <p className="text-center mb-5 px-4 mt-12">
           <button
+            tabIndex={4}
             className="px-2 py-0.5 bg-pink-200 hover:bg-pink-300 rounded disabled:bg-gray-200 disabled:text-gray-700"
             onClick={() => {
               submit()
@@ -141,11 +147,21 @@ export function NameModal({ onClose, setUserName, userId }: NameModalProps) {
     makePost('/register', { name, password: pw }).then((res) => {
       if (res.ok) {
         alert('Registrierung erfolgreich')
-        // TODO move on
-        setUserName(name)
+        makePost('/login', { name, password: pw }).then((res) => {
+          if (!res.ok) {
+            alert('Fehler aufgetreten: ' + res.reason)
+          }
+          mut((state) => {
+            state.playerData.loggedIn = true
+            state.playerData.token = res.token
+            state.playerData.name = res.data.name
+            state.playerData.id = res.id
+            state.modal = null
+          })
+        })
       } else {
         alert(
-          'Es ist ein Fehler aufgetreten:' +
+          'Es ist ein Fehler aufgetreten: ' +
             res.reason +
             '\n\nProbiere es erneut.'
         )

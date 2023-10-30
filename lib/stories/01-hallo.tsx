@@ -6,7 +6,7 @@ export const story1: StoryData = {
   y: 100,
   deps: [],
   render: ({ core, mut }) => {
-    if (!core.name && core.modal != 'name') {
+    if (!core.playerData.loggedIn && core.modal != 'name') {
       mut((c) => {
         c.modal = 'name'
       })
@@ -14,8 +14,13 @@ export const story1: StoryData = {
     return (
       <>
         <p>
-          Hallo{core.name ? <strong> {core.name}</strong> : ''}! Schön, dass du
-          hier bist :)
+          Hallo
+          {core.playerData.loggedIn ? (
+            <strong> {core.playerData.name}</strong>
+          ) : (
+            ''
+          )}
+          ! Schön, dass du hier bist :)
         </p>
         <p>
           Und hat dir schon jemand gesagt, dass du wunderbare ✨Augen✨ hast?
@@ -42,7 +47,7 @@ export const story1: StoryData = {
   submit: ({ value, mut, id, core }) => {
     genericSubmitHandler(
       value,
-      parseInt(value) == core.name?.length,
+      parseInt(value) == core.playerData.name.length,
       mut,
       id,
       core

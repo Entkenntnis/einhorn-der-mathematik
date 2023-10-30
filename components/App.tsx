@@ -20,7 +20,6 @@ export type State = Immutable<{
   showStory: number
   storyFeedback: { correct: boolean; text: string } | null
   solved: Set<number>
-  name: string | null
   modal: 'impressum' | 'name' | null
   userId: string
   analyze?: {
@@ -31,7 +30,12 @@ export type State = Immutable<{
     playerInfo: PlayerInfo[]
   }
   editorMode: boolean
-  loggedIn: boolean
+  playerData: {
+    loggedIn: boolean
+    token: string
+    name: string
+    id: number
+  }
 }>
 
 export default function App() {
@@ -39,11 +43,15 @@ export default function App() {
     showStory: -1,
     storyFeedback: null,
     solved: new Set(),
-    name: null,
     modal: null,
     userId: shortid.generate(),
     editorMode: false,
-    loggedIn: false,
+    playerData: {
+      loggedIn: false,
+      token: '',
+      name: '',
+      id: -1,
+    },
   })
 
   const cutOff = new Date('2023-10-27')
@@ -51,7 +59,7 @@ export default function App() {
   const runAnalyse = useRef(false)
 
   useEffect(() => {
-    const previousStorage = JSON.parse(
+    /*const previousStorage = JSON.parse(
       sessionStorage.getItem('einhorn_der_mathematik_solved') ?? '[]'
     )
     previousStorage.forEach((id: number) => {
@@ -59,12 +67,6 @@ export default function App() {
         state.solved.add(id)
       })
     })
-    const username = sessionStorage.getItem('einhorn_der_mathematik_name')
-    if (username) {
-      mut((state) => {
-        state.name = username
-      })
-    }
     const userId = sessionStorage.getItem('einhorn_der_mathematik_userid')
     if (userId) {
       mut((state) => {
@@ -72,7 +74,7 @@ export default function App() {
       })
     } else {
       sessionStorage.setItem('einhorn_der_mathematik_userid', core.userId)
-    }
+    }*/
     if (window.location.hash == '#demo') {
       mut((state) => {
         for (const id in storyData) {
@@ -195,9 +197,9 @@ export default function App() {
           <h1 className="mx-auto px-4 py-2 rounded-lg bg-pink-400 w-fit text-2xl">
             Einhorn der Mathematik
           </h1>
-          {core.loggedIn ? (
+          {core.playerData.loggedIn ? (
             <div className="fixed top-2 right-2 px-1 bg-white/50 rounded">
-              Name: <strong>{core.name}</strong>
+              Name: <strong>{core.playerData.name}</strong>
             </div>
           ) : (
             <div className="fixed top-2 right-2 px-2 py-1 bg-white/50 rounded">
@@ -419,13 +421,7 @@ export default function App() {
                 c.showStory = -1
               })
             }}
-            setUserName={(name) => {
-              mut((c) => {
-                c.name = name
-                c.modal = null
-              })
-            }}
-            userId={core.userId}
+            mut={mut}
           />
         )}
       </>
