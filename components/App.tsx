@@ -14,6 +14,7 @@ import {
   faUser,
 } from '@fortawesome/free-solid-svg-icons'
 import { LoginModal } from './LoginModal'
+import { makePost } from '../lib/make-post'
 
 interface PlayerInfo {
   name: string
@@ -102,14 +103,13 @@ export default function App() {
         prompt('Passwort') ||
         '0'
       void (async () => {
-        const res = await fetch('https://stats-einhorn.arrrg.de/export', {
-          method: 'POST',
-          body: new URLSearchParams({
-            password,
-          }),
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        const jsonResp = await makePost('/export', {
+          password,
         })
-        const jsonResp = await res.json()
+        alert(JSON.stringify(jsonResp))
+        sessionStorage.setItem('einhorn_der_mathematik_analyze_pw', password)
+        /*
+        //const jsonResp = await res.json()
         const data = jsonResp.event as {
           userId: string
           storyId: number
@@ -190,7 +190,7 @@ export default function App() {
             inputs,
             playerInfo,
           }
-        })
+        })*/
       })()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

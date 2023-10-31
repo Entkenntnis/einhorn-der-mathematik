@@ -155,7 +155,7 @@ export function NameModal({ onClose, mut }: NameModalProps) {
             state.playerData.loggedIn = true
             state.playerData.token = res.token
             state.playerData.name = res.data.name
-            state.playerData.id = res.id
+            state.playerData.id = res.data.id
             state.modal = null
           })
         })

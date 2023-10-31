@@ -24,6 +24,7 @@ import { story19 } from './stories/19-spielbrett'
 import { story20 } from './stories/20-100-nullen'
 import { story21 } from './stories/21-erdumfang'
 import { story22 } from './stories/22-todo'
+import { makePost } from './make-post'
 
 export interface StoryData {
   title: string
@@ -78,7 +79,13 @@ export function genericSubmitHandler(
   core: State
 ) {
   if (value) {
-    submit_event(core.userId, id, value)
+    console.log(core)
+    makePost('/log', {
+      storyId: id,
+      userId: core.playerData.id,
+      value,
+      correct: isCorrect,
+    })
   }
   if (isCorrect) {
     mut((c) => {
