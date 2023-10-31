@@ -7,7 +7,13 @@ import { AboutModal } from './AboutModal'
 import { InputBox } from './InputBox'
 import { NameModal } from './NameModal'
 import { FaIcon } from './FaIcon'
-import { faCheck, faUser } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCaretDown,
+  faCaretUp,
+  faCheck,
+  faUser,
+} from '@fortawesome/free-solid-svg-icons'
+import { LoginModal } from './LoginModal'
 
 interface PlayerInfo {
   name: string
@@ -20,7 +26,7 @@ export type State = Immutable<{
   showStory: number
   storyFeedback: { correct: boolean; text: string } | null
   solved: Set<number>
-  modal: 'impressum' | 'name' | null
+  modal: 'impressum' | 'name' | 'login' | null
   userId: string
   analyze?: {
     players: number
@@ -57,6 +63,8 @@ export default function App() {
   const cutOff = new Date('2023-10-27')
 
   const runAnalyse = useRef(false)
+
+  const [showMenu, setShowMenu] = useState(false)
 
   useEffect(() => {
     /*const previousStorage = JSON.parse(
@@ -198,12 +206,50 @@ export default function App() {
             Einhorn der Mathematik
           </h1>
           {core.playerData.loggedIn ? (
-            <div className="fixed top-2 right-2 px-1 bg-white/50 rounded">
-              Name: <strong>{core.playerData.name}</strong>
+            <div className="fixed top-2 right-2 px-1 ">
+              <div
+                className="mx-5 mt-3 bg-white/50 rounded cursor-pointer p-2 select-none hover:bg-white/60"
+                onClick={() => setShowMenu((val) => !val)}
+              >
+                Name: <strong>{core.playerData.name}</strong>
+                <FaIcon
+                  icon={showMenu ? faCaretUp : faCaretDown}
+                  className="ml-3"
+                />
+              </div>
+              {showMenu && (
+                <div className="mt-3 px-2 mb-3 bg-white/50 rounded pt-2 pb-1">
+                  <button
+                    className="border rounded my-1 p-2 block hover:bg-white/60"
+                    onClick={() => {
+                      mut((state) => {
+                        state.playerData.loggedIn = false
+                      })
+                    }}
+                  >
+                    Abmelden
+                  </button>
+                  <button className="border rounded my-1 p-2 block hover:bg-white/60">
+                    Passwort ändern
+                  </button>
+                  <div className="text-sm text-gray-700 mt-3">
+                    <button className="hover:underline">
+                      Account löschen ...
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
-            <div className="fixed top-2 right-2 px-2 py-1 bg-white/50 rounded">
-              <button>
+            <div className="fixed top-2 right-2 px-2 py-1 bg-white/50 rounded hover:bg-white/60 mt-3 mr-4 p-2">
+              <button
+                onClick={() => {
+                  mut((c) => {
+                    c.modal = 'login'
+                  })
+                  setShowMenu(false)
+                }}
+              >
                 <FaIcon icon={faUser} /> Login
               </button>
             </div>
@@ -310,6 +356,17 @@ export default function App() {
                   c.modal = null
                 })
               }}
+            />
+          )}
+          {core.modal == 'login' && (
+            <LoginModal
+              onClose={() => {
+                mut((c) => {
+                  c.modal = null
+                  c.showStory = -1
+                })
+              }}
+              mut={mut}
             />
           )}
           <style jsx global>
@@ -441,6 +498,7 @@ export default function App() {
             c.showStory = id
             c.storyFeedback = null
           })
+          setShowMenu(false)
         }}
         key={id}
       >

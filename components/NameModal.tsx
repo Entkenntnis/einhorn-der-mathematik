@@ -146,7 +146,7 @@ export function NameModal({ onClose, mut }: NameModalProps) {
 
     makePost('/register', { name, password: pw }).then((res) => {
       if (res.ok) {
-        alert('Registrierung erfolgreich')
+        // alert('Registrierung erfolgreich')
         makePost('/login', { name, password: pw }).then((res) => {
           if (!res.ok) {
             alert('Fehler aufgetreten: ' + res.reason)
