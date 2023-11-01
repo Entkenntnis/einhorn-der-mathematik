@@ -15,6 +15,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { LoginModal } from './LoginModal'
 import { makePost } from '../lib/make-post'
+import { ChangeModal } from './ChangeModal'
 
 interface PlayerInfo {
   name: string
@@ -27,7 +28,7 @@ export type State = Immutable<{
   showStory: number
   storyFeedback: { correct: boolean; text: string } | null
   solved: Set<number>
-  modal: 'impressum' | 'name' | 'login' | null
+  modal: 'impressum' | 'name' | 'login' | 'change' | null
   userId: string
   analyze?: {
     players: number
@@ -205,55 +206,6 @@ export default function App() {
           <h1 className="mx-auto px-4 py-2 rounded-lg bg-pink-400 w-fit text-2xl">
             Einhorn der Mathematik
           </h1>
-          {core.playerData.loggedIn ? (
-            <div className="fixed top-2 right-2 px-1 ">
-              <div
-                className="mx-5 mt-3 bg-white/50 rounded cursor-pointer p-2 select-none hover:bg-white/60"
-                onClick={() => setShowMenu((val) => !val)}
-              >
-                Name: <strong>{core.playerData.name}</strong>
-                <FaIcon
-                  icon={showMenu ? faCaretUp : faCaretDown}
-                  className="ml-3"
-                />
-              </div>
-              {showMenu && (
-                <div className="mt-3 px-2 mb-3 bg-white/50 rounded pt-2 pb-1">
-                  <button
-                    className="border rounded my-1 p-2 block hover:bg-white/60"
-                    onClick={() => {
-                      mut((state) => {
-                        state.playerData.loggedIn = false
-                      })
-                    }}
-                  >
-                    Abmelden
-                  </button>
-                  <button className="border rounded my-1 p-2 block hover:bg-white/60">
-                    Passwort ändern
-                  </button>
-                  <div className="text-sm text-gray-700 mt-3">
-                    <button className="hover:underline">
-                      Account löschen ...
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className="fixed top-2 right-2 px-2 py-1 bg-white/50 rounded hover:bg-white/60 mt-3 mr-4 p-2">
-              <button
-                onClick={() => {
-                  mut((c) => {
-                    c.modal = 'login'
-                  })
-                  setShowMenu(false)
-                }}
-              >
-                <FaIcon icon={faUser} /> Login
-              </button>
-            </div>
-          )}
           {core.analyze && (
             <div className="my-4 bg-white p-3">
               Daten ab {cutOff.toISOString().substring(0, 10)}
@@ -286,7 +238,7 @@ export default function App() {
               )}
             </div>
           )}
-          <div className="mt-4 mx-auto w-[1200px] h-[700px] relative">
+          <div className="mt-4 mx-auto w-[1200px] h-[700px] relative z-0">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600">
               {Object.entries(storyData).map(([id, data]) => {
                 if (isVisible(parseInt(id))) {
@@ -329,6 +281,87 @@ export default function App() {
                 : null
             )}
           </div>
+          {core.playerData.loggedIn ? (
+            <div className="fixed top-2 right-2 px-1 ">
+              <div
+                className="mx-5 mt-3 bg-white/50 rounded cursor-pointer p-2 select-none hover:bg-white/60"
+                onClick={() => setShowMenu((val) => !val)}
+              >
+                Name: <strong>{core.playerData.name}</strong>
+                <FaIcon
+                  icon={showMenu ? faCaretUp : faCaretDown}
+                  className="ml-3"
+                />
+              </div>
+              {showMenu && (
+                <div className="mt-3 px-2 mb-3 bg-white/50 rounded pt-2 pb-1 relative z-10">
+                  <button
+                    className="border rounded my-1 p-2 block hover:bg-white/60 w-full"
+                    onClick={() => {
+                      mut((state) => {
+                        state.playerData.loggedIn = false
+                        state.solved = new Set()
+                      })
+                    }}
+                  >
+                    Abmelden
+                  </button>
+                  <button
+                    className="border rounded my-1 p-2 block hover:bg-white/60 w-full"
+                    onClick={() => {
+                      mut((state) => {
+                        state.modal = 'change'
+                      })
+                      setShowMenu(false)
+                    }}
+                  >
+                    Passwort ändern
+                  </button>
+                  <div className="text-sm text-gray-700 mt-2 mb-1 ml-2">
+                    <button
+                      className="hover:underline"
+                      onClick={() => {
+                        const name = prompt(
+                          'Du bist dabei deinen Account zu lösen. Das kann nicht rückgängig gemacht werden. Bestätige diese Aktion mit der Eingabe deines Benutzernamens.'
+                        )
+                        if (name === core.playerData.name) {
+                          makePost('/delete', {
+                            name,
+                            token: core.playerData.token,
+                          }).then((res) => {
+                            if (res.ok) {
+                              mut((state) => {
+                                state.playerData.loggedIn = false
+                                state.solved = new Set()
+                              })
+                              setShowMenu(false)
+                            } else {
+                              alert(res.reason)
+                            }
+                          })
+                        }
+                      }}
+                    >
+                      Account löschen ...
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="fixed top-2 right-2 bg-white/50 rounded hover:bg-white/60 mt-3 mr-4 p-2 px-4">
+              <button
+                onClick={() => {
+                  mut((c) => {
+                    c.modal = 'login'
+                  })
+                  setShowMenu(false)
+                }}
+              >
+                <FaIcon icon={faUser} /> Login
+              </button>
+            </div>
+          )}
           <div className="fixed right-4 bottom-4 text-sm text-gray-300">
             <button
               className="hover:underline"
@@ -339,15 +372,7 @@ export default function App() {
               }}
             >
               Impressum/Datenschutz
-            </button>{' '}
-            | Hintergrund:{' '}
-            <a
-              href="https://www.wallpaperflare.com/pink-and-blue-sky-sky-clouds-nature-wallpaper-275895"
-              className="underline"
-              target="_blank"
-            >
-              wallpaperflare
-            </a>
+            </button>
           </div>
           {core.modal == 'impressum' && (
             <AboutModal
@@ -367,6 +392,16 @@ export default function App() {
                 })
               }}
               mut={mut}
+            />
+          )}{' '}
+          {core.modal == 'change' && (
+            <ChangeModal
+              onClose={() => {
+                mut((c) => {
+                  c.modal = null
+                })
+              }}
+              token={core.playerData.token}
             />
           )}
           <style jsx global>

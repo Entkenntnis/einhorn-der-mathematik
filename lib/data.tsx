@@ -1,7 +1,6 @@
 import { Draft } from 'immer'
 import type { ReactNode } from 'react'
 import { State } from '../components/App'
-import { submit_event } from './submit'
 import { story1 } from './stories/01-hallo'
 import { story2 } from './stories/02-wuerfel'
 import { story3 } from './stories/03-uhrzeit'
@@ -94,7 +93,7 @@ export function genericSubmitHandler(
         text: `"${value}" ist richtig`,
       }
     })
-    addSolved(mut, core.userId, id)
+    addSolved(mut, id, core.playerData.token)
   } else {
     mut((c) => {
       c.storyFeedback = {
@@ -124,21 +123,11 @@ export function ignoreCaseSolution(answer: string, alternatives?: string[]) {
 
 function addSolved(
   mut: (fn: (draft: Draft<State>) => void) => void,
-  userId: string,
-  storyId: number
+  storyId: number,
+  token: string
 ) {
   mut((c) => {
     c.solved.add(storyId)
   })
-  const previousStorage = JSON.parse(
-    sessionStorage.getItem('einhorn_der_mathematik_solved') ?? '[]'
-  )
-  if (!previousStorage.includes(storyId)) {
-    previousStorage.push(storyId)
-    sessionStorage.setItem(
-      'einhorn_der_mathematik_solved',
-      JSON.stringify(previousStorage)
-    )
-  }
-  submit_event(userId, storyId)
+  makePost('/solve', { storyId, token })
 }

@@ -11,7 +11,7 @@ export function AboutModal({ onClose }: AboutModalProps) {
       onClick={onClose}
     >
       <div
-        className="h-[310px] overflow-y-auto w-[500px] bg-white z-[200] rounded-xl relative flex justify-between flex-col"
+        className="h-[480px] overflow-y-auto w-[700px] bg-white z-[200] rounded-xl relative flex justify-between flex-col"
         onClick={(e) => {
           e.stopPropagation()
         }}
@@ -29,12 +29,24 @@ export function AboutModal({ onClose }: AboutModalProps) {
             <br />
             {impressum.contact}
           </p>
+          <p className="ml-4 mb-4">
+            Hintergrund:{' '}
+            <a
+              href="https://www.wallpaperflare.com/pink-and-blue-sky-sky-clouds-nature-wallpaper-275895"
+              className="underline"
+              target="_blank"
+            >
+              wallpaperflare
+            </a>
+          </p>
           <p className="ml-4 font-bold text-lg mt-2 mb-4">Datenschutz</p>
           <p className="mx-4 mb-4">
-            Diese Website wird auf einem Uberspace gehostet. Es werden
-            Aufrufstatistiken angelegt, dabei werden keine persönlichen Daten
-            verarbeitet. Die Website speichert auf dem Gerät keine Daten. Alle
-            Daten werden innerhalb von Deutschland verarbeitet.
+            Diese Website wird auf einem Uberspace gehostet. Bei der
+            Registrierung werden Benutzername und gelöste Aufgaben auf dem
+            Server gespeichert. Es werden Aufrufstatistiken angelegt, um die
+            Qualität des Angebots zu verbessern. Auf dem Gerät werden keine
+            Daten gespeichert. Alle Daten werden innerhalb von Deutschland
+            verarbeitet.
           </p>
         </div>
         <p className="text-center mb-5 mt-3">

@@ -41,7 +41,6 @@ export function LoginModal({ onClose, mut }: NameModalProps) {
               <input
                 tabIndex={1}
                 value={name}
-                placeholder="Bitte Name eingeben"
                 onChange={(e) => {
                   setName(e.target.value)
                 }}
@@ -62,7 +61,6 @@ export function LoginModal({ onClose, mut }: NameModalProps) {
                 tabIndex={2}
                 type={'password'}
                 value={pw}
-                placeholder="Bitte Passwort eingeben"
                 onChange={(e) => {
                   setPw(e.target.value)
                 }}
@@ -84,7 +82,7 @@ export function LoginModal({ onClose, mut }: NameModalProps) {
               submit()
             }}
           >
-            Einloggen!
+            Einloggen
           </button>
         </p>
       </div>
@@ -95,6 +93,7 @@ export function LoginModal({ onClose, mut }: NameModalProps) {
     makePost('/login', { name, password: pw }).then((res) => {
       if (!res.ok) {
         alert(res.reason)
+        return
       }
       mut((state) => {
         state.playerData.loggedIn = true
@@ -102,6 +101,9 @@ export function LoginModal({ onClose, mut }: NameModalProps) {
         state.playerData.name = res.data.name
         state.playerData.id = res.id
         state.modal = null
+        res.data.solved.forEach((entry: number) => {
+          state.solved.add(entry)
+        })
       })
     })
   }
