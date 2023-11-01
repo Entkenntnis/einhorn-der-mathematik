@@ -6,7 +6,7 @@ export const story1: StoryData = {
   y: 100,
   deps: [],
   render: ({ core, mut }) => {
-    if (!core.playerData.loggedIn && core.modal != 'name') {
+    if (!core.playerData.loggedIn && core.modal != 'name' && !core.analyze) {
       mut((c) => {
         c.modal = 'name'
       })

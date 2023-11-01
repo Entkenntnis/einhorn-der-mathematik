@@ -63,7 +63,7 @@ export default function App() {
     },
   })
 
-  const cutOff = new Date('2023-10-27')
+  const cutOff = new Date('2023-11-01')
 
   const runAnalyse = useRef(false)
 

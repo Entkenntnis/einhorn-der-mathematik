@@ -1,5 +1,5 @@
 export async function makePost(route: string, body: object) {
-  const res = await fetch('http://localhost:3111' + route, {
+  const res = await fetch('https://stats-einhorn.arrrg.de' + route, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json', // Set the appropriate content type for your data
