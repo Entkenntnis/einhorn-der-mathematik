@@ -21,7 +21,8 @@ interface PlayerInfo {
   name: string
   solved: number
   id: string
-  createdAt: string
+  createdAt: number
+  solvedTs: number[]
   mins?: string
 }
 export type State = Immutable<{
@@ -104,11 +105,61 @@ export default function App() {
         prompt('Passwort') ||
         '0'
       void (async () => {
-        const jsonResp = await makePost('/export', {
+        const data = (await makePost('/export', {
           password,
-        })
-        alert(JSON.stringify(jsonResp))
+        })) as {
+          users: { id: number; name: string; createdAt: string }[]
+          solved: { storyId: number; userId: number; createdAt: string }[]
+          logs: {
+            userId: number
+            storyId: number
+            value: string
+            correct: number
+          }[]
+        }
+        // alert(JSON.stringify(jsonResp))
         sessionStorage.setItem('einhorn_der_mathematik_analyze_pw', password)
+        const playerInfo: PlayerInfo[] = data.users
+          .map((user) => {
+            const createdAt = new Date(
+              user.createdAt.substring(0, 23)
+            ).getTime()
+            const solvedData = data.solved.filter((x) => x.userId == user.id)
+            return {
+              id: user.id.toString(),
+              createdAt,
+              name: user.name,
+              solved: solvedData.length,
+              solvedTs: solvedData.map((x) =>
+                new Date(x.createdAt.substring(0, 23)).getTime()
+              ),
+            }
+          })
+          .filter((x) => x.createdAt >= cutOff.getTime())
+        playerInfo.sort((a, b) => a.createdAt - b.createdAt)
+
+        const times = playerInfo.map((player) => {
+          if (player.solvedTs.length == 0) {
+            return 0
+          }
+          const minTime = Math.min(...player.solvedTs)
+          const maxTime = Math.max(...player.solvedTs)
+          if (player) {
+            player.mins = ((maxTime - minTime) / 1000 / 60).toFixed(0)
+          }
+          return maxTime - minTime
+        })
+        times.sort((a, b) => a - b)
+
+        mut((state) => {
+          state.analyze = {
+            players: data.users.length,
+            medianSeconds: Math.round(median(times) / 1000),
+            storyStats: {},
+            inputs: {},
+            playerInfo,
+          }
+        })
         /*
         //const jsonResp = await res.json()
         const data = jsonResp.event as {
@@ -116,7 +167,7 @@ export default function App() {
           storyId: number
           createdAt: string
         }[]
-        const playerInfo: PlayerInfo[] = []
+        
         const inputs = (
           jsonResp.input as {
             userId: string
@@ -220,7 +271,7 @@ export default function App() {
               Namen:{' '}
               {core.analyze.playerInfo.map(
                 ({ name, solved, id, createdAt, mins }) =>
-                  solved == -1 ? (
+                  solved == 0 ? (
                     <span key={id} className="inline-block mr-4 text-gray-400">
                       <i>{name}</i>
                     </span>
