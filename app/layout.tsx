@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 
 import 'tailwindcss/tailwind.css'
 import 'react-clock/dist/Clock.css'
+import './faicon.css'
 
 export const metadata: Metadata = {
   title: 'Einhorn der Mathematik',
@@ -17,8 +18,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="de">
-      <body>{children}</body>
+    <html lang="de" className="h-full">
+      <body className="h-full">{children}</body>
     </html>
   )
 }

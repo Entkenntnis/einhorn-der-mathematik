@@ -70,22 +70,22 @@ export default function App() {
   const [showMenu, setShowMenu] = useState(false)
 
   useEffect(() => {
-    /*const previousStorage = JSON.parse(
-      sessionStorage.getItem('einhorn_der_mathematik_solved') ?? '[]'
+    const data = JSON.parse(
+      sessionStorage.getItem('einhorn_der_mathematik_data') ?? '{}'
     )
-    previousStorage.forEach((id: number) => {
-      mut((state) => {
-        state.solved.add(id)
-      })
+    mut((state) => {
+      try {
+        data.solved.forEach((id: number) => {
+          state.solved.add(id)
+        })
+        state.playerData.loggedIn = data.loggedIn
+        state.playerData.id = data.id
+        state.playerData.name = data.name
+        state.playerData.token = data.token
+      } catch (e) {
+        // probably invalid state
+      }
     })
-    const userId = sessionStorage.getItem('einhorn_der_mathematik_userid')
-    if (userId) {
-      mut((state) => {
-        state.userId = userId
-      })
-    } else {
-      sessionStorage.setItem('einhorn_der_mathematik_userid', core.userId)
-    }*/
     if (window.location.hash == '#demo') {
       mut((state) => {
         for (const id in storyData) {
@@ -213,7 +213,14 @@ export default function App() {
   function renderOverview() {
     return (
       <div className="overflow-auto h-full">
-        <div className="min-h-full main-container pt-6 min-w-fit">
+        <div
+          className="min-h-full pt-6 min-w-fit"
+          style={{
+            backgroundImage: "url('/wallpaper.jpg')",
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+          }}
+        >
           <h1 className="mx-auto px-4 py-2 rounded-lg bg-pink-400 w-fit text-2xl">
             Einhorn der Mathematik
           </h1>
@@ -415,20 +422,6 @@ export default function App() {
               token={core.playerData.token}
             />
           )}
-          <style jsx global>
-            {`
-              html,
-              body,
-              #__next {
-                height: 100%;
-              }
-              .main-container {
-                background-image: url('/wallpaper.jpg');
-                background-repeat: no-repeat;
-                background-size: cover;
-              }
-            `}
-          </style>
         </div>
       </div>
     )
@@ -582,7 +575,22 @@ export default function App() {
   }
 
   function mut(fn: (draft: Draft<State>) => void) {
-    setCore((core) => produce(core, fn))
+    setCore((core) => {
+      const newval = produce(core, fn)
+
+      sessionStorage.setItem(
+        'einhorn_der_mathematik_data',
+        JSON.stringify({
+          solved: Array.from(newval.solved),
+          loggedIn: newval.playerData.loggedIn,
+          id: newval.playerData.id,
+          name: newval.playerData.name,
+          token: newval.playerData.token,
+        })
+      )
+
+      return newval
+    })
   }
 
   function isVisible(id: number) {
