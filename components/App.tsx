@@ -115,8 +115,25 @@ export default function App() {
             storyId: number
             value: string
             correct: number
+            createdAt: string
           }[]
         }
+
+        // TODO: preprocess solved data properly
+        const stories = new Set<number>()
+        const solvedBy = data.solved.reduce((res, obj) => {
+          const ts = new Date(obj.createdAt.substring(0, 23)).getTime()
+          if (ts < cutOff.getTime()) return res
+          const key = obj.userId
+          const entry = (res[key] = res[key] || {
+            solved: new Set(),
+            solvedTs: [],
+          })
+          entry.solved.add(obj.storyId)
+          stories.add(obj.storyId)
+          entry.solvedTs.push(ts)
+          return res
+        }, {} as { [key: number]: { solved: Set<number>; solvedTs: number[] } })
         // alert(JSON.stringify(jsonResp))
         sessionStorage.setItem('einhorn_der_mathematik_analyze_pw', password)
         const playerInfo: PlayerInfo[] = data.users
@@ -124,15 +141,12 @@ export default function App() {
             const createdAt = new Date(
               user.createdAt.substring(0, 23)
             ).getTime()
-            const solvedData = data.solved.filter((x) => x.userId == user.id)
             return {
               id: user.id.toString(),
               createdAt,
               name: user.name,
-              solved: solvedData.length,
-              solvedTs: solvedData.map((x) =>
-                new Date(x.createdAt.substring(0, 23)).getTime()
-              ),
+              solved: solvedBy[user.id]?.solved.size ?? 0,
+              solvedTs: solvedBy[user.id]?.solvedTs ?? [],
             }
           })
           .filter((x) => x.createdAt >= cutOff.getTime())
@@ -151,98 +165,44 @@ export default function App() {
         })
         times.sort((a, b) => a - b)
 
-        mut((state) => {
-          state.analyze = {
-            players: data.users.length,
-            medianSeconds: Math.round(median(times) / 1000),
-            storyStats: {},
-            inputs: {},
-            playerInfo,
-          }
+        const storyStats: {
+          [key: number]: { reachable: number; solved: number }
+        } = {}
+        Array.from(stories).forEach((storyId) => {
+          const reachable = Object.values(playerInfo).filter(
+            (user) =>
+              storyId == 1 ||
+              storyData[storyId as number].deps.some((dep) =>
+                solvedBy[parseInt(user.id)]?.solved.has(dep)
+              )
+          ).length
+          const solved = Object.values(playerInfo).filter((user) =>
+            solvedBy[parseInt(user.id)]?.solved.has(storyId as number)
+          ).length
+          storyStats[storyId] = { reachable, solved }
         })
-        /*
-        //const jsonResp = await res.json()
-        const data = jsonResp.event as {
-          userId: string
-          storyId: number
-          createdAt: string
-        }[]
-        
-        const inputs = (
-          jsonResp.input as {
-            userId: string
-            storyId: number
-            createdAt: string
-            value: string
-          }[]
-        ).reduce((res, obj) => {
-          if (new Date(obj.createdAt).getTime() < cutOff.getTime()) return res
-          if (obj.storyId == -1) {
-            playerInfo.push({
-              name: obj.value,
-              id: obj.userId,
-              solved: -1,
-              createdAt: obj.createdAt,
-            })
+
+        const inputs = data.logs.reduce((res, obj) => {
+          if (
+            new Date(obj.createdAt.substring(0, 23)).getTime() <
+            cutOff.getTime()
+          )
             return res
-          }
           const key = obj.storyId
           const entry = (res[key] = res[key] || [])
           entry.push(obj.value)
           return res
         }, {} as { [key: string]: string[] })
-        sessionStorage.setItem('einhorn_der_mathematik_analyze_pw', password)
-        const stories = new Set()
-        const users = data.reduce((res, obj) => {
-          if (new Date(obj.createdAt).getTime() < cutOff.getTime()) return res
-          const key = obj.userId
-          const entry = (res[key] = res[key] || { solved: new Set(), ts: [] })
-          entry.solved.add(obj.storyId)
-          stories.add(obj.storyId)
-          entry.ts.push(new Date(obj.createdAt).getTime())
-          return res
-        }, {} as { [key: string]: { solved: Set<number>; ts: number[] } })
-        const times = Object.entries(users).map(([id, user]) => {
-          const minTime = Math.min(...user.ts)
-          const maxTime = Math.max(...user.ts)
-          const player = playerInfo.find((p) => p.id == id)
-          if (player) {
-            player.mins = ((maxTime - minTime) / 1000 / 60).toFixed(0)
-          }
-          return maxTime - minTime
-        })
-        times.sort((a, b) => a - b)
-        const storyStats: {
-          [key: string]: { reachable: number; solved: number }
-        } = {}
-        for (const userId in users) {
-          const player = playerInfo.find((p) => p.id == userId)
-          if (player) {
-            player.solved = users[userId].solved.size
-          }
-        }
-        Array.from(stories).forEach((storyId) => {
-          const reachable = Object.values(users).filter(
-            (user) =>
-              storyId == 1 ||
-              storyData[storyId as number].deps.some((dep) =>
-                user.solved.has(dep)
-              )
-          ).length
-          const solved = Object.values(users).filter((user) =>
-            user.solved.has(storyId as number)
-          ).length
-          storyStats[storyId as string] = { reachable, solved }
-        })
+
         mut((state) => {
           state.analyze = {
-            players: Object.keys(users).length,
+            players: data.users.length,
             medianSeconds: Math.round(median(times) / 1000),
             storyStats,
             inputs,
             playerInfo,
           }
-        })*/
+        })
       })()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
