@@ -263,7 +263,7 @@ export default function App() {
                   return (
                     <Fragment key={id}>
                       {data.deps.map((dep) => {
-                        if (core.solved.has(dep)) {
+                        if (core.solved.has(dep) || core.analyze) {
                           return (
                             <line
                               key={`connect-${id}-${dep}`}
