@@ -250,7 +250,10 @@ export default function App() {
                         new Date(createdAt).toString() + ' / ' + mins + 'min'
                       }
                     >
-                      {name} <span className="text-gray-600">({solved})</span>
+                      {name}{' '}
+                      <span className="text-gray-600">
+                        ({solved} / {mins}min)
+                      </span>
                     </span>
                   )
               )}
