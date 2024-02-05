@@ -16,6 +16,7 @@ import {
 import { LoginModal } from './LoginModal'
 import { makePost } from '../lib/make-post'
 import { ChangeModal } from './ChangeModal'
+import { RedirectModal } from './RedirectModal'
 
 interface PlayerInfo {
   name: string
@@ -45,6 +46,7 @@ export type State = Immutable<{
     name: string
     id: number
   }
+  showRedirect: boolean
 }>
 
 export default function App() {
@@ -61,6 +63,7 @@ export default function App() {
       name: '',
       id: -1,
     },
+    showRedirect: true,
   })
 
   const cutOff = new Date('2023-11-01')
@@ -221,6 +224,22 @@ export default function App() {
             backgroundSize: 'cover',
           }}
         >
+          {core.showRedirect ? (
+            <RedirectModal
+              onClose={() => {
+                mut((state) => {
+                  state.showRedirect = false
+                })
+              }}
+            />
+          ) : (
+            <a
+              href="https://de.serlo.org/mathe/298181/einhorn-der-mathematik-%C3%BCbersicht-aller-episoden"
+              className="fixed left-4 bottom-4 px-4 py-2 bg-pink-300 hover:bg-pink-400 rounded text-lg"
+            >
+              Zur neuen Oberfläche
+            </a>
+          )}
           <h1 className="mx-auto px-4 py-2 rounded-lg bg-pink-400 w-fit text-2xl">
             Einhorn der Mathematik
           </h1>
