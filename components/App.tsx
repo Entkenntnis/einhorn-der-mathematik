@@ -29,7 +29,7 @@ export type State = Immutable<{
     players: number
     medianSeconds: number
     storyStats: { [key: string]: { reachable: number; solved: number } }
-    inputs: { [key: string]: string[] }
+    inputs: { [key: string]: { value: string; correct: boolean }[] }
     playerInfo: PlayerInfo[]
   }
   editorMode: boolean
@@ -57,11 +57,9 @@ export default function App() {
     persistBannerShown: false,
   })
 
-  const cutOff = new Date('2023-11-01')
+  const cutOff = new Date('2024-02-16') // TODO: -> 2-19
 
   const runAnalyse = useRef(false)
-
-  console.log('render', core.modal)
 
   useEffect(() => {
     const data = JSON.parse(
@@ -104,20 +102,20 @@ export default function App() {
         const data = (await makePost('/export', {
           password,
         })) as {
-          users: { id: number; name: string; createdAt: string }[]
-          solved: { storyId: number; userId: number; createdAt: string }[]
+          names: { userId: string; name: string; createdAt: string }[]
+          solves: { storyId: number; userId: string; createdAt: string }[]
           logs: {
             userId: number
             storyId: number
             value: string
-            correct: number
+            correct: boolean
             createdAt: string
           }[]
         }
 
         // TODO: preprocess solved data properly
         const stories = new Set<number>()
-        const solvedBy = data.solved.reduce((res, obj) => {
+        const solvedBy = data.solves.reduce((res, obj) => {
           const ts = new Date(obj.createdAt.substring(0, 23)).getTime()
           if (ts < cutOff.getTime()) return res
           const key = obj.userId
@@ -129,20 +127,20 @@ export default function App() {
           stories.add(obj.storyId)
           entry.solvedTs.push(ts)
           return res
-        }, {} as { [key: number]: { solved: Set<number>; solvedTs: number[] } })
+        }, {} as { [key: string]: { solved: Set<number>; solvedTs: number[] } })
         // alert(JSON.stringify(jsonResp))
         sessionStorage.setItem('einhorn_der_mathematik_analyze_pw', password)
-        const playerInfo: PlayerInfo[] = data.users
+        const playerInfo: PlayerInfo[] = data.names
           .map((user) => {
             const createdAt = new Date(
               user.createdAt.substring(0, 23)
             ).getTime()
             return {
-              id: user.id.toString(),
+              id: user.userId.toString(),
               createdAt,
               name: user.name,
-              solved: solvedBy[user.id]?.solved.size ?? 0,
-              solvedTs: solvedBy[user.id]?.solvedTs ?? [],
+              solved: solvedBy[user.userId]?.solved.size ?? 0,
+              solvedTs: solvedBy[user.userId]?.solvedTs ?? [],
             }
           })
           .filter((x) => x.createdAt >= cutOff.getTime())
@@ -169,11 +167,11 @@ export default function App() {
             (user) =>
               storyId == 1 ||
               storyData[storyId as number].deps.some((dep) =>
-                solvedBy[parseInt(user.id)]?.solved.has(dep)
+                solvedBy[user.id]?.solved.has(dep)
               )
           ).length
           const solved = Object.values(playerInfo).filter((user) =>
-            solvedBy[parseInt(user.id)]?.solved.has(storyId as number)
+            solvedBy[user.id]?.solved.has(storyId as number)
           ).length
           storyStats[storyId] = { reachable, solved }
         })
@@ -186,13 +184,13 @@ export default function App() {
             return res
           const key = obj.storyId
           const entry = (res[key] = res[key] || [])
-          entry.push(obj.value)
+          entry.push({ value: obj.value, correct: !!obj.correct })
           return res
-        }, {} as { [key: string]: string[] })
+        }, {} as { [key: string]: { value: string; correct: boolean }[] })
 
         mut((state) => {
           state.analyze = {
-            players: data.users.length,
+            players: data.names.length,
             medianSeconds: Math.round(median(times) / 1000),
             storyStats,
             inputs,
@@ -282,7 +280,7 @@ export default function App() {
                 </label>
               </div>
             ) : (
-              <div className="fixed left-6 bottom-9 sm:bottom-4 w-[450px] max-w-[90%] mr-4 bg-yellow-100 rounded-xl px-2 py-1">
+              <div className="fixed left-6 bottom-9 sm:bottom-4 max-w-[90%] mr-4 bg-yellow-100 rounded-xl px-4 py-1">
                 <p>
                   Möchtest du deinen Fortschritt auf diesem Gerät speichern?
                 </p>
@@ -470,7 +468,14 @@ export default function App() {
         </div>
         {core.analyze && (
           <div className="mt-24 mx-4 text-gray-500">
-            Eingaben: {core.analyze.inputs[core.showStory]?.join(', ')}
+            Eingaben:{' '}
+            {core.analyze.inputs[core.showStory]?.map((val, i) => {
+              return (
+                <span key={i} className={val.correct ? 'text-green-500' : ''}>
+                  {val.value},{' '}
+                </span>
+              )
+            })}
           </div>
         )}
         {core.modal == 'name' && (
@@ -482,13 +487,11 @@ export default function App() {
               })
             }}
             setUserName={(name) => {
-              console.log('hi')
               mut((c) => {
                 c.playerData.name = name
                 c.modal = null
               })
-              console.log('value after mut', core.modal)
-              // makePost('/name', { name, userId: core.playerData.id })
+              makePost('/name', { name, userId: core.playerData.id })
             }}
           />
         )}

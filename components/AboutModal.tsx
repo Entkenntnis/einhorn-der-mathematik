@@ -36,7 +36,8 @@ export function AboutModal({ onClose }: AboutModalProps) {
               className="underline"
             >
               Quellcode auf GitHub
-            </a>
+            </a>{' '}
+            <span className="ml-12 text-gray-800">Version: März 2024</span>
           </p>
           <p className="ml-4 mb-4">
             Hintergrund:{' '}
