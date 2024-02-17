@@ -3,8 +3,8 @@ import { StoryData, ignoreCaseSolution } from '../data'
 export const story6: StoryData = {
   title: 'Dreiecke',
   x: 250,
-  y: 70,
-  deps: [],
+  y: 63,
+  deps: [1],
   render: ({ onSubmit, feedback }) => (
     <>
       <p>

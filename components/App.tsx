@@ -259,6 +259,7 @@ export default function App() {
             </div>
           )}
           {core.solved.size > 0 &&
+            !core.editorMode &&
             (core.persistBannerShown ? (
               <div className="fixed left-6 bottom-9 sm:bottom-4 text-white">
                 <label className="cursor-pointer select-none">
@@ -397,8 +398,9 @@ export default function App() {
     const data = storyData[core.showStory]
     return (
       <>
+        <div className="h-6"></div>
         <h1
-          className="mx-auto px-4 py-2 rounded-lg bg-pink-400 w-fit mt-6 text-2xl cursor-pointer"
+          className="mx-auto px-4 py-2 rounded-lg bg-pink-400 w-fit text-2xl cursor-pointer"
           onClick={() => {
             mut((c) => {
               c.showStory = -1
@@ -407,7 +409,7 @@ export default function App() {
         >
           Einhorn der Mathematik
         </h1>
-        <div className="max-w-[800px] mx-auto bg-pink-50 rounded p-3 mt-6 mb-12">
+        <div className="max-w-[800px] mx-auto bg-pink-50 rounded p-3 mt-6 mb-16">
           <h2 className="mt-3 text-xl font-bold">{data.title}</h2>
 
           {core.storyFeedback && core.storyFeedback.correct ? (

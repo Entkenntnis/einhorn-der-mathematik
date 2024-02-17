@@ -2,15 +2,12 @@ import { StoryData, ignoreCaseSolution } from '../data'
 
 export const story10: StoryData = {
   title: 'Rechenmauer',
-  x: 370,
+  x: 360,
   y: 320,
-  deps: [],
+  deps: [7],
   render: () => (
     <>
-      <p>
-        Ich schaue Teo bei seinen Hausaufgaben zu, weil er so putzig ist und
-        seine Aufgaben so leicht sind.
-      </p>
+      <p>Teo ist putzig, genauso wie seine Hausaufgaben.</p>
       <p>
         Heute gibt es eine Rechenmauer. Dabei addiert man immer die zwei Zahlen
         unterhalb eines Felds. Das macht auch seiner großen Schwester Spaß!

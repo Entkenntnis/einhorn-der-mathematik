@@ -3,7 +3,7 @@ import { StoryData, ignoreCaseSolution } from '../data'
 export const story31: StoryData = {
   title: 'Barock (TODO)',
   x: 500,
-  y: 200,
+  y: 230,
   deps: [],
   render: () => (
     <>

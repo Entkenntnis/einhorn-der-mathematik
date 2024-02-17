@@ -88,6 +88,13 @@ export const storyData: { [key: number]: StoryData } = {
   31: story31,
 }
 
+// DEBUG
+for (const key in storyData) {
+  if (key != '1' && storyData[key].deps.length == 0) {
+    delete storyData[key]
+  }
+}
+
 export function genericSubmitHandler(
   value: string,
   isCorrect: boolean,
@@ -124,10 +131,12 @@ export function genericSubmitHandler(
 
 export function ignoreCaseSolution(answer: string, alternatives?: string[]) {
   return (props: Parameters<StoryData['submit']>[0]) => {
-    const value = props.value.trim().toLowerCase()
+    const value = props.value.trim().toLowerCase().replace(/\s/g, '')
     const isCorrect =
-      (answer.toLowerCase().trim() == value ||
-        alternatives?.some((alt) => alt.toLowerCase().trim() == value)) ??
+      (answer.toLowerCase().trim().replace(/\s/g, '') == value ||
+        alternatives?.some(
+          (alt) => alt.toLowerCase().trim().replace(/\s/g, '') == value
+        )) ??
       false
     genericSubmitHandler(
       props.value.trim(),

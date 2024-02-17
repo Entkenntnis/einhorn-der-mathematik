@@ -26,5 +26,5 @@ export const story8: StoryData = {
       </p>
     </>
   ),
-  submit: ignoreCaseSolution('74', ['74°', '74 °', '74 grad']),
+  submit: ignoreCaseSolution('74', ['74°', '74 grad']),
 }
