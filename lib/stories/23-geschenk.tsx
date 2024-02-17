@@ -41,12 +41,12 @@ interface ChoiceInputProps {
 
 function ChoiceInput({ onSubmit, feedback }: ChoiceInputProps) {
   const choices = [
-    'das violette Band',
     'das blaue Band',
-    'das grüne Band',
+    'das violette Band',
     'das rote Band',
+    'das grüne Band',
   ]
-  const short = 'VBGR'
+  const short = 'BVRG'
 
   const [showFeedback, setShowFeedback] = useState(false)
   const [selection, setSelection] = useState([-1, -1, -1, -1])

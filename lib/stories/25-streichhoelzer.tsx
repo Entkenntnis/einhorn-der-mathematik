@@ -25,5 +25,5 @@ export const story25: StoryData = {
       </p>
     </>
   ),
-  submit: ignoreCaseSolution('32'),
+  submit: ignoreCaseSolution('711'),
 }

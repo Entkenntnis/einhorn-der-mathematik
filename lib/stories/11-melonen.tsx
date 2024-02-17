@@ -19,5 +19,5 @@ export const story11: StoryData = {
       <p>Wie viel Kilogramm Melonen hat der Händler am Ende des Tages?</p>
     </>
   ),
-  submit: ignoreCaseSolution('500', ['500kg', '500 kg']),
+  submit: ignoreCaseSolution('500', ['500kg']),
 }

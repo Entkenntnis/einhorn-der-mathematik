@@ -261,7 +261,7 @@ export default function App() {
           {core.solved.size > 0 &&
             !core.editorMode &&
             (core.persistBannerShown ? (
-              <div className="fixed left-6 bottom-9 sm:bottom-4 text-white">
+              <div className="fixed left-6 bottom-9 sm:bottom-4 text-white z-10">
                 <label className="cursor-pointer select-none">
                   <input
                     type="checkbox"
@@ -281,7 +281,7 @@ export default function App() {
                 </label>
               </div>
             ) : (
-              <div className="fixed left-6 bottom-9 sm:bottom-4 max-w-[90%] mr-4 bg-yellow-100 rounded-xl px-4 pb-1 pt-2">
+              <div className="fixed left-6 bottom-9 sm:bottom-4 max-w-[90%] mr-4 bg-yellow-100 rounded-xl px-4 pb-1 pt-2 z-10">
                 <p>
                   Möchtest du deinen Fortschritt auf diesem Gerät speichern?
                 </p>
@@ -357,6 +357,7 @@ export default function App() {
                 : null
             )}
           </div>
+          <div className="h-48"></div>
           <div className="fixed right-6 bottom-4 text-sm text-gray-300">
             <button
               className="hover:underline"
@@ -468,22 +469,26 @@ export default function App() {
                     />
                   </>
                 )}
+                {core.analyze && (
+                  <div className="mt-3 text-gray-500">
+                    Eingaben:{' '}
+                    {core.analyze.inputs[core.showStory]?.map((val, i) => {
+                      return (
+                        <span
+                          key={i}
+                          className={val.correct ? 'text-green-500' : ''}
+                        >
+                          {val.value},{' '}
+                        </span>
+                      )
+                    })}
+                  </div>
+                )}
               </div>
             </>
           )}
         </div>
-        {core.analyze && (
-          <div className="mt-24 mx-4 text-gray-500">
-            Eingaben:{' '}
-            {core.analyze.inputs[core.showStory]?.map((val, i) => {
-              return (
-                <span key={i} className={val.correct ? 'text-green-500' : ''}>
-                  {val.value},{' '}
-                </span>
-              )
-            })}
-          </div>
-        )}
+
         {core.modal == 'name' && (
           <NameModal
             onClose={() => {
