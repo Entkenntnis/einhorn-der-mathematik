@@ -26,7 +26,7 @@ import { story22 } from './stories/22-schatzkiste'
 import { makePost } from './make-post'
 import { story23 } from './stories/23-geschenk'
 import { story24 } from './stories/24-riesenrad'
-import { story25 } from './stories/25-streichhölzer'
+import { story25 } from './stories/25-streichhoelzer'
 import { story26 } from './stories/26-wochentag'
 import { story28 } from './stories/28-taschengeld'
 import { story29 } from './stories/29-kleiderschrank'
@@ -91,7 +91,7 @@ export const storyData: { [key: number]: StoryData } = {
 // DEBUG
 for (const key in storyData) {
   if (key != '1' && storyData[key].deps.length == 0) {
-    delete storyData[key]
+    //delete storyData[key]
   }
 }
 

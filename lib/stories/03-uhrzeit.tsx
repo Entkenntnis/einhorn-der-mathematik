@@ -4,9 +4,9 @@ import Clock from 'react-clock'
 
 export const story3: StoryData = {
   title: 'Uhrzeit',
-  x: 300,
-  y: 440,
-  deps: [],
+  x: 230,
+  y: 430,
+  deps: [28, 29],
   render: ({ onSubmit, feedback }) => (
     <>
       <p>

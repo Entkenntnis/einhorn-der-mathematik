@@ -4,7 +4,7 @@ export const story12: StoryData = {
   title: 'Freunde',
   x: 400,
   y: 420,
-  deps: [],
+  deps: [10, 29],
   render: () => (
     <>
       <p>
@@ -17,7 +17,10 @@ export const story12: StoryData = {
         Einhörnern spricht meine Sprache. Bei einer von 100 Einhörnern gelingt
         es, Freunde zu werden (grob geschätzt).
       </p>
-      <p>Wie viele Personen muss ich begegnen, um eine Freundin zu finden?</p>
+      <p>
+        Wie viele Personen muss ich durchschnittlich begegnen, um eine Freundin
+        zu finden?
+      </p>
     </>
   ),
   submit: ignoreCaseSolution('500000'),

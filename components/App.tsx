@@ -310,8 +310,8 @@ export default function App() {
                 </p>
               </div>
             ))}
-          <div className="mt-4 mx-auto w-[1200px] h-[800px] relative z-0 outline">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+          <div className="mt-4 mx-auto w-[1200px] h-[850px] relative z-0 outline">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 850">
               {Object.entries(storyData).map(([id, data]) => {
                 if (isVisible(parseInt(id))) {
                   return (
@@ -346,7 +346,7 @@ export default function App() {
             <img
               src="/shooting-star.png"
               alt="Sternschnuppe"
-              className="w-[60px] absolute left-[1000px] top-[500px]"
+              className="w-[60px] absolute left-[1000px] top-[700px]"
             />
             {Object.entries(storyData).map(([id, data]) =>
               data.deps.length == 0 ||
