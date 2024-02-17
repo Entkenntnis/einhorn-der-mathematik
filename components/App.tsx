@@ -7,16 +7,9 @@ import { AboutModal } from './AboutModal'
 import { InputBox } from './InputBox'
 import { NameModal } from './NameModal'
 import { FaIcon } from './FaIcon'
-import {
-  faCaretDown,
-  faCaretUp,
-  faCheck,
-  faUser,
-} from '@fortawesome/free-solid-svg-icons'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { LoginModal } from './LoginModal'
 import { makePost } from '../lib/make-post'
-import { ChangeModal } from './ChangeModal'
-import { RedirectModal } from './RedirectModal'
 
 interface PlayerInfo {
   name: string
@@ -41,12 +34,11 @@ export type State = Immutable<{
   }
   editorMode: boolean
   playerData: {
-    loggedIn: boolean
-    token: string
     name: string
-    id: number
+    id: string
   }
-  showRedirect: boolean
+  persist: boolean
+  persistBannerShown: boolean
 }>
 
 export default function App() {
@@ -58,33 +50,34 @@ export default function App() {
     userId: shortid.generate(),
     editorMode: false,
     playerData: {
-      loggedIn: false,
-      token: '',
       name: '',
-      id: -1,
+      id: shortid(),
     },
-    showRedirect: true,
+    persist: false,
+    persistBannerShown: false,
   })
 
   const cutOff = new Date('2023-11-01')
 
   const runAnalyse = useRef(false)
 
-  const [showMenu, setShowMenu] = useState(false)
+  console.log('render', core.modal)
 
   useEffect(() => {
     const data = JSON.parse(
-      sessionStorage.getItem('einhorn_der_mathematik_data') ?? '{}'
+      localStorage.getItem('einhorn_der_mathematik_data_v2') ??
+        sessionStorage.getItem('einhorn_der_mathematik_data_v2') ??
+        '{}'
     )
     mut((state) => {
       try {
         data.solved.forEach((id: number) => {
           state.solved.add(id)
         })
-        state.playerData.loggedIn = data.loggedIn
         state.playerData.id = data.id
         state.playerData.name = data.name
-        state.playerData.token = data.token
+        state.persist = data.persist
+        state.persistBannerShown = data.persistBannerShown
       } catch (e) {
         // probably invalid state
       }
@@ -224,22 +217,6 @@ export default function App() {
             backgroundSize: 'cover',
           }}
         >
-          {core.showRedirect ? (
-            <RedirectModal
-              onClose={() => {
-                mut((state) => {
-                  state.showRedirect = false
-                })
-              }}
-            />
-          ) : (
-            <a
-              href="https://de.serlo.org/mathe/298181/einhorn-der-mathematik-%C3%BCbersicht-aller-episoden"
-              className="fixed left-4 bottom-4 px-4 py-2 bg-pink-300 hover:bg-pink-400 rounded text-lg"
-            >
-              Zur neuen Oberfläche
-            </a>
-          )}
           <h1 className="mx-auto px-4 py-2 rounded-lg bg-pink-400 w-fit text-2xl">
             Einhorn der Mathematik
           </h1>
@@ -278,6 +255,62 @@ export default function App() {
               )}
             </div>
           )}
+          {core.playerData.name && (
+            <div className="fixed top-3 right-3 px-2 py-0.5 bg-white/50 rounded">
+              Name: <strong>{core.playerData.name}</strong>
+            </div>
+          )}
+          {core.solved.size > 0 &&
+            (core.persistBannerShown ? (
+              <div className="fixed left-6 bottom-9 sm:bottom-4 text-white">
+                <label className="cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    checked={core.persist}
+                    onChange={(e) => {
+                      mut((c) => {
+                        c.persist = e.target.checked
+                      })
+                      if (!e.target.checked) {
+                        localStorage.removeItem(
+                          'einhorn_der_mathematik_data_v2'
+                        )
+                      }
+                    }}
+                  />{' '}
+                  Fortschritt speichern
+                </label>
+              </div>
+            ) : (
+              <div className="fixed left-6 bottom-9 sm:bottom-4 w-[450px] max-w-[90%] mr-4 bg-yellow-100 rounded-xl px-2 py-1">
+                <p>
+                  Möchtest du deinen Fortschritt auf diesem Gerät speichern?
+                </p>
+                <p className="my-2 flex justify-between items-baseline">
+                  <button
+                    className="text-sm text-gray-700 underline ml-4"
+                    onClick={() => {
+                      mut((c) => {
+                        c.persistBannerShown = true
+                      })
+                    }}
+                  >
+                    später
+                  </button>
+                  <button
+                    className="px-2 py-0.5 bg-yellow-300 hover:bg-yellow-400 inline-block rounded mr-4"
+                    onClick={() => {
+                      mut((c) => {
+                        c.persist = true
+                        c.persistBannerShown = true
+                      })
+                    }}
+                  >
+                    Speichern
+                  </button>
+                </p>
+              </div>
+            ))}
           <div className="mt-4 mx-auto w-[1200px] h-[700px] relative z-0">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600">
               {Object.entries(storyData).map(([id, data]) => {
@@ -321,88 +354,7 @@ export default function App() {
                 : null
             )}
           </div>
-          {core.playerData.loggedIn ? (
-            <div className="fixed top-2 right-2 px-1 ">
-              <div
-                className="mx-5 mt-3 bg-white/50 rounded cursor-pointer p-2 select-none hover:bg-white/60"
-                onClick={() => setShowMenu((val) => !val)}
-              >
-                Name: <strong>{core.playerData.name}</strong>
-                <FaIcon
-                  icon={showMenu ? faCaretUp : faCaretDown}
-                  className="ml-3"
-                />
-              </div>
-              {showMenu && (
-                <div className="mt-3 px-2 mb-3 bg-white/50 rounded pt-2 pb-1 relative z-10">
-                  <button
-                    className="border rounded my-1 p-2 block hover:bg-white/60 w-full"
-                    onClick={() => {
-                      mut((state) => {
-                        state.playerData.loggedIn = false
-                        state.solved = new Set()
-                      })
-                    }}
-                  >
-                    Abmelden
-                  </button>
-                  <button
-                    className="border rounded my-1 p-2 block hover:bg-white/60 w-full"
-                    onClick={() => {
-                      mut((state) => {
-                        state.modal = 'change'
-                      })
-                      setShowMenu(false)
-                    }}
-                  >
-                    Passwort ändern
-                  </button>
-                  <div className="text-sm text-gray-700 mt-2 mb-1 ml-2">
-                    <button
-                      className="hover:underline"
-                      onClick={() => {
-                        const name = prompt(
-                          'Du bist dabei deinen Account zu lösen. Das kann nicht rückgängig gemacht werden. Bestätige diese Aktion mit der Eingabe deines Benutzernamens.'
-                        )
-                        if (name === core.playerData.name) {
-                          makePost('/delete', {
-                            name,
-                            token: core.playerData.token,
-                          }).then((res) => {
-                            if (res.ok) {
-                              mut((state) => {
-                                state.playerData.loggedIn = false
-                                state.solved = new Set()
-                              })
-                              setShowMenu(false)
-                            } else {
-                              alert(res.reason)
-                            }
-                          })
-                        }
-                      }}
-                    >
-                      Account löschen ...
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className="fixed top-2 right-2 bg-white/50 rounded hover:bg-white/60 mt-3 mr-4 p-2 px-4">
-              <button
-                onClick={() => {
-                  mut((c) => {
-                    c.modal = 'login'
-                  })
-                  setShowMenu(false)
-                }}
-              >
-                <FaIcon icon={faUser} /> Login
-              </button>
-            </div>
-          )}
-          <div className="fixed right-4 bottom-4 text-sm text-gray-300">
+          <div className="fixed right-6 bottom-4 text-sm text-gray-300">
             <button
               className="hover:underline"
               onClick={() => {
@@ -434,16 +386,6 @@ export default function App() {
               mut={mut}
             />
           )}{' '}
-          {core.modal == 'change' && (
-            <ChangeModal
-              onClose={() => {
-                mut((c) => {
-                  c.modal = null
-                })
-              }}
-              token={core.playerData.token}
-            />
-          )}
         </div>
       </div>
     )
@@ -539,7 +481,15 @@ export default function App() {
                 c.showStory = -1
               })
             }}
-            mut={mut}
+            setUserName={(name) => {
+              console.log('hi')
+              mut((c) => {
+                c.playerData.name = name
+                c.modal = null
+              })
+              console.log('value after mut', core.modal)
+              // makePost('/name', { name, userId: core.playerData.id })
+            }}
           />
         )}
       </>
@@ -559,7 +509,6 @@ export default function App() {
             c.showStory = id
             c.storyFeedback = null
           })
-          setShowMenu(false)
         }}
         key={id}
       >
@@ -600,16 +549,21 @@ export default function App() {
     setCore((core) => {
       const newval = produce(core, fn)
 
-      sessionStorage.setItem(
-        'einhorn_der_mathematik_data',
-        JSON.stringify({
-          solved: Array.from(newval.solved),
-          loggedIn: newval.playerData.loggedIn,
-          id: newval.playerData.id,
-          name: newval.playerData.name,
-          token: newval.playerData.token,
-        })
-      )
+      const data = JSON.stringify({
+        solved: Array.from(newval.solved),
+        id: newval.playerData.id,
+        name: newval.playerData.name,
+        persist: newval.persist,
+        persistBannerShown: newval.persistBannerShown,
+      })
+
+      if (newval.persist) {
+        localStorage.setItem('einhorn_der_mathematik_data_v2', data)
+        sessionStorage.removeItem('einhorn_der_mathematik_data_v2')
+      } else {
+        sessionStorage.setItem('einhorn_der_mathematik_data_v2', data)
+        localStorage.removeItem('einhorn_der_mathematik_data_v2')
+      }
 
       return newval
     })

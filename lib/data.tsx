@@ -93,7 +93,7 @@ export function genericSubmitHandler(
         text: `"${value}" ist richtig`,
       }
     })
-    addSolved(mut, id, core.playerData.token)
+    addSolved(mut, id, core.playerData.id)
   } else {
     mut((c) => {
       c.storyFeedback = {
@@ -124,10 +124,10 @@ export function ignoreCaseSolution(answer: string, alternatives?: string[]) {
 function addSolved(
   mut: (fn: (draft: Draft<State>) => void) => void,
   storyId: number,
-  token: string
+  userId: string
 ) {
   mut((c) => {
     c.solved.add(storyId)
   })
-  makePost('/solve', { storyId, token })
+  makePost('/solve', { storyId, userId })
 }

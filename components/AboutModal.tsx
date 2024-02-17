@@ -11,7 +11,7 @@ export function AboutModal({ onClose }: AboutModalProps) {
       onClick={onClose}
     >
       <div
-        className="h-[480px] overflow-y-auto w-[700px] bg-white z-[200] rounded-xl relative flex justify-between flex-col"
+        className="h-[560px] overflow-y-auto w-[700px] bg-white z-[200] rounded-xl relative flex justify-between flex-col"
         onClick={(e) => {
           e.stopPropagation()
         }}
@@ -20,7 +20,7 @@ export function AboutModal({ onClose }: AboutModalProps) {
           {' '}
           <p className="ml-4 font-bold text-lg mt-2 mb-4">Impressum</p>
           <p className="ml-4">Betreiber:</p>
-          <p className="m-3 ml-4 mb-6">
+          <p className="m-3 ml-4 mb-2">
             {impressum.name}
             <br />
             {impressum.address1}
@@ -28,6 +28,15 @@ export function AboutModal({ onClose }: AboutModalProps) {
             {impressum.address2}
             <br />
             {impressum.contact}
+          </p>
+          <p className="ml-4 mb-4">
+            <a
+              href="https://github.com/Entkenntnis/einhorn-der-mathematik"
+              target="_blank"
+              className="underline"
+            >
+              Quellcode auf GitHub
+            </a>
           </p>
           <p className="ml-4 mb-4">
             Hintergrund:{' '}
@@ -40,13 +49,32 @@ export function AboutModal({ onClose }: AboutModalProps) {
             </a>
           </p>
           <p className="ml-4 font-bold text-lg mt-2 mb-4">Datenschutz</p>
-          <p className="mx-4 mb-4">
-            Diese Website wird auf einem Uberspace gehostet. Bei der
-            Registrierung werden Benutzername und gelöste Aufgaben auf dem
-            Server gespeichert. Es werden Aufrufstatistiken angelegt, um die
-            Qualität des Angebots zu verbessern. Auf dem Gerät werden keine
-            Daten gespeichert. Alle Daten werden innerhalb von Deutschland
+          <p className="mx-4 mb-2">
+            Diese Website wird auf einem Uberspace gehostet. Bei der Nutzung
+            werden keine Daten auf dem Gerät gespeichert. Auf Wunsch kann der
+            Fortschritt auf dem Gerät gespeichert werden. Dann wird der
+            Spielstand dauerhaft im Browser hinterlegt. Es werden
+            Aufrufstatistiken angelegt. Es werden Protokolle geführt, um die
+            Qualität des Angebots zu verbessern. Daten werden nicht an Dritte
+            weitergeben. Alle Daten werden innerhalb von Deutschland
             verarbeitet.
+          </p>
+          <p className="ml-4 mb-3 ">
+            <button
+              className="underline hover:text-red-500"
+              onClick={() => {
+                const val = confirm(
+                  'Fortschritt jetzt zurücksetzen? Diese Aktion kann nicht rückgangig gemacht werden.'
+                )
+                if (val) {
+                  sessionStorage.removeItem('einhorn_der_mathematik_data_v2')
+                  localStorage.removeItem('einhorn_der_mathematik_data_v2')
+                  window.location.reload()
+                }
+              }}
+            >
+              Fortschritt zurücksetzen
+            </button>
           </p>
         </div>
         <p className="text-center mb-5 mt-3">
