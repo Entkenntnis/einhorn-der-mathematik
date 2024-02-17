@@ -1,14 +1,34 @@
 import { StoryData, ignoreCaseSolution } from '../data'
 
 export const story31: StoryData = {
-  title: 'Barock (TODO)',
-  x: 500,
+  title: 'Barock',
+  x: 580,
   y: 230,
-  deps: [],
+  deps: [22, 27],
   render: () => (
     <>
-      <p>TODO</p>
+      <p>
+        Ich dachte zuerst, dass Musik nicht viel mit Mathematik zu tun hat -
+        geht es dort doch viel mehr um Kreativität und Schönheit.
+      </p>
+
+      <p>
+        Aber ein Video zum größten Barock-Komponisten hat mir die Augen
+        geöffnet.
+      </p>
+
+      <p>
+        Auch in der Musik findet man viele Strukturen, Muster - und auch manche
+        geheime Botschaft.
+      </p>
+
+      <img src="/story31.png" alt="vier Noten" width={300} />
+
+      <p>
+        Die vier Noten stellen den Namen dieses Barock-Komponisten da. Von wem
+        ist hier die Rede?
+      </p>
     </>
   ),
-  submit: ignoreCaseSolution('32'),
+  submit: ignoreCaseSolution('bach'),
 }

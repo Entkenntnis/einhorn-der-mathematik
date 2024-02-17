@@ -88,13 +88,6 @@ export const storyData: { [key: number]: StoryData } = {
   31: story31,
 }
 
-// DEBUG
-for (const key in storyData) {
-  if (key != '1' && storyData[key].deps.length == 0) {
-    //delete storyData[key]
-  }
-}
-
 export function genericSubmitHandler(
   value: string,
   isCorrect: boolean,

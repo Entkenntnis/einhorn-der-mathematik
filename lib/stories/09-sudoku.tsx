@@ -2,9 +2,9 @@ import { StoryData, ignoreCaseSolution } from '../data'
 
 export const story9: StoryData = {
   title: 'Sudoku',
-  x: 600,
-  y: 600,
-  deps: [],
+  x: 550,
+  y: 660,
+  deps: [13, 25],
   render: () => (
     <>
       <p>

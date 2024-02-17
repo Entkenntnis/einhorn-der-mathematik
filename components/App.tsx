@@ -310,7 +310,7 @@ export default function App() {
                 </p>
               </div>
             ))}
-          <div className="mt-4 mx-auto w-[1200px] h-[850px] relative z-0 outline">
+          <div className="mt-4 mx-auto w-[1200px] h-[850px] relative z-0">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 850">
               {Object.entries(storyData).map(([id, data]) => {
                 if (isVisible(parseInt(id))) {

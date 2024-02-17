@@ -2,9 +2,9 @@ import { StoryData, ignoreCaseSolution } from '../data'
 
 export const story17: StoryData = {
   title: 'Pizza',
-  x: 800,
-  y: 600,
-  deps: [],
+  x: 440,
+  y: 750,
+  deps: [2, 13],
   render: () => (
     <>
       <p>
