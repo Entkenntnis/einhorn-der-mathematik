@@ -7,4 +7,4 @@ https://einhorn.arrrg.de/
 <br>
 <br>
 
-![Einhorn der Mathematik](https://einhorn.arrrg.de/einhorn.png)
+<img alt="Einhorn der Mathematik" src="https://einhorn.arrrg.de/einhorn.png" width="300px"/>
