@@ -14,7 +14,7 @@ import { story10 } from './stories/10-rechenmauer'
 import { story11 } from './stories/11-melonen'
 import { story12 } from './stories/12-freunde'
 import { story13 } from './stories/13-zahlenfolge'
-import { story14 } from './stories/14-zufall'
+import { story14 } from './stories/14-bingo'
 import { story15 } from './stories/15-koerper'
 import { story16 } from './stories/16-landkarte'
 import { story17 } from './stories/17-pizza'
@@ -22,8 +22,17 @@ import { story18 } from './stories/18-mathe-video'
 import { story19 } from './stories/19-spielbrett'
 import { story20 } from './stories/20-100-nullen'
 import { story21 } from './stories/21-erdumfang'
-import { story22 } from './stories/22-todo'
+import { story22 } from './stories/22-schatzkiste'
 import { makePost } from './make-post'
+import { story23 } from './stories/23-geschenk'
+import { story24 } from './stories/24-riesenrad'
+import { story25 } from './stories/25-streichhölzer'
+import { story26 } from './stories/26-wochentag'
+import { story28 } from './stories/28-taschengeld'
+import { story29 } from './stories/29-kleiderschrank'
+import { story27 } from './stories/27-griechisch'
+import { story30 } from './stories/30-um-die-ecke'
+import { story31 } from './stories/31-barock'
 
 export interface StoryData {
   title: string
@@ -67,7 +76,16 @@ export const storyData: { [key: number]: StoryData } = {
   19: story19,
   20: story20,
   21: story21,
-  /*22: story22,*/
+  22: story22,
+  23: story23,
+  24: story24,
+  25: story25,
+  26: story26,
+  27: story27,
+  28: story28,
+  29: story29,
+  30: story30,
+  31: story31,
 }
 
 export function genericSubmitHandler(

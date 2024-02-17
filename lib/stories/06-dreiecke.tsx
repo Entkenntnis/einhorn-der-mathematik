@@ -4,7 +4,7 @@ export const story6: StoryData = {
   title: 'Dreiecke',
   x: 250,
   y: 70,
-  deps: [1],
+  deps: [],
   render: ({ onSubmit, feedback }) => (
     <>
       <p>

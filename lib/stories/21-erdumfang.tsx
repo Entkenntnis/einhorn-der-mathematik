@@ -2,9 +2,9 @@ import { StoryData, ignoreCaseSolution } from '../data'
 
 export const story21: StoryData = {
   title: 'Erdumfang',
-  x: 700,
-  y: 220,
-  deps: [11, 17],
+  x: 1100,
+  y: 200,
+  deps: [],
   render: () => (
     <>
       <p>

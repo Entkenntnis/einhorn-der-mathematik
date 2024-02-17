@@ -2,9 +2,9 @@ import { StoryData, ignoreCaseSolution } from '../data'
 
 export const story7: StoryData = {
   title: 'Hufeisen',
-  x: 180,
-  y: 220,
-  deps: [1],
+  x: 190,
+  y: 175,
+  deps: [],
   render: () => (
     <>
       <p>Bei uns Zuhause hängt dieses Bild an der Wand.</p>

@@ -5,8 +5,8 @@ import clsx from 'clsx'
 export const story2: StoryData = {
   title: 'Würfel',
   x: 280,
-  y: 440,
-  deps: [14],
+  y: 530,
+  deps: [],
   render: ({ onSubmit, feedback }) => (
     <>
       <p>

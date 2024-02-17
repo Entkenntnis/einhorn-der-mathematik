@@ -254,7 +254,7 @@ export default function App() {
             </div>
           )}
           {core.playerData.name && (
-            <div className="fixed top-3 right-3 px-2 py-0.5 bg-white/50 rounded">
+            <div className="fixed top-3 right-5 px-2 py-0.5 bg-white/50 rounded">
               Name: <strong>{core.playerData.name}</strong>
             </div>
           )}
@@ -280,7 +280,7 @@ export default function App() {
                 </label>
               </div>
             ) : (
-              <div className="fixed left-6 bottom-9 sm:bottom-4 max-w-[90%] mr-4 bg-yellow-100 rounded-xl px-4 py-1">
+              <div className="fixed left-6 bottom-9 sm:bottom-4 max-w-[90%] mr-4 bg-yellow-100 rounded-xl px-4 pb-1 pt-2">
                 <p>
                   Möchtest du deinen Fortschritt auf diesem Gerät speichern?
                 </p>
@@ -309,14 +309,18 @@ export default function App() {
                 </p>
               </div>
             ))}
-          <div className="mt-4 mx-auto w-[1200px] h-[700px] relative z-0">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600">
+          <div className="mt-4 mx-auto w-[1200px] h-[800px] relative z-0 outline">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
               {Object.entries(storyData).map(([id, data]) => {
                 if (isVisible(parseInt(id))) {
                   return (
                     <Fragment key={id}>
                       {data.deps.map((dep) => {
-                        if (core.solved.has(dep) || core.analyze) {
+                        if (
+                          core.solved.has(dep) ||
+                          core.analyze ||
+                          core.editorMode
+                        ) {
                           return (
                             <line
                               key={`connect-${id}-${dep}`}
@@ -500,11 +504,12 @@ export default function App() {
   }
 
   function renderStoryIcon(title: string, x: number, y: number, id: number) {
+    const showSolved = (core.solved.has(id) || core.analyze) && !core.editorMode
     return (
       <div
         className={clsx(
           'flex items-center flex-col w-[64px] cursor-pointer group absolute pointer-events-none',
-          core.solved.has(id) && 'pt-2'
+          showSolved && 'pt-2'
         )}
         style={{ left: `${x}px`, top: `${y}px` }}
         onClick={() => {
@@ -518,7 +523,7 @@ export default function App() {
         <button className="text-lg bg-gray-100/70 px-1 py-0.5 rounded group-hover:bg-white/80 pointer-events-auto whitespace-nowrap">
           {title}
         </button>
-        {core.solved.has(id) || core.analyze ? (
+        {showSolved ? (
           <div className="w-16 pt-3 flex justify-center items-center">
             <div className="bg-pink-200 rounded-full w-6 h-6 pointer-events-auto">
               <FaIcon icon={faCheck} className="ml-[5px] text-pink-400" />
