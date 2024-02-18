@@ -189,7 +189,7 @@ export default function App() {
 
         mut((state) => {
           state.analyze = {
-            players: data.names.length,
+            players: playerInfo.length,
             medianSeconds: Math.round(median(times) / 1000),
             storyStats,
             inputs,
@@ -225,10 +225,15 @@ export default function App() {
               Anzahl SpielerInnen: {core.analyze.players}
               <br />
               <br />
-              Median Spielzeit: {core.analyze.medianSeconds}s
+              Median Spielzeit:{' '}
+              {isNaN(core.analyze.medianSeconds) ? (
+                '---'
+              ) : (
+                <>{core.analyze.medianSeconds}s</>
+              )}
               <br />
               <br />
-              Namen:{' '}
+              Details:{' '}
               {core.analyze.playerInfo.map(
                 ({ name, solved, id, createdAt, mins }) =>
                   solved == 0 ? (
