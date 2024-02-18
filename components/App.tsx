@@ -8,7 +8,6 @@ import { InputBox } from './InputBox'
 import { NameModal } from './NameModal'
 import { FaIcon } from './FaIcon'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
-import { LoginModal } from './LoginModal'
 import { makePost } from '../lib/make-post'
 
 interface PlayerInfo {
@@ -379,17 +378,6 @@ export default function App() {
               }}
             />
           )}
-          {core.modal == 'login' && (
-            <LoginModal
-              onClose={() => {
-                mut((c) => {
-                  c.modal = null
-                  c.showStory = -1
-                })
-              }}
-              mut={mut}
-            />
-          )}{' '}
         </div>
       </div>
     )
