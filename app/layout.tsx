@@ -7,7 +7,7 @@ import './faicon.css'
 export const metadata: Metadata = {
   title: 'Einhorn der Mathematik',
   description:
-    'Löse kleine Rätsel mit der Einhorn-Dame Tina und ihrem Bruder Teo. Knobel-Spaß für alle Altersgruppen',
+    'Löse Mathe-Rätsel mit der Einhorn-Dame Tina und ihrem Bruder Teo. Knobel-Spaß für alle Altersgruppen',
 }
 
 export default function RootLayout({
