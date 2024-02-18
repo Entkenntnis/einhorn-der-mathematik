@@ -57,7 +57,7 @@ export default function App() {
     persistBannerShown: false,
   })
 
-  const cutOff = new Date('2024-02-16') // TODO: -> 2-19
+  const cutOff = new Date('2024-02-19')
 
   const runAnalyse = useRef(false)
 
