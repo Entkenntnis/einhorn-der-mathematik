@@ -1,4 +1,8 @@
 export async function makePost(route: string, body: object) {
+  if (window.location.hostname === 'localhost') {
+    console.log('makePost', route, body)
+    return
+  }
   const res = await fetch('https://stats-einhorn.arrrg.de' + route, {
     method: 'POST',
     headers: {

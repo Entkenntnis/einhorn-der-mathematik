@@ -96,7 +96,6 @@ export function genericSubmitHandler(
   core: State
 ) {
   if (value) {
-    console.log(core)
     makePost('/log', {
       storyId: id,
       userId: core.playerData.id,

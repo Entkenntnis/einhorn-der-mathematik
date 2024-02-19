@@ -12,7 +12,7 @@ export function NameModal({ onClose, setUserName }: NameModalProps) {
   return (
     <div className="bg-black/20 fixed inset-0 flex justify-center items-center z-[150]">
       <div
-        className="h-[280px] w-[500px] bg-white z-[200] rounded-xl relative"
+        className="h-[250px] w-[95%] sm:w-[500px] bg-white z-[200] rounded-xl relative"
         onClick={(e) => {
           e.stopPropagation()
         }}
@@ -41,12 +41,11 @@ export function NameModal({ onClose, setUserName }: NameModalProps) {
                   setUserName(name.trim())
                 }
               }}
-              className="mt-4 text-3xl border-pink-500 border-2 rounded text-center outline-none"
-              maxLength={30}
+              className="mt-4 text-3xl border-pink-500 border-2 rounded text-center outline-none w-[90%]"
             />
           </p>
         </div>
-        <p className="text-center mb-5 px-4 mt-12">
+        <p className="text-center px-4 mt-8">
           <button
             className="px-2 py-0.5 bg-pink-200 hover:bg-pink-300 rounded disabled:bg-gray-200 disabled:text-gray-700"
             onClick={() => {
