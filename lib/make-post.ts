@@ -1,5 +1,5 @@
 export async function makePost(route: string, body: object) {
-  if (window.location.hostname === 'localhost') {
+  if (window.location.hostname !== 'einhorn.arrrg.de' && route !== '/export') {
     console.log('makePost', route, body)
     return
   }
