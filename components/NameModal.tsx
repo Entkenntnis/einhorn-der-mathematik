@@ -12,7 +12,7 @@ export function NameModal({ onClose, setUserName }: NameModalProps) {
   return (
     <div className="bg-black/20 fixed inset-0 flex justify-center items-center z-[150]">
       <div
-        className="h-[250px] w-[95%] sm:w-[500px] bg-white z-[200] rounded-xl relative"
+        className="min-h-[250px] w-[95%] sm:w-[500px] bg-white z-[200] rounded-xl relative pb-4"
         onClick={(e) => {
           e.stopPropagation()
         }}
@@ -42,6 +42,7 @@ export function NameModal({ onClose, setUserName }: NameModalProps) {
                 }
               }}
               className="mt-4 text-3xl border-pink-500 border-2 rounded text-center outline-none w-[90%]"
+              maxLength={30}
             />
           </p>
         </div>
