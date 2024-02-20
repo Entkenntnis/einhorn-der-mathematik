@@ -131,9 +131,7 @@ export default function App() {
         sessionStorage.setItem('einhorn_der_mathematik_analyze_pw', password)
         const playerInfo: PlayerInfo[] = data.names
           .map((user) => {
-            const createdAt = new Date(
-              user.createdAt.substring(0, 23)
-            ).getTime()
+            const createdAt = new Date(user.createdAt).getTime()
             return {
               id: user.userId.toString(),
               createdAt,
@@ -176,11 +174,7 @@ export default function App() {
         })
 
         const inputs = data.logs.reduce((res, obj) => {
-          if (
-            new Date(obj.createdAt.substring(0, 23)).getTime() <
-            cutOff.getTime()
-          )
-            return res
+          if (new Date(obj.createdAt).getTime() < cutOff.getTime()) return res
           const key = obj.storyId
           const entry = (res[key] = res[key] || [])
           entry.push({ value: obj.value, correct: !!obj.correct })
