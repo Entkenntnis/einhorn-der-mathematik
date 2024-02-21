@@ -16,6 +16,7 @@ interface PlayerInfo {
   id: string
   createdAt: number
   solvedTs: number[]
+  nameTs: number
   mins?: string
 }
 export type State = Immutable<{
@@ -27,6 +28,7 @@ export type State = Immutable<{
   analyze?: {
     players: number
     medianSeconds: number
+    medianPlayers: number
     storyStats: { [key: string]: { reachable: number; solved: number } }
     inputs: { [key: string]: { value: string; correct: boolean }[] }
     playerInfo: PlayerInfo[]
@@ -115,7 +117,7 @@ export default function App() {
         // TODO: preprocess solved data properly
         const stories = new Set<number>()
         const solvedBy = data.solves.reduce((res, obj) => {
-          const ts = new Date(obj.createdAt.substring(0, 23)).getTime()
+          const ts = new Date(obj.createdAt).getTime()
           if (ts < cutOff.getTime()) return res
           const key = obj.userId
           const entry = (res[key] = res[key] || {
@@ -138,22 +140,25 @@ export default function App() {
               name: user.name,
               solved: solvedBy[user.userId]?.solved.size ?? 0,
               solvedTs: solvedBy[user.userId]?.solvedTs ?? [],
+              nameTs: createdAt,
             }
           })
           .filter((x) => x.createdAt >= cutOff.getTime())
         playerInfo.sort((a, b) => a.createdAt - b.createdAt)
 
-        const times = playerInfo.map((player) => {
-          if (player.solvedTs.length == 0) {
-            return 0
-          }
-          const minTime = Math.min(...player.solvedTs)
-          const maxTime = Math.max(...player.solvedTs)
-          if (player) {
-            player.mins = ((maxTime - minTime) / 1000 / 60).toFixed(0)
-          }
-          return maxTime - minTime
-        })
+        const times = playerInfo
+          .map((player) => {
+            if (player.solvedTs.length == 0) {
+              return -1
+            }
+            const minTime = Math.min(...player.solvedTs, player.nameTs)
+            const maxTime = Math.max(...player.solvedTs)
+            if (player) {
+              player.mins = ((maxTime - minTime) / 1000 / 60).toFixed(0)
+            }
+            return maxTime - minTime
+          })
+          .filter((time) => time >= 0)
         times.sort((a, b) => a - b)
 
         const storyStats: {
@@ -185,6 +190,7 @@ export default function App() {
           state.analyze = {
             players: playerInfo.length,
             medianSeconds: Math.round(median(times) / 1000),
+            medianPlayers: times.length,
             storyStats,
             inputs,
             playerInfo,
@@ -219,7 +225,12 @@ export default function App() {
               Anzahl SpielerInnen: {core.analyze.players}
               <br />
               <br />
-              Median Spielzeit:{' '}
+              Median Spielzeit (
+              <span className="text-gray-600">
+                ab einer gelösten Aufgabe, Zeit ab Namenseingabe,{' '}
+                {core.analyze.medianPlayers} Personen
+              </span>
+              ):{' '}
               {isNaN(core.analyze.medianSeconds) ? (
                 '---'
               ) : (
