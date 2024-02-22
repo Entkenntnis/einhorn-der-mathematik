@@ -20,7 +20,7 @@ export const story13: StoryData = {
         Ich kann es natürlich nicht verkneifen, am Ende doch folgende Aufgabe zu
         stellen:
       </p>
-      <img src="story13.png" alt="1, 1, 2, 3, 5, ?" />
+      <img src="story13.png" alt="1, 1, 2, 3, 5, ?" width={350} />
       <p>
         Teo kommen die Tränen, als er die Folge nicht lösen kann. Mein Vater
         schaut prüfend zu mir und ich wische die Folge schnell weg. Wie lautet
