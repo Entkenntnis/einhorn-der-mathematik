@@ -75,19 +75,18 @@ function ChoiceInput({ onSubmit, feedback }: ChoiceInputProps) {
   function renderSelect(index: number) {
     if (selection[index] >= 0) {
       return (
-        <span className="px-2 py-0.5 bg-pink-200 rounded">
+        <button
+          onClick={() => {
+            const newSelection = selection.slice()
+            newSelection[index] = -1
+            setSelection(newSelection)
+            setShowFeedback(false)
+          }}
+          className="px-2 py-0.5 bg-pink-200 rounded"
+          title="Auswahl zurücksetzen"
+        >
           {choices[selection[index]]}
-          <button
-            onClick={() => {
-              const newSelection = selection.slice()
-              newSelection[index] = -1
-              setSelection(newSelection)
-              setShowFeedback(false)
-            }}
-          >
-            <FaIcon icon={faTimes} className="ml-2" />
-          </button>
-        </span>
+        </button>
       )
     }
     return (
