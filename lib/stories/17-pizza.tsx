@@ -8,7 +8,7 @@ export const story17: StoryData = {
   render: () => (
     <>
       <p>
-        Es gibt heute Abend Pizza! Ich und Teo schneiden abwechselnd die Pizza.
+        Es gibt heute Abend Pizza! Teo und ich schneiden abwechselnd die Pizza.
         Den vierten Schnitt macht Teo leider etwas daneben.
       </p>
       <img src="/story17.jpg" alt="Pizza mit Schnitten" className="w-[350px]" />

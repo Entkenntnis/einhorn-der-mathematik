@@ -21,7 +21,7 @@ interface PlayerInfo {
 }
 export type State = Immutable<{
   showStory: number
-  storyFeedback: { correct: boolean; text: string } | null
+  storyFeedback: { correct: boolean; text: string; toWait?: number } | null
   solved: Set<number>
   modal: 'impressum' | 'name' | 'login' | 'change' | null
   userId: string
@@ -413,9 +413,7 @@ export default function App() {
 
           {core.storyFeedback && core.storyFeedback.correct ? (
             <>
-              <div className="mt-10 text-green-600">
-                {core.storyFeedback.text}
-              </div>
+              {renderStoryFeedback(core.storyFeedback)}
               <button
                 className="mt-8 text-pink-500 hover:underline hover:text-pink-600"
                 onClick={() => {
@@ -446,19 +444,11 @@ export default function App() {
                   onSubmit: (value) => {
                     data.submit({ value, mut, id: core.showStory, core })
                   },
-                  feedback: core.storyFeedback ? (
-                    <div className="mt-6 text-yellow-600">
-                      {core.storyFeedback.text}
-                    </div>
-                  ) : null,
+                  feedback: renderStoryFeedback(core.storyFeedback),
                 })}
                 {!data.hideSubmit && (
                   <>
-                    {core.storyFeedback && (
-                      <div className="mt-6 text-yellow-600">
-                        {core.storyFeedback.text}
-                      </div>
-                    )}
+                    {renderStoryFeedback(core.storyFeedback)}
                     <InputBox
                       className="mt-8 -ml-1"
                       submit={(value) => {
@@ -507,6 +497,21 @@ export default function App() {
         )}
       </>
     )
+  }
+
+  function renderStoryFeedback(feedback: State['storyFeedback']) {
+    if (!feedback) {
+      return null
+    }
+    if (feedback.toWait) {
+      return <CountdownTimer toWait={feedback.toWait} />
+    }
+    if (feedback.correct == false) {
+      return <div className="mt-6 text-yellow-600">{feedback.text}</div>
+    }
+    if (feedback.correct) {
+      return <div className="mt-10 text-green-600">{feedback.text}</div>
+    }
   }
 
   function renderStoryIcon(title: string, x: number, y: number, id: number) {
@@ -600,4 +605,19 @@ export default function App() {
       return arr[middle]
     }
   }
+}
+
+function CountdownTimer({ toWait }: { toWait: number }) {
+  const [ts] = useState(new Date().getTime())
+  const [seconds, setSeconds] = useState(Math.ceil(toWait / 1000))
+  useEffect(() => {
+    seconds > 0 && setTimeout(() => setSeconds(seconds - 1), 1000)
+  }, [seconds])
+  if (seconds == 0) return null
+  return (
+    <div className="mt-6 text-gray-600 italic">
+      Warte noch {seconds} Sekunde{seconds == 1 ? '' : 'n'} bis zum nächsten
+      Versuch.
+    </div>
+  )
 }

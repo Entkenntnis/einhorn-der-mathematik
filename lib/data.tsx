@@ -95,6 +95,22 @@ export function genericSubmitHandler(
   id: number,
   core: State
 ) {
+  const sessionStorageRateLimitKey = `einhorn_der_mathematik_last_checked_${id}`
+  const t = parseInt(sessionStorage.getItem(sessionStorageRateLimitKey) ?? '-1')
+  const ts = new Date().getTime()
+  if (!isNaN(t) && t > 0) {
+    const toWait = 15000 - (ts - t)
+    if (toWait > 0) {
+      mut((c) => {
+        c.storyFeedback = {
+          correct: false,
+          text: '',
+          toWait,
+        }
+      })
+      return
+    }
+  }
   if (value) {
     makePost('/log', {
       storyId: id,
@@ -112,6 +128,9 @@ export function genericSubmitHandler(
     })
     addSolved(mut, id, core.playerData.id)
   } else {
+    if (value) {
+      sessionStorage.setItem(sessionStorageRateLimitKey, ts.toString())
+    }
     mut((c) => {
       c.storyFeedback = {
         correct: false,
