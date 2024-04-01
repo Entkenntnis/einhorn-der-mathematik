@@ -33,6 +33,11 @@ import { story29 } from './stories/29-kleiderschrank'
 import { story27 } from './stories/27-griechisch'
 import { story30 } from './stories/30-um-die-ecke'
 import { story31 } from './stories/31-barock'
+import { story32 } from './stories/32-A'
+import { story33 } from './stories/33-B'
+import { story34 } from './stories/34-C'
+import { story36 } from './stories/36-E'
+import { story35 } from './stories/35-D'
 
 export interface StoryData {
   title: string
@@ -86,6 +91,11 @@ export const storyData: { [key: number]: StoryData } = {
   29: story29,
   30: story30,
   31: story31,
+  32: story32,
+  33: story33,
+  34: story34,
+  35: story35,
+  36: story36,
 }
 
 export function genericSubmitHandler(

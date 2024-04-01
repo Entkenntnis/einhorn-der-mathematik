@@ -6,7 +6,7 @@ export const story3: StoryData = {
   title: 'Uhrzeit',
   x: 260,
   y: 460,
-  deps: [28, 29],
+  deps: [24, 28],
   render: ({ onSubmit, feedback }) => (
     <>
       <p>

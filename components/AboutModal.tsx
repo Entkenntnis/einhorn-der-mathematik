@@ -37,7 +37,7 @@ export function AboutModal({ onClose }: AboutModalProps) {
             >
               Quellcode auf GitHub
             </a>{' '}
-            <span className="ml-12 text-gray-800">Version: März 2024</span>
+            <span className="ml-12 text-gray-800">Version: April 2024</span>
           </p>
           <p className="ml-4 mb-4">
             Hintergrund:{' '}
@@ -47,6 +47,14 @@ export function AboutModal({ onClose }: AboutModalProps) {
               target="_blank"
             >
               wallpaperflare
+            </a>
+            , Regenbogen:{' '}
+            <a
+              className="underline"
+              target="_blank"
+              href="https://de.freepik.com/vektoren-kostenlos/mehrfarbige-regenbogenfahnen-design-vektorillustration_24046490.htm#fromView=search&page=1&position=31&uuid=0727ae31-c3eb-47fe-9b44-783763905947"
+            >
+              Bild von Rochak Shukla auf Freepik
             </a>
           </p>
           <p className="ml-4 font-bold text-lg mt-2 mb-4">Datenschutz</p>
@@ -60,7 +68,7 @@ export function AboutModal({ onClose }: AboutModalProps) {
             weitergeben. Alle Daten werden innerhalb von Deutschland
             verarbeitet.
           </p>
-          <p className="ml-4 mb-3 ">
+          <p className="ml-4 mb-3">
             <button
               className="underline hover:text-red-500"
               onClick={() => {

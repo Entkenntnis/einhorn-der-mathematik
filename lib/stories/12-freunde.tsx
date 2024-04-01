@@ -4,7 +4,7 @@ export const story12: StoryData = {
   title: 'Freunde',
   x: 400,
   y: 420,
-  deps: [10, 29],
+  deps: [10, 24],
   render: () => (
     <>
       <p>

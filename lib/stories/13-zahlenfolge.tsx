@@ -4,7 +4,7 @@ export const story13: StoryData = {
   title: 'Zahlenfolge',
   x: 390,
   y: 620,
-  deps: [3, 12, 24],
+  deps: [2, 3, 12],
   render: () => (
     <>
       <p>
