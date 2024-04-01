@@ -36,7 +36,7 @@ export const story1: StoryData = {
           Mathe-Rätsel aus. Ich hoffe, diese machen dir genauso viel Spaß wie
           mir!
         </p>
-        <p>Dein erstes Rätsel: Wie viele Buchstaben hat dein Name?</p>
+        <p>Dein erstes Rätsel: Wie viele Zeichen hat dein Name?</p>
       </>
     )
   },
@@ -53,16 +53,24 @@ export const story1: StoryData = {
         hinausschauen wollen. Ach, es gibt wenig schönere Dinge als einen
         eleganten mathematischen Beweis 🥰
       </p>
-      <p>--- netter Abschlusssatz ---</p>
+      <p>Bis gleich bei der nächsten Aufgabe :)</p>
     </>
   ),
   submit: ({ value, mut, id, core }) => {
     genericSubmitHandler(
       value,
-      parseInt(value) == core.playerData.name.length,
+      parseInt(value) == countCodePoints(core.playerData.name),
       mut,
       id,
       core
     )
   },
+}
+
+function countCodePoints(str: string) {
+  let c = 0
+  for (const v of str) {
+    c++
+  }
+  return c
 }
