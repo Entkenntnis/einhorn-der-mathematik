@@ -40,6 +40,7 @@ export type State = Immutable<{
   }
   persist: boolean
   persistBannerShown: boolean
+  freeTries: number
 }>
 
 export default function App() {
@@ -56,6 +57,7 @@ export default function App() {
     },
     persist: false,
     persistBannerShown: false,
+    freeTries: 0,
   })
 
   const cutOff = new Date('2024-02-19')
@@ -424,6 +426,11 @@ export default function App() {
               >
                 weiter
               </button>
+              {data.proof && (
+                <div className="mt-8 [&>p]:mt-4 [&_code]:text-pink-400 [&_code]:font-bold [&>img]:my-6 [&_a]:underline [&_a]:text-blue-600 [&_a]:hover:text-blue-700">
+                  {data.proof({ core })}
+                </div>
+              )}
             </>
           ) : (
             <>
@@ -527,6 +534,7 @@ export default function App() {
           mut((c) => {
             c.showStory = id
             c.storyFeedback = null
+            c.freeTries = 2
           })
         }}
         key={id}
@@ -608,7 +616,6 @@ export default function App() {
 }
 
 function CountdownTimer({ toWait }: { toWait: number }) {
-  const [ts] = useState(new Date().getTime())
   const [seconds, setSeconds] = useState(Math.ceil(toWait / 1000))
   useEffect(() => {
     seconds > 0 && setTimeout(() => setSeconds(seconds - 1), 1000)

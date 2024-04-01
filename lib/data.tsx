@@ -57,6 +57,7 @@ export interface StoryData {
     id: number
     core: State
   }) => void
+  proof?: (props: { core: State }) => JSX.Element
 }
 
 export const storyData: { [key: number]: StoryData } = {
@@ -108,17 +109,23 @@ export function genericSubmitHandler(
   const sessionStorageRateLimitKey = `einhorn_der_mathematik_last_checked_${id}`
   const t = parseInt(sessionStorage.getItem(sessionStorageRateLimitKey) ?? '-1')
   const ts = new Date().getTime()
-  if (!isNaN(t) && t > 0) {
-    const toWait = 15000 - (ts - t)
-    if (toWait > 0) {
-      mut((c) => {
-        c.storyFeedback = {
-          correct: false,
-          text: '',
-          toWait,
-        }
-      })
-      return
+  if (core.freeTries > 0) {
+    mut((c) => {
+      c.freeTries--
+    })
+  } else {
+    if (!isNaN(t) && t > 0) {
+      const toWait = 15000 - (ts - t)
+      if (toWait > 0) {
+        mut((c) => {
+          c.storyFeedback = {
+            correct: false,
+            text: '',
+            toWait,
+          }
+        })
+        return
+      }
     }
   }
   if (value) {

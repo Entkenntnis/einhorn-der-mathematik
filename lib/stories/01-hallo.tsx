@@ -40,6 +40,22 @@ export const story1: StoryData = {
       </>
     )
   },
+  proof: () => (
+    <>
+      <p>
+        <strong>Hallöööchen! Ich bin Tea, Tina&apos;s Einhorn-Tante.</strong>{' '}
+        Ich studiere Mathematik an der Akademie und freue mich sehr, dass sich
+        Tina für Mathematik begeistert.
+      </p>
+      <p>
+        Tina hat mir erlaubt, dass ich nach jeder Aufgabe ein paar Zusatz-Infos
+        geben darf - für alle, die gerne ein wenig über den Tellerrand
+        hinausschauen wollen. Ach, es gibt wenig schönere Dinge als einen
+        eleganten mathematischen Beweis 🥰
+      </p>
+      <p>--- netter Abschlusssatz ---</p>
+    </>
+  ),
   submit: ({ value, mut, id, core }) => {
     genericSubmitHandler(
       value,
