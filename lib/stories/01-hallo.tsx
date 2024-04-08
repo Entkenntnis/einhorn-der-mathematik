@@ -43,7 +43,7 @@ export const story1: StoryData = {
   proof: () => (
     <>
       <p>
-        <strong>Hallöööchen! Ich bin Tea, Tina&apos;s Einhorn-Tante.</strong>{' '}
+        <strong>Hallöööchen!</strong> Ich bin Tea, Tina&apos;s Einhorn-Tante.
         Ich studiere Mathematik an der Akademie und freue mich sehr, dass sich
         Tina für Mathematik begeistert.
       </p>

@@ -21,5 +21,35 @@ export const story26: StoryData = {
       <p>Hilf mir kurz auf die Sprünge. Welcher Wochentag ist heute?</p>
     </>
   ),
+  proof: () => (
+    <>
+      <p>
+        Mit Rückwärts-Rechnen kann man die Aufgabe auf den ersten Weg lösen:
+      </p>
+      <p>
+        Die Schule startet am Montag
+        <br />
+        Der Tag davor ist Sonntag,
+        <br />
+        zwei Tage davor ist Samstag,
+        <br />
+        drei Tage davor ist Freitag,
+        <br />
+        vier Tage davor ist Donnerstag,
+        <br />
+        und schließlich ist fünf Tage davor <strong>Mittwoch</strong>.
+      </p>
+      <hr />
+      <p>
+        Wer es aber etwas kreativer möchte, für den gibt es noch einen zweiten
+        Weg: Die Wochentage wiederholen sich alle 7 Tage. Wenn in fünf Tagen ein
+        Montag ist, dann war vor zwei Tagen ebenfalls ein Montag.
+      </p>
+      <p>
+        Damit musst du nur zwei Tage vom Montag aus nach vorne zählen und kommst
+        auf den Mittwoch.
+      </p>
+    </>
+  ),
   submit: ignoreCaseSolution('Mittwoch', ['MI']),
 }
