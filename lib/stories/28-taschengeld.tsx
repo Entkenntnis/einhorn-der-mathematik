@@ -22,5 +22,20 @@ export const story28: StoryData = {
       <p>Wie viel Euro Taschengeld bekomme ich im Monat?</p>
     </>
   ),
+  proof: () => (
+    <>
+      <p>
+        Von den 15€ weißt du, dass Tina davon 5€ bekommt. Die restlichen 10€
+        werden gleichmäßig auf Tina und Teo aufgeteilt, also für beide je 5€.
+        Damit bekommt Tina <strong>10€ im Monat</strong>, Teo bekommt 5€ im
+        Monat. Die Probe geht auf.
+      </p>
+      <p>
+        Man könnte hier auch die Gleichung x + 5 = x aufstellen und das formal
+        lösen. Wenn dir dieser Weg leichter fällt, ist das sehr legit. Aber
+        manchmal gefällt es mir auch, mal nicht mit Formeln zu arbeiten.
+      </p>
+    </>
+  ),
   submit: ignoreCaseSolution('10', ['10€', '10 euro']),
 }
