@@ -4,7 +4,7 @@ export const story25: StoryData = {
   title: 'Streichhölzer',
   x: 500,
   y: 550,
-  deps: [3, 12],
+  deps: [3, 35],
   render: () => (
     <>
       <p>

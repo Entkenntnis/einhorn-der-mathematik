@@ -37,7 +37,7 @@ import { story32 } from './stories/32-turnier'
 import { story33 } from './stories/33-B'
 import { story34 } from './stories/34-C'
 import { story36 } from './stories/36-E'
-import { story35 } from './stories/35-D'
+import { story35 } from './stories/35-rechenmauer-2'
 
 export interface StoryData {
   title: string

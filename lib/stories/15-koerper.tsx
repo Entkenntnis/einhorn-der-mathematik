@@ -4,7 +4,7 @@ export const story15: StoryData = {
   title: 'Körper',
   x: 560,
   y: 430,
-  deps: [8, 12],
+  deps: [8, 35],
   render: () => (
     <>
       <p>
