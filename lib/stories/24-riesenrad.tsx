@@ -22,5 +22,15 @@ export const story24: StoryData = {
       <p>Wie viele Einhörner passen in das Riesenrad?</p>
     </>
   ),
+  proof: () => (
+    <>
+      <p>
+        Wenn man die drei Gondeln in Reparatur abzieht, sind es noch 21 Gondeln,
+        die zur Verfügung stehen. Multipliziere die Zahl mit 3 und du hast das
+        Ergebnis: <strong>21 · 3 = 63 Gondeln</strong>.
+      </p>
+      <p></p>
+    </>
+  ),
   submit: ignoreCaseSolution('63'),
 }
