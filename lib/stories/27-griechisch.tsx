@@ -1,6 +1,4 @@
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
-import { FaIcon } from '../../components/FaIcon'
 import { StoryData, ignoreCaseSolution } from '../data'
 
 export const story27: StoryData = {
@@ -26,6 +24,30 @@ export const story27: StoryData = {
         Buchstaben aus.
       </p>
       <ChoiceInput onSubmit={onSubmit} feedback={feedback} />
+    </>
+  ),
+  proof: () => (
+    <>
+      <p>
+        In der Mathematik kommen ziemlich häufig griechische Buchstaben vor für
+        alle möglichen Dinge, wie Winkel, Summen, Abbildungen, ...
+      </p>
+      <p>
+        Muss man? Eigentlich nicht. Aber vielleicht ist der Grund einfach: Weil
+        die griechischen Zeichen cooler aussehen :)
+      </p>
+      <img src="/story27_sol.jpg" alt="Auflistung griechisches Alphabet" />
+      <p className="!-mt-6">
+        <small>
+          <a
+            href="https://www.math.uni-hamburg.de/home/kiechle/uebl/griechAlphabet.html"
+            target="_blank"
+            className="!text-gray-400 underline"
+          >
+            Bildquelle
+          </a>
+        </small>
+      </p>
     </>
   ),
   hideSubmit: true,
