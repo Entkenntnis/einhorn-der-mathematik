@@ -30,6 +30,35 @@ export const story3: StoryData = {
       <ClockInput onSubmit={onSubmit} feedback={feedback} />
     </>
   ),
+  proof: () => (
+    <>
+      <p>
+        Ich muss mich hier wirklich zurückhalten. Es gibt einen gesamten Zweig
+        der Mathematik, der auf dieser Idee aufbaut und es ist ziemlich genial,
+        wie weit und tief man diesen Ansatz verfolgen kann!
+      </p>
+      <p>
+        Ich möchte nur so viel sagen: Eine Stunde auf der Uhr kann man auch als
+        Drehung um 30° im Uhrzeigersinn verstehen. Um von 4 Uhr auf 7 Uhr zu
+        kommen, sind es 3 Stunden und damit eine 90° Drehung.
+      </p>
+      <img src="story3_sol.png" alt="Drehung 3 Stunden" />
+      <p>
+        Und stell dir nun vor, man darf den Zeiger auch an der Vertikalen
+        spiegeln.
+      </p>
+      <img src="story3_sol2.png" alt="Drehung 3 Stunden" />
+      <p>
+        Irgendein Mathematiker hat einmal angefangen, mit Drehung und Spiegelung
+        herumzuspielen und dabei festgestellt, dass es viele Ähnlichkeiten zu
+        unseren Grundrechenarten gibt - und auch Unterschiede!
+      </p>
+      <p>
+        So viel für jetzt - vielleicht habe ich später noch Gelegenheit, hier
+        mehr einzusteigen :)
+      </p>
+    </>
+  ),
   hideSubmit: true,
   submit: ignoreCaseSolution('4 Uhr'),
 }

@@ -26,5 +26,34 @@ export const story8: StoryData = {
       </p>
     </>
   ),
+  proof: () => (
+    <>
+      <p>
+        In der Aufgabe ist der mathematische Satz angegeben, mit dem du diese
+        Aufgabe lösen kannst.
+      </p>
+      <p>
+        Rechne{' '}
+        <strong>180°&nbsp;-&nbsp;60°&nbsp;-&nbsp;46°&nbsp;=&nbsp;74°</strong>{' '}
+        und erhalte das Ergebnis.
+      </p>
+      <img src="story8_sol.png" alt="Lösung" />
+      <p>
+        Die Mathematik hat zwei Seiten - erstens kann man vorhandene Sätze
+        anwenden und damit Ergebnisse berechnen. Das macht Spaß.
+      </p>
+      <p>
+        Oder zweitens, man erfindet neue Sätze oder schreibt Beweise für
+        vorhandene Sätze, wie zum Beispiel den Innenwinkelsummensatz für das
+        Dreieck. Das ist oft anstrengend, braucht ein wenig Kreativität und
+        Geduld - aber manchmal auch eine schöne Abwechslung zum reinen Rechnen.
+      </p>
+      <p>
+        Es gibt viele Wege um zu begründen, dass die Innenwinkelsumme 180°
+        ergeben muss. Weißt du, warum das so ist? Wenn dich das interessiert,
+        dann steht dir eine ganze Welt zum Entdecken offen.
+      </p>
+    </>
+  ),
   submit: ignoreCaseSolution('74', ['74°', '74 grad']),
 }

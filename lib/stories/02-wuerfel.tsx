@@ -28,6 +28,33 @@ export const story2: StoryData = {
       <DiceInput onSubmit={onSubmit} feedback={feedback} />
     </>
   ),
+  proof: () => (
+    <>
+      <p>
+        Auf den Bildern sieht man keine gegenüberliegende Seiten. Wenn man also
+        ein Augen-Paar findet, dass in Summe 7 ergibt, dann ist dieser Würfel
+        fehlerhaft.
+      </p>
+      <img src="story2_sol.png" alt="Auflösung" />
+      <p>
+        Das passiert bei den Würfeln A und D. Diese müssten sicher korrigiert
+        werden. Aus den verfügbaren Informationen können wir nur sagen, wann ein
+        Würfel falsch ist. Um sagen zu können, ob ein Würfel korrekt ist,
+        bräuchten wir auch die Rückseiten. Daher hat Tina die Frage so
+        formuliert, wie sie jetzt ist.
+      </p>
+      <p>
+        Heutzutage folgen alle mir bekannten Würfel dieser Regel. Ich finde das
+        erstaunlich, weil es einen Zeitpunkt geben musste, wo jemand diese Regel
+        erfunden hat. Wann ist das geschehen, wer hat das gemacht - und vor
+        allem, warum?
+      </p>
+      <p>
+        Das sind die wichtigen Fragen des Lebens, damit sollte sich die Akademie
+        viel mehr beschäftigen!
+      </p>
+    </>
+  ),
   hideSubmit: true,
   submit: ignoreCaseSolution('A D'),
 }
