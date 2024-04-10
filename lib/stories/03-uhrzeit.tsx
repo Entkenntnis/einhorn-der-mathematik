@@ -33,29 +33,20 @@ export const story3: StoryData = {
   proof: () => (
     <>
       <p>
-        Ich muss mich hier wirklich zurückhalten. Es gibt einen gesamten Zweig
-        der Mathematik, der auf dieser Idee aufbaut und es ist ziemlich genial,
-        wie weit und tief man diesen Ansatz verfolgen kann!
+        24 Uhr ist die gleiche Uhrzeit wie 0 Uhr, genauso wie die Vielfachen 48,
+        72 und 96.
       </p>
       <p>
-        Ich möchte nur so viel sagen: Eine Stunde auf der Uhr kann man auch als
-        Drehung um 30° im Uhrzeigersinn verstehen. Um von 4 Uhr auf 7 Uhr zu
-        kommen, sind es 3 Stunden und damit eine 90° Drehung.
-      </p>
-      <img src="story3_sol.png" alt="Drehung 3 Stunden" />
-      <p>
-        Und stell dir nun vor, man darf den Zeiger auch an der Vertikalen
-        spiegeln.
-      </p>
-      <img src="story3_sol2.png" alt="Drehung 3 Stunden" />
-      <p>
-        Irgendein Mathematiker hat einmal angefangen, mit Drehung und Spiegelung
-        herumzuspielen und dabei festgestellt, dass es viele Ähnlichkeiten zu
-        unseren Grundrechenarten gibt - und auch Unterschiede!
+        96 Uhr ist also gleich 0 Uhr. Bis 100 Uhr vergehen noch weitere 4
+        Stunden. Damit entspricht 100 Uhr der Uhrzeit <strong>4 Uhr</strong>.
       </p>
       <p>
-        So viel für jetzt - vielleicht habe ich später noch Gelegenheit, hier
-        mehr einzusteigen :)
+        Teo macht also mit der Uhr acht ganze 12-Stunden-Runden, dann bleiben
+        noch 4 Stunden übrig. So kann man sich die Aufgabe auch überlegen.
+      </p>
+      <p>
+        Oder mal teilt 100 durch 24 und nimmt den Rest. So würden wahrscheinlich
+        die meisten von uns an der Akademie die Aufgabe lösen.
       </p>
     </>
   ),
