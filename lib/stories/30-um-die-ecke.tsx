@@ -36,5 +36,23 @@ export const story30: StoryData = {
       </details>
     </>
   ),
+  proof: () => (
+    <>
+      <p>
+        Da musst ich auch einen Moment meine grauen Zellen anwerfen. Tina hat
+        sicherlich schnell erkannt, dass jeweils die Summe und die Differenz der
+        zwei Zahlen eine Rolle spielen.
+      </p>
+      <p>5 - 3 = 2; 5 + 3 = 8; das Ergebnis lautet 28.</p>
+      <p>8 - 1 = 7; 8 + 1 = 9; das Ergebnis lautet 79.</p>
+      <p>6 - 5 = 1; 6 + 5 = 11; das Ergebnis lautet 111.</p>
+      <p>
+        6 - 4 = 2; 6 + 4 = 10; das Ergebnis lautet <strong>210</strong>.
+      </p>
+      <p>
+        Schreibe sie hintereinander als Zahl und schon hast du das Ergebnis.
+      </p>
+    </>
+  ),
   submit: ignoreCaseSolution('210'),
 }

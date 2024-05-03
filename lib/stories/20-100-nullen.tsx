@@ -21,5 +21,19 @@ export const story20: StoryData = {
       <p>Wie heißt diese Zahl?</p>
     </>
   ),
+  proof: () => (
+    <>
+      <p>
+        Auf diese Zahl ist Tina vermutlich über die bekannte Suchmaschine
+        gestoßen, die ihren Namen davon abgeleitet hat.
+      </p>
+      <p>
+        Ausgedacht hat sich den Namen ein 9-Jähriges Kind! Ich finde das
+        ziemlich cool. Nicht immer muss in der Mathematik alles so ernsthaft
+        sein. Manchmal gehört auch einfach eine Portion kindliche Faszination
+        dazu, das Staunen über die Größe und Weite dieser Welt.
+      </p>
+    </>
+  ),
   submit: ignoreCaseSolution('googol'),
 }

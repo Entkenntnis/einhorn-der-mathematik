@@ -47,7 +47,7 @@ export const story26: StoryData = {
       </p>
       <p>
         Damit musst du nur zwei Tage vom Montag aus nach vorne zählen und kommst
-        auf den Mittwoch.
+        ebenfalls auf den Mittwoch.
       </p>
     </>
   ),

@@ -410,7 +410,7 @@ export default function App() {
         >
           Einhorn der Mathematik
         </h1>
-        <div className="max-w-[800px] mx-2 md:mx-auto bg-pink-50 rounded p-3 mt-6">
+        <div className="max-w-[800px] mx-2 md:mx-auto bg-pink-50 rounded p-3 mt-6 relative">
           <h2 className="mt-3 text-xl font-bold">{data.title}</h2>
 
           {core.storyFeedback && core.storyFeedback.correct ? (
@@ -429,6 +429,13 @@ export default function App() {
               {data.proof && (
                 <div className="mt-8 [&>p]:mt-4 [&_code]:text-pink-400 [&_code]:font-bold [&>img]:my-6 [&_a]:underline [&_a]:text-blue-600 [&_a]:hover:text-blue-700 [&_hr]:mt-4">
                   {data.proof({ core })}
+                </div>
+              )}
+
+              {data.proof && (
+                <div className="absolute right-3 top-2 flex items-center flex-col">
+                  <img src="/gluehbirne.png" alt="Glühbirne" className="h-16" />
+                  <em className="mt-1">Tante Tea</em>
                 </div>
               )}
             </>
@@ -464,6 +471,10 @@ export default function App() {
                     />
                   </>
                 )}
+                <div className="absolute right-3 top-2 flex items-center flex-col">
+                  <img src="/einhorn.png" alt="Glühbirne" className="h-16" />
+                  <em className="mt-1">Tina</em>
+                </div>
                 {core.analyze && (
                   <div className="mt-3 text-gray-500">
                     Eingaben:{' '}

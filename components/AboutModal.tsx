@@ -56,6 +56,14 @@ export function AboutModal({ onClose }: AboutModalProps) {
             >
               Bild von Rochak Shukla auf Freepik
             </a>
+            , Glühbirne:{' '}
+            <a
+              className="underline"
+              target="_blank"
+              href="https://de.freepik.com/vektoren-kostenlos/gluehlampe_35202510.htm#fromView=search&page=1&position=8&uuid=b1bbf230-0af5-4707-9fa9-b9b80cec8e1b"
+            >
+              Bild von juicy_fish auf Freepik
+            </a>
           </p>
           <p className="ml-4 font-bold text-lg mt-2 mb-4">Datenschutz</p>
           <p className="mx-4 mb-2">

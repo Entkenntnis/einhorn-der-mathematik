@@ -44,7 +44,7 @@ export const story29: StoryData = {
         Ergebnis 60.
       </p>
       <p>
-        Die Farben habe ich mir nur ausgedacht - Tina hat sicherlich passendere
+        Die Farben habe ich mir nur ausgedacht - Tina hat sicherlich schönere
         Farben in ihrem Kleiderschrank.
       </p>
     </>
