@@ -30,6 +30,39 @@ export const story23: StoryData = {
       <ChoiceInput onSubmit={onSubmit} feedback={feedback} />
     </>
   ),
+  proof: () => {
+    return (
+      <>
+        <img
+          src="story23.jpg"
+          alt="Geschenk umwickelt mit Bändern"
+          width={350}
+        />
+        <p>
+          Bei dieser Aufgabe braucht es einen scharfen Blick und bisschen
+          Vorstellungskraft. Das rote Band muss als erstes entfernt werden, weil
+          es von keinem anderen Band gekreuzt wird. Jetzt kann man die zwei
+          Kreuzungen des roten Bandes ignorieren. Hier ein Bild, falls es dir
+          schwerfällt, das vorzustellen:
+        </p>
+        <img
+          src="story23_sol.jpg"
+          alt="Geschenk umwickelt mit Bändern"
+          width={350}
+        />
+        <p>
+          Als nächstes liegt das grüne Band offen, dann das blaue Band und am
+          Ende das violette Band.
+        </p>
+        <p>
+          Bei der Aufgabe ist es so, dass die Reihenfolge eindeutig ist. Das
+          muss nicht immer so sein. Es kann durchaus passieren, dass die Bände
+          so liegen, dass es gar kein Reihenfolge gibt - oder mehrere mögliche
+          Reihenfolgen.
+        </p>
+      </>
+    )
+  },
   hideSubmit: true,
   submit: ignoreCaseSolution('R G B V'),
 }

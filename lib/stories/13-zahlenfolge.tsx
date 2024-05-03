@@ -28,5 +28,28 @@ export const story13: StoryData = {
       </p>
     </>
   ),
+  proof: () => (
+    <>
+      <p>
+        Das hier ist die berühmte Fibonacci-Folge. Sie ist das Ergebnis davon,
+        wenn Mathematiker sich mit praktischen Dinge wie die Fortpflanzung von
+        Kaninchen befassen. Alles schön abstrakt und sauber :) vielleicht für
+        manche auch etwas langweilig.
+      </p>
+      <p>
+        Die Regel für die Folge ist denkbar einfach. Nimm die letzten zwei
+        Zahlen und addiere sie.
+      </p>
+      <img src="story13_sol.png" alt="1, 1, 2, 3, 5, ?" width={350} />
+      <p>
+        1 + 1 = 2, 2 + 3 = 5 und schließlich 3 + 5 = <strong>8</strong>.
+      </p>
+      <p>
+        Was die Zahlenfolge aber mit der Kaninchen-Population gemeinsam hat: Sie
+        wächst sehr schnell. Die 20. Fibonacci-Zahl lautet 6765, die 100.
+        Fibonacci-Zahl dann schon 354224848179261915075.
+      </p>
+    </>
+  ),
   submit: ignoreCaseSolution('8'),
 }
