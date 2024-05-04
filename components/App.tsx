@@ -41,7 +41,8 @@ export type State = Immutable<{
   persist: boolean
   persistBannerShown: boolean
   freeTries: number
-  scrollPos: number
+  scrollPosTop: number
+  scrollPosLeft: number
 }>
 
 export default function App() {
@@ -59,7 +60,8 @@ export default function App() {
     persist: false,
     persistBannerShown: false,
     freeTries: 0,
-    scrollPos: 0,
+    scrollPosTop: 0,
+    scrollPosLeft: 0,
   })
 
   const cutOff = new Date('2024-05-05')
@@ -430,7 +432,8 @@ export default function App() {
                   function scroll() {
                     const el = document.getElementById('map-scroller')
                     if (el) {
-                      el.scrollTop = core.scrollPos
+                      el.scrollTop = core.scrollPosTop
+                      el.scrollLeft = core.scrollPosLeft
                     } else {
                       requestAnimationFrame(scroll)
                     }
@@ -464,7 +467,8 @@ export default function App() {
                   function scroll() {
                     const el = document.getElementById('map-scroller')
                     if (el) {
-                      el.scrollTop = core.scrollPos
+                      el.scrollTop = core.scrollPosTop
+                      el.scrollLeft = core.scrollPosLeft
                     } else {
                       requestAnimationFrame(scroll)
                     }
@@ -544,11 +548,16 @@ export default function App() {
     if (!feedback) {
       return null
     }
-    if (feedback.toWait) {
+    if (feedback.toWait && !feedback.text) {
       return <CountdownTimer toWait={feedback.toWait} />
     }
     if (feedback.correct == false) {
-      return <div className="mt-6 text-yellow-600">{feedback.text}</div>
+      return (
+        <>
+          <div className="mt-6 text-yellow-600">{feedback.text}</div>
+          {feedback.toWait && <CountdownTimer toWait={feedback.toWait} />}
+        </>
+      )
     }
     if (feedback.correct) {
       return <div className="mt-10 text-green-600">{feedback.text}</div>
@@ -568,9 +577,11 @@ export default function App() {
           mut((c) => {
             c.showStory = id
             c.storyFeedback = null
-            c.freeTries = 2
-            c.scrollPos =
+            c.freeTries = 3
+            c.scrollPosTop =
               document.getElementById('map-scroller')?.scrollTop ?? 0
+            c.scrollPosLeft =
+              document.getElementById('map-scroller')?.scrollLeft ?? 0
           })
         }}
         key={id}

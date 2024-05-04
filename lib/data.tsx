@@ -109,13 +109,15 @@ export function genericSubmitHandler(
   const sessionStorageRateLimitKey = `einhorn_der_mathematik_last_checked_${id}`
   const t = parseInt(sessionStorage.getItem(sessionStorageRateLimitKey) ?? '-1')
   const ts = new Date().getTime()
+  const isLastFreeTry = core.freeTries === 1
+
   if (core.freeTries > 0) {
     mut((c) => {
       c.freeTries--
     })
   } else {
     if (!isNaN(t) && t > 0) {
-      const toWait = 15000 - (ts - t)
+      const toWait = 10000 - (ts - t)
       if (toWait > 0) {
         mut((c) => {
           c.storyFeedback = {
@@ -152,6 +154,7 @@ export function genericSubmitHandler(
       c.storyFeedback = {
         correct: false,
         text: `"${value}" ist falsch`,
+        toWait: isLastFreeTry ? 10000 : undefined,
       }
     })
   }
