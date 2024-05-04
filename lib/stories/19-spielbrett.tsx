@@ -19,5 +19,18 @@ export const story19: StoryData = {
       </p>
     </>
   ),
+  proof: () => (
+    <>
+      <p>
+        Der kürzeste Weg besteht aus 4 Abschnitten und hat eine Gesamtlänge von
+        6 + 3 + 5 + 5 = <strong>19</strong> Schritten.
+      </p>
+      <img src="/story19_sol.jpg" alt="Spielbrett" className="w-[500px]" />
+      <p>
+        Die untere Alternative vom Start aus ist um einen Schritt länger, ebenso
+        ist der mittlere Weg zum Ziel um einen Schritt länger.
+      </p>
+    </>
+  ),
   submit: ignoreCaseSolution('19'),
 }

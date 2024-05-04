@@ -20,5 +20,21 @@ export const story5: StoryData = {
       <p>Wie heißt diese Figur?</p>
     </>
   ),
+  proof: () => (
+    <>
+      <p>
+        Da hat sich Tina wieder eine ganz poetische Beschreibung ausgedacht!
+      </p>
+      <img src="/story5_sol.png" alt="Kreis" />
+      <p>
+        Sie hat dabei die wichtigste Eigenschaft des Kreises umschrieben: Alle
+        Punkte auf der Kreislinie haben vom Mittelpunkt den Abstand r (=
+        Radius). Man könnte den Mittelpunkt wie Tina auch als Königin über die
+        Kreislinie sehen. Sie ist ganz alleine - aber ich finde, sie ist von
+        vielen Punkten umgeben und darf sich auch glücklich schätzen, im Zentrum
+        zu stehen.
+      </p>
+    </>
+  ),
   submit: ignoreCaseSolution('kreis'),
 }

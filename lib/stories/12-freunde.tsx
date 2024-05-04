@@ -19,7 +19,23 @@ export const story12: StoryData = {
       </p>
       <p>
         Wie viele Personen muss ich durchschnittlich begegnen, um eine Freundin
-        zu finden?
+        zu finden, die meine Sprache spricht?
+      </p>
+    </>
+  ),
+  proof: () => (
+    <>
+      <p>
+        Awwh! Tina, gib nicht auf! Suche weiter, auch wenn das Ergebnis
+        entmutigend wirkt!
+      </p>
+      <p>
+        An der Rechnung von Tina ist aber nichts auszusetzen, im Durchschnitt
+        muss sie 1000 · 5 · 100 = <strong>500000</strong> Personen begegnen.
+      </p>
+      <p>
+        Wenn du ein Einhorn bist und gute Freunde hast: schätze dich glücklich
+        und behandle sie wie einen Schatz.
       </p>
     </>
   ),
