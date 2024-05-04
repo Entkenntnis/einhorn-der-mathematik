@@ -31,5 +31,22 @@ export const story18: StoryData = {
       </p>
     </>
   ),
+  proof: () => (
+    <>
+      <p>
+        Uhmm, eine sehr interessante Aufgabe - die kann ich gleich morgen in der
+        Akademie zeigen.
+      </p>
+      <p>
+        Nach dem Argument aus dem Video kann es keine dreistellige Zahl geben,
+        die die gewünschte Eigenschaft erfüllt. Außerdem darf keine Ziffere
+        durch 3 teilbar sein.
+      </p>
+      <p>
+        Die größte zweistellige Zahl mit dieser Bedingung ist{' '}
+        <strong>88</strong>.
+      </p>
+    </>
+  ),
   submit: ignoreCaseSolution('88'),
 }

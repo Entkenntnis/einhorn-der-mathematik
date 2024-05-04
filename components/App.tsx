@@ -41,6 +41,7 @@ export type State = Immutable<{
   persist: boolean
   persistBannerShown: boolean
   freeTries: number
+  scrollPos: number
 }>
 
 export default function App() {
@@ -58,13 +59,17 @@ export default function App() {
     persist: false,
     persistBannerShown: false,
     freeTries: 0,
+    scrollPos: 0,
   })
 
-  const cutOff = new Date('2024-02-19')
+  const cutOff = new Date('2024-05-05')
 
   const runAnalyse = useRef(false)
 
   useEffect(() => {
+    window.addEventListener('hashchange', () => {
+      window.location.reload()
+    })
     const data = JSON.parse(
       localStorage.getItem('einhorn_der_mathematik_data_v2') ??
         sessionStorage.getItem('einhorn_der_mathematik_data_v2') ??
@@ -207,7 +212,7 @@ export default function App() {
 
   function renderOverview() {
     return (
-      <div className="overflow-auto h-full">
+      <div className="overflow-auto h-full" id="map-scroller">
         <div
           className="min-h-full pt-6 min-w-fit"
           style={{
@@ -422,6 +427,15 @@ export default function App() {
                   mut((c) => {
                     c.showStory = -1
                   })
+                  function scroll() {
+                    const el = document.getElementById('map-scroller')
+                    if (el) {
+                      el.scrollTop = core.scrollPos
+                    } else {
+                      requestAnimationFrame(scroll)
+                    }
+                  }
+                  requestAnimationFrame(scroll)
                 }}
               >
                 weiter
@@ -447,6 +461,15 @@ export default function App() {
                   mut((c) => {
                     c.showStory = -1
                   })
+                  function scroll() {
+                    const el = document.getElementById('map-scroller')
+                    if (el) {
+                      el.scrollTop = core.scrollPos
+                    } else {
+                      requestAnimationFrame(scroll)
+                    }
+                  }
+                  requestAnimationFrame(scroll)
                 }}
               >
                 zurück
@@ -546,6 +569,8 @@ export default function App() {
             c.showStory = id
             c.storyFeedback = null
             c.freeTries = 2
+            c.scrollPos =
+              document.getElementById('map-scroller')?.scrollTop ?? 0
           })
         }}
         key={id}

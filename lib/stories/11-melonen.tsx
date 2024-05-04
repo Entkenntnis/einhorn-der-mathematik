@@ -19,5 +19,22 @@ export const story11: StoryData = {
       <p>Wie viel Kilogramm Melonen hat der Händler am Ende des Tages?</p>
     </>
   ),
+  proof: () => (
+    <>
+      <p>
+        Wenn 1000kg Wassermelonen zu 99% aus Wasser bestehen, bleiben noch 1% =
+        10kg für Nicht-Wasser. Dieser Anteil verändert sich im Laufe des Tages
+        nicht.
+      </p>
+      <p>
+        Am Ende des Tages entsprechen diese 10kg = 2% der Melonen. Der Grundwert
+        berechnet sich dann auf 500kg.
+      </p>
+      <p>
+        Dem Händler bleiben am Ende des Tages nur noch <strong>500kg</strong>{' '}
+        Melonen.
+      </p>
+    </>
+  ),
   submit: ignoreCaseSolution('500', ['500kg']),
 }

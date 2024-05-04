@@ -34,9 +34,9 @@ import { story27 } from './stories/27-griechisch'
 import { story30 } from './stories/30-um-die-ecke'
 import { story31 } from './stories/31-barock'
 import { story32 } from './stories/32-turnier'
-import { story33 } from './stories/33-B'
-import { story34 } from './stories/34-C'
-import { story36 } from './stories/36-E'
+import { story33 } from './stories/33-ungeduld'
+import { story34 } from './stories/34-memory'
+import { story36 } from './stories/36-mathe'
 import { story35 } from './stories/35-rechenmauer-2'
 
 export interface StoryData {

@@ -25,5 +25,19 @@ export const story21: StoryData = {
       </p>
     </>
   ),
+  proof: () => (
+    <>
+      <p>
+        Das Seil ist 2 ∙ π ∙ 6370km lang, das entspricht 40023,89041km oder
+        40023890,41m.
+      </p>
+      <p>
+        Verlängere das Seil um 2 Meter. Berechne daraus den neuen Radius:
+        40023892,41m : (2π) = 6370000,318m. Der neue Radius ist um{' '}
+        <strong>32cm</strong> größer als der alte Radius. Es ist für einen
+        Menschen möglich, unter dem Seil durchzukriechen.
+      </p>
+    </>
+  ),
   submit: ignoreCaseSolution('32'),
 }
