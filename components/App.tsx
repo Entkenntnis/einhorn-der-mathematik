@@ -347,7 +347,7 @@ export default function App() {
                               y1={data.y + 64}
                               x2={storyData[dep].x + 32}
                               y2={storyData[dep].y + 64}
-                              strokeWidth="10"
+                              strokeWidth="9"
                               stroke="gray"
                             />
                           )
@@ -570,7 +570,7 @@ export default function App() {
       <div
         className={clsx(
           'flex items-center flex-col w-[64px] cursor-pointer group absolute pointer-events-none',
-          showSolved && 'pt-2'
+          'pt-2'
         )}
         style={{ left: `${x}px`, top: `${y}px` }}
         onClick={() => {
@@ -591,16 +591,14 @@ export default function App() {
         </button>
         {showSolved ? (
           <div className="w-16 pt-3 flex justify-center items-center">
-            <div className="bg-pink-200 rounded-full w-6 h-6 pointer-events-auto">
+            <div className="bg-gray-200 rounded-full w-6 h-6 pointer-events-auto">
               <FaIcon icon={faCheck} className="ml-[5px] text-pink-400" />
             </div>
           </div>
         ) : (
-          <img
-            src="/einhorn.png"
-            alt="Kopf eines Einhorns"
-            className="w-16 pointer-events-auto pt-2"
-          ></img>
+          <div className="w-16 pt-3 flex justify-center items-center">
+            <div className="bg-emerald-400 rounded-full w-6 h-6 pointer-events-auto"></div>
+          </div>
         )}
         {core.analyze && core.analyze.storyStats[id] && (
           <small>

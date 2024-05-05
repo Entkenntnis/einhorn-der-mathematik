@@ -13,7 +13,7 @@ export const story16: StoryData = {
       </p>
       <img src="/story16.jpg" alt="Landkarte" className="w-[400px]" />
       <p>
-        Die Insel hat eine Fläche von 620 Fußballfelder. Auf einer Insel leben
+        Die Insel hat eine Fläche von 620 Fußballfeldern. Auf einer Insel leben
         die Gruppen A und B. Durch einen See mit zwei Flüssen wird die Insel in
         zwei gleich große Teile unterteilt. Gruppe B besitzt 180 Fußballfelder
         mehr Land als Gruppe A.
