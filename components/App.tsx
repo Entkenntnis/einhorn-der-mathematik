@@ -489,14 +489,7 @@ export default function App() {
           {core.storyFeedback && core.storyFeedback.correct ? (
             <>
               {renderStoryFeedback(core.storyFeedback)}
-              <button
-                className="mt-8 text-pink-500 hover:underline hover:text-pink-600"
-                onClick={() => {
-                  back()
-                }}
-              >
-                weiter
-              </button>
+
               {data.proof && (
                 <details className="mt-8">
                   <summary className="cursor-pointer select-none">
@@ -507,6 +500,15 @@ export default function App() {
                   </div>
                 </details>
               )}
+
+              <button
+                className="mt-8 text-pink-500 hover:underline hover:text-pink-600"
+                onClick={() => {
+                  back()
+                }}
+              >
+                weiter
+              </button>
 
               {/*data.proof && (
                 <div className="absolute right-3 top-2 flex items-center flex-col">
@@ -569,7 +571,7 @@ export default function App() {
             </>
           )}
         </div>
-        <div className="h-16"></div>
+        <div className="h-32"></div>
 
         {core.modal == 'name' && (
           <NameModal
