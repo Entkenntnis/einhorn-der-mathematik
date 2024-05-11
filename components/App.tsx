@@ -64,7 +64,7 @@ export default function App() {
     scrollPosLeft: 0,
   })
 
-  const cutOff = new Date('2024-05-05')
+  const cutOff = new Date('2024-05-12')
 
   const runAnalyse = useRef(false)
 
