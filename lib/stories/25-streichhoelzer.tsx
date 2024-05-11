@@ -3,7 +3,7 @@ import { StoryData, ignoreCaseSolution } from '../data'
 export const story25: StoryData = {
   title: 'Streichhölzer',
   x: 500,
-  y: 550,
+  y: 551,
   deps: [3, 35],
   render: () => (
     <>

@@ -330,6 +330,37 @@ export default function App() {
             ))}
           <div className="mt-4 mx-auto w-[1200px] h-[1000px] relative z-0">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1000">
+              <defs>
+                <linearGradient
+                  id="grad_vertical"
+                  gradientTransform="rotate(90)"
+                >
+                  <stop offset="0%" stopColor="rgba(255, 153, 153, 1)" />
+                  <stop offset="10%" stopColor="rgba(255, 204, 153, 1)" />
+                  <stop offset="20%" stopColor="rgba(255, 255, 153, 1)" />
+                  <stop offset="30%" stopColor="rgba(204, 255, 153, 1)" />
+                  <stop offset="40%" stopColor="rgba(153, 255, 204, 1)" />
+                  <stop offset="50%" stopColor="rgba(153, 204, 255, 1)" />
+                  <stop offset="60%" stopColor="rgba(153, 153, 255, 1)" />
+                  <stop offset="70%" stopColor="rgba(204, 153, 255, 1)" />
+                  <stop offset="80%" stopColor="rgba(255, 153, 255, 1)" />
+                  <stop offset="90%" stopColor="rgba(255, 204, 204, 1)" />
+                  <stop offset="100%" stopColor="rgba(255, 153, 153, 1)" />
+                </linearGradient>
+                <linearGradient id="grad_horizontal">
+                  <stop offset="0%" stopColor="rgba(255, 153, 153, 1)" />
+                  <stop offset="10%" stopColor="rgba(255, 204, 153, 1)" />
+                  <stop offset="20%" stopColor="rgba(255, 255, 153, 1)" />
+                  <stop offset="30%" stopColor="rgba(204, 255, 153, 1)" />
+                  <stop offset="40%" stopColor="rgba(153, 255, 204, 1)" />
+                  <stop offset="50%" stopColor="rgba(153, 204, 255, 1)" />
+                  <stop offset="60%" stopColor="rgba(153, 153, 255, 1)" />
+                  <stop offset="70%" stopColor="rgba(204, 153, 255, 1)" />
+                  <stop offset="80%" stopColor="rgba(255, 153, 255, 1)" />
+                  <stop offset="90%" stopColor="rgba(255, 204, 204, 1)" />
+                  <stop offset="100%" stopColor="rgba(255, 153, 153, 1)" />
+                </linearGradient>
+              </defs>
               {Object.entries(storyData).map(([id, data]) => {
                 if (isVisible(parseInt(id))) {
                   return (
@@ -340,6 +371,24 @@ export default function App() {
                           core.analyze ||
                           core.editorMode
                         ) {
+                          const angle =
+                            (Math.atan2(
+                              storyData[dep].y - data.y,
+                              storyData[dep].x - data.x
+                            ) /
+                              Math.PI) *
+                            180
+                          const stroke =
+                            angle < -135 ||
+                            angle > 135 ||
+                            (angle > -45 && angle < 45)
+                              ? 'url(#grad_horizontal)'
+                              : 'url(#grad_vertical)'
+
+                          if (angle === -90 || angle === 0 || angle === 180) {
+                            console.log('DANGER', id, dep)
+                          }
+                          // console.log(angle, stroke)
                           return (
                             <line
                               key={`connect-${id}-${dep}`}
@@ -348,7 +397,7 @@ export default function App() {
                               x2={storyData[dep].x + 32}
                               y2={storyData[dep].y + 64}
                               strokeWidth="9"
-                              stroke="gray"
+                              stroke={stroke}
                             />
                           )
                         } else {
@@ -444,17 +493,22 @@ export default function App() {
                 weiter
               </button>
               {data.proof && (
-                <div className="mt-8 [&>p]:mt-4 [&_code]:text-pink-400 [&_code]:font-bold [&>img]:my-6 [&_a]:underline [&_a]:text-blue-600 [&_a]:hover:text-blue-700 [&_hr]:mt-4">
-                  {data.proof({ core })}
-                </div>
+                <details className="mt-8">
+                  <summary className="cursor-pointer">
+                    Lösungsweg anzeigen (mit Tante Tea)
+                  </summary>
+                  <div className="mt-5 [&>p]:mt-4 [&_code]:text-pink-400 [&_code]:font-bold [&>img]:my-6 [&_a]:underline [&_a]:text-blue-600 [&_a]:hover:text-blue-700 [&_hr]:mt-4">
+                    {data.proof({ core })}
+                  </div>
+                </details>
               )}
 
-              {data.proof && (
+              {/*data.proof && (
                 <div className="absolute right-3 top-2 flex items-center flex-col">
                   <img src="/gluehbirne.png" alt="Glühbirne" className="h-16" />
                   <em className="mt-1">Tante Tea</em>
                 </div>
-              )}
+              )*/}
             </>
           ) : (
             <>
@@ -566,11 +620,12 @@ export default function App() {
 
   function renderStoryIcon(title: string, x: number, y: number, id: number) {
     const showSolved = (core.solved.has(id) || core.analyze) && !core.editorMode
+    const showTina = id == 1 && !showSolved
     return (
       <div
         className={clsx(
           'flex items-center flex-col w-[64px] cursor-pointer group absolute pointer-events-none',
-          'pt-2'
+          !showTina && 'pt-2'
         )}
         style={{ left: `${x}px`, top: `${y}px` }}
         onClick={() => {
@@ -595,9 +650,15 @@ export default function App() {
               <FaIcon icon={faCheck} className="ml-[5px] text-pink-400" />
             </div>
           </div>
+        ) : showTina ? (
+          <img
+            src="/einhorn.png"
+            alt="Kopf eines Einhorns"
+            className="w-16 pointer-events-auto pt-2"
+          ></img>
         ) : (
           <div className="w-16 pt-3 flex justify-center items-center">
-            <div className="bg-emerald-400 rounded-full w-6 h-6 pointer-events-auto"></div>
+            <div className="bg-emerald-500 rounded-full w-6 h-6 pointer-events-auto"></div>
           </div>
         )}
         {core.analyze && core.analyze.storyStats[id] && (
