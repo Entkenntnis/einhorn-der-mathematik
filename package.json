@@ -14,7 +14,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "clsx": "^1.1.1",
     "immer": "^9.0.0",
-    "next": "13",
+    "next": "^14.0.0",
     "react": "^18.0.0",
     "react-clock": "^4.2.0",
     "react-dom": "^18.0.0",
