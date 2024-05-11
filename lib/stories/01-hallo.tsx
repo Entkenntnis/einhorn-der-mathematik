@@ -36,7 +36,7 @@ export const story1: StoryData = {
           Mathe-Rätsel aus. Ich hoffe, diese machen dir genauso viel Spaß wie
           mir!
         </p>
-        <p>Dein erstes Rätsel: Wie viele Zeichen hat dein Name?</p>
+        <p>Mein erstes Rätsel: Wie viele Zeichen hat dein Name?</p>
       </>
     )
   },

@@ -4,7 +4,7 @@ export const story24: StoryData = {
   title: 'Riesenrad',
   x: 191,
   y: 320,
-  deps: [7, 26],
+  deps: [7, 37],
   render: () => (
     <>
       <p>

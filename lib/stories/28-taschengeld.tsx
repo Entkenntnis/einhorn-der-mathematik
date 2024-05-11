@@ -4,7 +4,7 @@ export const story28: StoryData = {
   title: 'Taschengeld',
   x: 66,
   y: 350,
-  deps: [26],
+  deps: [37],
   render: () => (
     <>
       <p>

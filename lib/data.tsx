@@ -38,6 +38,7 @@ import { story33 } from './stories/33-ungeduld'
 import { story34 } from './stories/34-memory'
 import { story36 } from './stories/36-mathe'
 import { story35 } from './stories/35-rechenmauer-2'
+import { story37 } from './stories/37-zahlenstrahl'
 
 export interface StoryData {
   title: string
@@ -49,6 +50,7 @@ export interface StoryData {
     mut: (fn: (draft: Draft<State>) => void) => void
     onSubmit: (val: string) => void
     feedback: ReactNode
+    back: () => void
   }) => JSX.Element
   hideSubmit?: boolean
   submit: (props: {
@@ -97,6 +99,7 @@ export const storyData: { [key: number]: StoryData } = {
   34: story34,
   35: story35,
   36: story36,
+  37: story37,
 }
 
 export function genericSubmitHandler(

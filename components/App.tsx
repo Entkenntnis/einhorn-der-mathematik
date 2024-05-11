@@ -453,6 +453,23 @@ export default function App() {
 
   function renderStory() {
     const data = storyData[core.showStory]
+
+    function back() {
+      mut((c) => {
+        c.showStory = -1
+      })
+      function scroll() {
+        const el = document.getElementById('map-scroller')
+        if (el) {
+          el.scrollTop = core.scrollPosTop
+          el.scrollLeft = core.scrollPosLeft
+        } else {
+          requestAnimationFrame(scroll)
+        }
+      }
+      requestAnimationFrame(scroll)
+    }
+
     return (
       <>
         <div className="h-6"></div>
@@ -475,26 +492,14 @@ export default function App() {
               <button
                 className="mt-8 text-pink-500 hover:underline hover:text-pink-600"
                 onClick={() => {
-                  mut((c) => {
-                    c.showStory = -1
-                  })
-                  function scroll() {
-                    const el = document.getElementById('map-scroller')
-                    if (el) {
-                      el.scrollTop = core.scrollPosTop
-                      el.scrollLeft = core.scrollPosLeft
-                    } else {
-                      requestAnimationFrame(scroll)
-                    }
-                  }
-                  requestAnimationFrame(scroll)
+                  back()
                 }}
               >
                 weiter
               </button>
               {data.proof && (
                 <details className="mt-8">
-                  <summary className="cursor-pointer">
+                  <summary className="cursor-pointer select-none">
                     Lösungsweg anzeigen (mit Tante Tea)
                   </summary>
                   <div className="mt-5 [&>p]:mt-4 [&_code]:text-pink-400 [&_code]:font-bold [&>img]:my-6 [&_a]:underline [&_a]:text-blue-600 [&_a]:hover:text-blue-700 [&_hr]:mt-4">
@@ -515,19 +520,7 @@ export default function App() {
               <button
                 className="mt-3 text-pink-500 hover:underline hover:text-pink-600"
                 onClick={() => {
-                  mut((c) => {
-                    c.showStory = -1
-                  })
-                  function scroll() {
-                    const el = document.getElementById('map-scroller')
-                    if (el) {
-                      el.scrollTop = core.scrollPosTop
-                      el.scrollLeft = core.scrollPosLeft
-                    } else {
-                      requestAnimationFrame(scroll)
-                    }
-                  }
-                  requestAnimationFrame(scroll)
+                  back()
                 }}
               >
                 zurück
@@ -539,6 +532,7 @@ export default function App() {
                   onSubmit: (value) => {
                     data.submit({ value, mut, id: core.showStory, core })
                   },
+                  back,
                   feedback: renderStoryFeedback(core.storyFeedback),
                 })}
                 {!data.hideSubmit && (
