@@ -103,7 +103,7 @@ export function NumberLineExercise({
         </div>
       </div>
 
-      <div className="-mt-4 mb-4">
+      <div className="sm:-mt-4 mb-4">
         <ExerciseFeedback
           noUserInput={selectedValue === startValue}
           noUserInputText={noInputText}
