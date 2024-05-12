@@ -465,7 +465,10 @@ export default function App() {
                     Lösungsweg anzeigen (mit Tante Tea)
                   </summary>
                   <div className="mt-5 [&>p]:mt-4 [&_code]:text-pink-400 [&_code]:font-bold [&>img]:my-6 [&_a]:underline [&_a]:text-blue-600 [&_a]:hover:text-blue-700 [&_hr]:mt-4">
-                    {data.proof({ core })}
+                    {data.proof({
+                      core,
+                      genData: core.storyGeneratorData[core.showStory],
+                    })}
                   </div>
                 </details>
               )}
@@ -478,13 +481,6 @@ export default function App() {
               >
                 weiter
               </button>
-
-              {/*data.proof && (
-                <div className="absolute right-3 top-2 flex items-center flex-col">
-                  <img src="/gluehbirne.png" alt="Glühbirne" className="h-16" />
-                  <em className="mt-1">Tante Tea</em>
-                </div>
-              )*/}
             </>
           ) : (
             <>
@@ -501,10 +497,17 @@ export default function App() {
                   core,
                   mut,
                   onSubmit: (value) => {
-                    data.submit({ value, mut, id: core.showStory, core })
+                    data.submit({
+                      value,
+                      mut,
+                      id: core.showStory,
+                      core,
+                      genData: core.storyGeneratorData[core.showStory],
+                    })
                   },
                   back,
                   feedback: renderStoryFeedback(core.storyFeedback),
+                  genData: core.storyGeneratorData[core.showStory],
                 })}
                 {!data.hideSubmit && (
                   <>
@@ -512,7 +515,13 @@ export default function App() {
                     <InputBox
                       className="mt-8 -ml-1"
                       submit={(value) => {
-                        data.submit({ value, mut, id: core.showStory, core })
+                        data.submit({
+                          value,
+                          mut,
+                          id: core.showStory,
+                          core,
+                          genData: core.storyGeneratorData[core.showStory],
+                        })
                       }}
                     />
                   </>
@@ -605,6 +614,9 @@ export default function App() {
               document.getElementById('map-scroller')?.scrollLeft ?? 0
 
             const data = storyData[id]
+            if (data.generator && !c.storyGeneratorData[id]) {
+              c.storyGeneratorData[id] = data.generator()
+            }
           })
         }}
         key={id}

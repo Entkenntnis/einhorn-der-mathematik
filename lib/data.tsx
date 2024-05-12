@@ -140,6 +140,24 @@ export function genericSubmitHandler(
   }
 }
 
+export function ignoreCaseSolutionWithGenData<T>(f: (data: T) => string[]) {
+  return (props: Parameters<StoryData['submit']>[0]) => {
+    const value = props.value.trim().toLowerCase().replace(/\s/g, '')
+    const data = props.genData as T
+    const answers = f(data)
+    const isCorrect = answers.some(
+      (answer) => answer.toLowerCase().trim().replace(/\s/g, '') == value
+    )
+    genericSubmitHandler(
+      props.value.trim(),
+      isCorrect,
+      props.mut,
+      props.id,
+      props.core
+    )
+  }
+}
+
 export function ignoreCaseSolution(answer: string, alternatives?: string[]) {
   return (props: Parameters<StoryData['submit']>[0]) => {
     const value = props.value.trim().toLowerCase().replace(/\s/g, '')

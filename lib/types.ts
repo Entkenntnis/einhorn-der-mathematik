@@ -50,6 +50,7 @@ export interface StoryData {
     onSubmit: (val: string) => void
     feedback: ReactNode
     back: () => void
+    genData: object
   }) => JSX.Element
   hideSubmit?: boolean
   submit: (props: {
@@ -57,6 +58,8 @@ export interface StoryData {
     mut: (fn: (draft: Draft<State>) => void) => void
     id: number
     core: State
+    genData: object
   }) => void
-  proof?: (props: { core: State }) => JSX.Element
+  proof?: (props: { core: State; genData: object }) => JSX.Element
+  generator?: () => object
 }
