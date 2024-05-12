@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import produce, { Immutable, Draft } from 'immer'
+import produce, { Draft } from 'immer'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import shortid from 'shortid'
 import { storyData } from '../lib/data'
@@ -9,41 +9,9 @@ import { NameModal } from './NameModal'
 import { FaIcon } from './FaIcon'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { makePost } from '../lib/make-post'
-
-interface PlayerInfo {
-  name: string
-  solved: number
-  id: string
-  createdAt: number
-  solvedTs: number[]
-  nameTs: number
-  mins?: string
-}
-export type State = Immutable<{
-  showStory: number
-  storyFeedback: { correct: boolean; text: string; toWait?: number } | null
-  solved: Set<number>
-  modal: 'impressum' | 'name' | 'login' | 'change' | null
-  userId: string
-  analyze?: {
-    players: number
-    medianSeconds: number
-    medianPlayers: number
-    storyStats: { [key: string]: { reachable: number; solved: number } }
-    inputs: { [key: string]: { value: string; correct: boolean }[] }
-    playerInfo: PlayerInfo[]
-  }
-  editorMode: boolean
-  playerData: {
-    name: string
-    id: string
-  }
-  persist: boolean
-  persistBannerShown: boolean
-  freeTries: number
-  scrollPosTop: number
-  scrollPosLeft: number
-}>
+import { median } from '../lib/helper/median'
+import { State, PlayerInfo } from '../lib/types'
+import { CountdownTimer } from './CountdownTimer'
 
 export default function App() {
   const [core, setCore] = useState<State>({
@@ -53,6 +21,7 @@ export default function App() {
     modal: null,
     userId: shortid.generate(),
     editorMode: false,
+    demoMode: false,
     playerData: {
       name: '',
       id: shortid(),
@@ -92,9 +61,7 @@ export default function App() {
     })
     if (window.location.hash == '#demo') {
       mut((state) => {
-        for (const id in storyData) {
-          state.solved.add(parseInt(id))
-        }
+        state.demoMode = true
       })
     }
     if (window.location.hash == '#editor') {
@@ -123,7 +90,6 @@ export default function App() {
           }[]
         }
 
-        // TODO: preprocess solved data properly
         const stories = new Set<number>()
         const solvedBy = data.solves.reduce((res, obj) => {
           const ts = new Date(obj.createdAt).getTime()
@@ -369,7 +335,8 @@ export default function App() {
                         if (
                           core.solved.has(dep) ||
                           core.analyze ||
-                          core.editorMode
+                          core.editorMode ||
+                          core.demoMode
                         ) {
                           const angle =
                             (Math.atan2(
@@ -419,7 +386,8 @@ export default function App() {
               data.deps.length == 0 ||
               data.deps.some((d) => core.solved.has(d)) ||
               core.analyze ||
-              core.editorMode
+              core.editorMode ||
+              core.demoMode
                 ? renderStoryIcon(data.title, data.x, data.y, parseInt(id))
                 : null
             )}
@@ -615,7 +583,8 @@ export default function App() {
   }
 
   function renderStoryIcon(title: string, x: number, y: number, id: number) {
-    const showSolved = (core.solved.has(id) || core.analyze) && !core.editorMode
+    const showSolved =
+      (core.solved.has(id) || core.analyze || core.demoMode) && !core.editorMode
     const showTina = id == 1 && !showSolved
     return (
       <div
@@ -637,7 +606,7 @@ export default function App() {
         }}
         key={id}
       >
-        <button className="text-lg bg-gray-100/70 px-1 py-0.5 rounded group-hover:bg-white/80 pointer-events-auto whitespace-nowrap">
+        <button className="text-lg bg-gray-100/80 px-1 py-0.5 rounded group-hover:bg-white/90 pointer-events-auto whitespace-nowrap">
           {title}
         </button>
         {showSolved ? (
@@ -703,30 +672,8 @@ export default function App() {
       storyData[id].deps.length == 0 ||
       storyData[id].deps.some((d) => core.solved.has(d)) ||
       core.analyze ||
-      core.editorMode
+      core.editorMode ||
+      core.demoMode
     )
   }
-
-  function median(arr: number[]) {
-    const middle = Math.floor(arr.length / 2)
-    if (arr.length % 2 === 0) {
-      return (arr[middle - 1] + arr[middle]) / 2
-    } else {
-      return arr[middle]
-    }
-  }
-}
-
-function CountdownTimer({ toWait }: { toWait: number }) {
-  const [seconds, setSeconds] = useState(Math.ceil(toWait / 1000))
-  useEffect(() => {
-    seconds > 0 && setTimeout(() => setSeconds(seconds - 1), 1000)
-  }, [seconds])
-  if (seconds == 0) return null
-  return (
-    <div className="mt-6 text-gray-600 italic">
-      Warte noch {seconds} Sekunde{seconds == 1 ? '' : 'n'} bis zum nächsten
-      Versuch.
-    </div>
-  )
 }

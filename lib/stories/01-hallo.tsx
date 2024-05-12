@@ -11,6 +11,7 @@ export const story1: StoryData = {
         c.modal = 'name'
       })
     }
+    const nameIsAlphabetical = /^[a-zA-ZäöüÄÜÖß()]+$/.test(core.playerData.name)
     return (
       <>
         <p>
@@ -36,7 +37,10 @@ export const story1: StoryData = {
           Mathe-Rätsel aus. Ich hoffe, diese machen dir genauso viel Spaß wie
           mir!
         </p>
-        <p>Mein erstes Rätsel: Wie viele Zeichen hat dein Name?</p>
+        <p>
+          Das erste Rätsel: Wie viele{' '}
+          {nameIsAlphabetical ? 'Buchstaben' : 'Zeichen'} hat dein Name?
+        </p>
       </>
     )
   },
