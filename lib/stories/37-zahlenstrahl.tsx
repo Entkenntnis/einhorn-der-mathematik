@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { NumberLineExercise } from '../../components/math-skills/number-line/number-line-exercise'
-import { StoryData, ignoreCaseSolution } from '../data'
+import { ignoreCaseSolution } from '../data'
 import { getIntRange } from '../helper/get-int-range'
 import { randomItemFromArray } from '../helper/random-item-from-array'
 import { CounterContext } from '../../components/math-skills/context/counter-context'
+import { StoryData } from '../types'
 
 export const story37: StoryData = {
   title: 'Zahlenstrahl',

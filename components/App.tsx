@@ -31,6 +31,7 @@ export default function App() {
     freeTries: 0,
     scrollPosTop: 0,
     scrollPosLeft: 0,
+    storyGeneratorData: {},
   })
 
   const cutOff = new Date('2024-05-12')
@@ -602,6 +603,8 @@ export default function App() {
               document.getElementById('map-scroller')?.scrollTop ?? 0
             c.scrollPosLeft =
               document.getElementById('map-scroller')?.scrollLeft ?? 0
+
+            const data = storyData[id]
           })
         }}
         key={id}

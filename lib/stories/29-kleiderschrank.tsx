@@ -1,4 +1,5 @@
-import { StoryData, ignoreCaseSolution } from '../data'
+import { ignoreCaseSolution } from '../data'
+import { StoryData } from '../types'
 
 export const story29: StoryData = {
   title: 'Kleiderschrank',

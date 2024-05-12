@@ -1,4 +1,5 @@
-import { StoryData, ignoreCaseSolution } from '../data'
+import { ignoreCaseSolution } from '../data'
+import { StoryData } from '../types'
 
 export const story24: StoryData = {
   title: 'TODO',
@@ -10,5 +11,5 @@ export const story24: StoryData = {
       <p>TODO</p>
     </>
   ),
-  submit: ignoreCaseSolution('32'),
+  submit: ignoreCaseSolution('42'),
 }

@@ -1,4 +1,5 @@
-import { Immutable } from 'immer'
+import { Draft, Immutable } from 'immer'
+import { ReactNode } from 'react'
 
 export interface PlayerInfo {
   name: string
@@ -9,6 +10,7 @@ export interface PlayerInfo {
   nameTs: number
   mins?: string
 }
+
 export type State = Immutable<{
   showStory: number
   storyFeedback: { correct: boolean; text: string; toWait?: number } | null
@@ -34,4 +36,27 @@ export type State = Immutable<{
   freeTries: number
   scrollPosTop: number
   scrollPosLeft: number
+  storyGeneratorData: { [key: number]: object }
 }>
+
+export interface StoryData {
+  title: string
+  x: number
+  y: number
+  deps: number[]
+  render: (props: {
+    core: State
+    mut: (fn: (draft: Draft<State>) => void) => void
+    onSubmit: (val: string) => void
+    feedback: ReactNode
+    back: () => void
+  }) => JSX.Element
+  hideSubmit?: boolean
+  submit: (props: {
+    value: string
+    mut: (fn: (draft: Draft<State>) => void) => void
+    id: number
+    core: State
+  }) => void
+  proof?: (props: { core: State }) => JSX.Element
+}

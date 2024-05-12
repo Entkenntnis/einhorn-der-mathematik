@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { StoryData, ignoreCaseSolution } from '../data'
+import { ignoreCaseSolution } from '../data'
 import clsx from 'clsx'
+import { StoryData } from '../types'
 
 export const story2: StoryData = {
   title: 'Würfel',

@@ -1,6 +1,4 @@
 import { Draft } from 'immer'
-import type { ReactNode } from 'react'
-import { State } from '../components/App'
 import { story1 } from './stories/01-hallo'
 import { story2 } from './stories/02-wuerfel'
 import { story3 } from './stories/03-uhrzeit'
@@ -39,28 +37,7 @@ import { story34 } from './stories/34-memory'
 import { story36 } from './stories/36-mathe'
 import { story35 } from './stories/35-rechenmauer-2'
 import { story37 } from './stories/37-zahlenstrahl'
-
-export interface StoryData {
-  title: string
-  x: number
-  y: number
-  deps: number[]
-  render: (props: {
-    core: State
-    mut: (fn: (draft: Draft<State>) => void) => void
-    onSubmit: (val: string) => void
-    feedback: ReactNode
-    back: () => void
-  }) => JSX.Element
-  hideSubmit?: boolean
-  submit: (props: {
-    value: string
-    mut: (fn: (draft: Draft<State>) => void) => void
-    id: number
-    core: State
-  }) => void
-  proof?: (props: { core: State }) => JSX.Element
-}
+import { State, StoryData } from './types'
 
 export const storyData: { [key: number]: StoryData } = {
   1: story1,

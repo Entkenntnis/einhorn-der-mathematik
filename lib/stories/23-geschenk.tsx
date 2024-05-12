@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import { StoryData, ignoreCaseSolution } from '../data'
-import { FaIcon } from '../../components/FaIcon'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import { ignoreCaseSolution } from '../data'
+import { StoryData } from '../types'
 
 export const story23: StoryData = {
   title: 'Geschenk',

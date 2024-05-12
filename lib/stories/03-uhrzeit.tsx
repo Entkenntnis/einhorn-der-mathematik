@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { StoryData, ignoreCaseSolution } from '../data'
+import { ignoreCaseSolution } from '../data'
 import Clock from 'react-clock'
+import { StoryData } from '../types'
 
 export const story3: StoryData = {
   title: 'Uhrzeit',
