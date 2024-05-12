@@ -624,18 +624,18 @@ export default function App() {
         <button className="text-lg bg-gray-100/80 px-1 py-0.5 rounded group-hover:bg-white/90 pointer-events-auto whitespace-nowrap">
           {title}
         </button>
-        {showSolved ? (
-          <div className="w-16 pt-3 flex justify-center items-center">
-            <div className="bg-gray-200 rounded-full w-6 h-6 pointer-events-auto">
-              <FaIcon icon={faCheck} className="ml-[5px] text-pink-400" />
-            </div>
-          </div>
-        ) : showTina ? (
+        {showTina ? (
           <img
             src="/einhorn.png"
             alt="Kopf eines Einhorns"
             className="w-16 pointer-events-auto pt-2"
           ></img>
+        ) : showSolved ? (
+          <div className="w-16 pt-3 flex justify-center items-center">
+            <div className="bg-gray-200 rounded-full w-6 h-6 pointer-events-auto">
+              <FaIcon icon={faCheck} className="ml-[5px] text-pink-400" />
+            </div>
+          </div>
         ) : (
           <div className="w-16 pt-3 flex justify-center items-center">
             <div className="bg-emerald-500 rounded-full w-6 h-6 pointer-events-auto"></div>
