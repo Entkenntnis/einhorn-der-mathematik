@@ -149,7 +149,7 @@ export function ExerciseFeedback({
         className="px-2 py-0.5 bg-pink-300 hover:bg-pink-400 rounded"
         onClick={onButtonClick}
       >
-        {isNextButton && (isDone ? 'Aufgabe abschließen' : 'Nächste Zahl 👉')}
+        {isNextButton && (isDone ? 'weiter' : 'Neue Zahl 👉')}
         {exStatus === 'fresh' && "Stimmt's?"}
       </button>
     )

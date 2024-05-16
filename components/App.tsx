@@ -34,7 +34,7 @@ export default function App() {
     storyGeneratorData: {},
   })
 
-  const cutOff = new Date('2024-05-13')
+  const cutOff = new Date('2024-05-17')
 
   const runAnalyse = useRef(false)
 

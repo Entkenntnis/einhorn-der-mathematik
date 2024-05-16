@@ -38,13 +38,12 @@ function MultistepExercise({ onDone }: { onDone: () => void }) {
     <CounterContext.Provider
       value={{
         count,
-        target: 4,
+        target: 1,
         increment: () => setCounter((x) => x + 1),
         onDone,
       }}
     >
       <NumberLineExercise generator={numberLineGeneratorLevel1} />
-      <div>Fortschritt: {count}/4</div>
     </CounterContext.Provider>
   )
 }
