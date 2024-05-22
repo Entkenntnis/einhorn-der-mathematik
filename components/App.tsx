@@ -28,7 +28,7 @@ export default function App() {
     },
     persist: false,
     persistBannerShown: false,
-    freeTries: 0,
+    rateLimit: { freeTries: 3, lockedUntil: null },
     scrollPosTop: 0,
     scrollPosLeft: 0,
     storyGeneratorData: {},
@@ -573,17 +573,19 @@ export default function App() {
   }
 
   function renderStoryFeedback(feedback: State['storyFeedback']) {
-    if (!feedback) {
+    if (!feedback || !feedback.text) {
       return null
-    }
-    if (feedback.toWait && !feedback.text) {
-      return <CountdownTimer toWait={feedback.toWait} />
     }
     if (feedback.correct == false) {
       return (
         <>
           <div className="mt-6 text-yellow-600">{feedback.text}</div>
-          {feedback.toWait && <CountdownTimer toWait={feedback.toWait} />}
+          {feedback.toWait && (
+            <CountdownTimer
+              toWait={feedback.toWait}
+              key={core.rateLimit.lockedUntil}
+            />
+          )}
         </>
       )
     }
@@ -607,7 +609,8 @@ export default function App() {
           mut((c) => {
             c.showStory = id
             c.storyFeedback = null
-            c.freeTries = 3
+            c.rateLimit.freeTries = 3
+            c.rateLimit.lockedUntil = null
             c.scrollPosTop =
               document.getElementById('map-scroller')?.scrollTop ?? 0
             c.scrollPosLeft =

@@ -86,30 +86,26 @@ export function genericSubmitHandler(
   id: number,
   core: State
 ) {
-  const sessionStorageRateLimitKey = `einhorn_der_mathematik_last_checked_${id}`
-  const t = parseInt(sessionStorage.getItem(sessionStorageRateLimitKey) ?? '-1')
   const ts = new Date().getTime()
-  const isLastFreeTry = core.freeTries === 1
+  const isLocked =
+    core.rateLimit.lockedUntil !== null && ts < core.rateLimit.lockedUntil
 
-  if (core.freeTries > 0) {
-    mut((c) => {
-      c.freeTries--
-    })
+  if (isLocked) {
+    return
   } else {
-    if (!isNaN(t) && t > 0) {
-      const toWait = 10000 - (ts - t)
-      if (toWait > 0) {
-        mut((c) => {
-          c.storyFeedback = {
-            correct: false,
-            text: '',
-            toWait,
-          }
-        })
-        return
-      }
+    if (core.rateLimit.lockedUntil !== null) {
+      mut((c) => {
+        c.rateLimit.lockedUntil = null
+      })
     }
   }
+
+  if (core.rateLimit.freeTries > 0) {
+    mut((c) => {
+      c.rateLimit.freeTries--
+    })
+  }
+
   if (value) {
     makePost('/log', {
       storyId: id,
@@ -127,14 +123,14 @@ export function genericSubmitHandler(
     })
     addSolved(mut, id, core.playerData.id)
   } else {
-    if (value) {
-      sessionStorage.setItem(sessionStorageRateLimitKey, ts.toString())
-    }
     mut((c) => {
       c.storyFeedback = {
         correct: false,
         text: `"${value}" ist falsch`,
-        toWait: isLastFreeTry ? 10000 : undefined,
+        toWait: core.rateLimit.freeTries === 0 ? 10000 : undefined,
+      }
+      if (core.rateLimit.freeTries === 0) {
+        c.rateLimit.lockedUntil = new Date().getTime() + 10000
       }
     })
   }

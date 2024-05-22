@@ -20,6 +20,9 @@ export const story20: StoryData = {
         hat einen ganz bestimmten Namen.
       </p>
       <p>Wie heißt diese Zahl?</p>
+      <p className="italic text-gray-600">
+        <small>Du kannst für diese Aufgabe eine Suchmaschine verwenden.</small>
+      </p>
     </>
   ),
   proof: () => (

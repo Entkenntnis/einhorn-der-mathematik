@@ -33,7 +33,7 @@ export type State = Immutable<{
   }
   persist: boolean
   persistBannerShown: boolean
-  freeTries: number
+  rateLimit: { freeTries: number; lockedUntil: number | null }
   scrollPosTop: number
   scrollPosLeft: number
   storyGeneratorData: { [key: number]: object }
