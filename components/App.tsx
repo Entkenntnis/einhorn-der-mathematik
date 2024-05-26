@@ -34,7 +34,7 @@ export default function App() {
     storyGeneratorData: {},
   })
 
-  const cutOff = new Date('2024-05-17')
+  const cutOff = new Date('2024-05-27')
 
   const runAnalyse = useRef(false)
 
@@ -467,7 +467,7 @@ export default function App() {
                   <div className="mt-5 [&>p]:mt-4 [&_code]:text-pink-400 [&_code]:font-bold [&>img]:my-6 [&_a]:underline [&_a]:text-blue-600 [&_a]:hover:text-blue-700 [&_hr]:mt-4">
                     {data.proof({
                       core,
-                      genData: core.storyGeneratorData[core.showStory],
+                      data: core.storyGeneratorData[core.showStory],
                     })}
                   </div>
                 </details>
@@ -502,12 +502,12 @@ export default function App() {
                       mut,
                       id: core.showStory,
                       core,
-                      genData: core.storyGeneratorData[core.showStory],
+                      data: core.storyGeneratorData[core.showStory],
                     })
                   },
                   back,
                   feedback: renderStoryFeedback(core.storyFeedback),
-                  genData: core.storyGeneratorData[core.showStory],
+                  data: core.storyGeneratorData[core.showStory],
                 })}
                 {!data.hideSubmit && (
                   <>
@@ -520,7 +520,7 @@ export default function App() {
                           mut,
                           id: core.showStory,
                           core,
-                          genData: core.storyGeneratorData[core.showStory],
+                          data: core.storyGeneratorData[core.showStory],
                         })
                       }}
                     />
@@ -601,7 +601,7 @@ export default function App() {
     return (
       <div
         className={clsx(
-          'flex items-center flex-col w-[64px] cursor-pointer group absolute pointer-events-none',
+          'flex items-center flex-col w-[64px] cursor-pointer group absolute',
           !showTina && 'pt-2'
         )}
         style={{ left: `${x}px`, top: `${y}px` }}

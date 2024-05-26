@@ -5,7 +5,7 @@ export const story19: StoryData = {
   title: 'Spielbrett',
   x: 680,
   y: 550,
-  deps: [15, 25],
+  deps: [3, 15],
   render: () => (
     <>
       <p>

@@ -10,11 +10,11 @@ interface DATA {
   proGondel: number
 }
 
-export const story24: StoryData = {
+export const story24: StoryData<DATA> = {
   title: 'Riesenrad',
-  x: 191,
-  y: 320,
-  deps: [7, 37],
+  x: 540,
+  y: 110,
+  deps: [27, 39],
   generator: () => {
     const data: DATA = {
       gondeln: randomIntBetween(12, 25),
@@ -23,8 +23,7 @@ export const story24: StoryData = {
     }
     return data
   },
-  render: ({ genData }) => {
-    const data = genData as DATA
+  render: ({ data }) => {
     return (
       <>
         <p>
@@ -45,8 +44,7 @@ export const story24: StoryData = {
       </>
     )
   },
-  proof: ({ genData }) => {
-    const data = genData as DATA
+  proof: ({ data }) => {
     return (
       <>
         <p>

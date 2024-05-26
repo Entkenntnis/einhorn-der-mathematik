@@ -10,11 +10,11 @@ interface DATA {
 
 const letters = ['A', 'B', 'C', 'D']
 
-export const story2: StoryData = {
+export const story2: StoryData<DATA> = {
   title: 'Würfel',
-  x: 120,
-  y: 500,
-  deps: [24, 28],
+  x: 260,
+  y: 460,
+  deps: [23, 38],
   generator: () => {
     const data: DATA = {
       entries: [
@@ -41,8 +41,7 @@ export const story2: StoryData = {
     data.entries = shuffleArray(data.entries)
     return data
   },
-  render: ({ onSubmit, feedback, genData }) => {
-    const data = genData as DATA
+  render: ({ onSubmit, feedback, data }) => {
     return (
       <>
         <p>

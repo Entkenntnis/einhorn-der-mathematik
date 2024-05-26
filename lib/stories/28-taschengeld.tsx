@@ -7,21 +7,19 @@ interface DATA {
   teo: number
 }
 
-export const story28: StoryData = {
+export const story28: StoryData<DATA> = {
   title: 'Taschengeld',
-  x: 66,
-  y: 350,
-  deps: [37],
+  x: 115,
+  y: 676,
+  deps: [26],
   generator: () => {
     const teo = randomIntBetween(5, 15)
-    const data: DATA = {
+    return {
       tina: teo + randomIntBetween(2, 10),
       teo,
     }
-    return data
   },
-  render: ({ genData }) => {
-    const data = genData as DATA
+  render: ({ data }) => {
     return (
       <>
         <p>
@@ -41,8 +39,7 @@ export const story28: StoryData = {
       </>
     )
   },
-  proof: ({ genData }) => {
-    const data = genData as DATA
+  proof: ({ data }) => {
     return (
       <>
         <p>

@@ -1,19 +1,41 @@
-import { ignoreCaseSolution } from '../data'
+import { ignoreCaseSolution, ignoreCaseSolutionWithGenData } from '../data'
+import { randomIntBetween } from '../helper/random-int-between'
 import { StoryData } from '../types'
 
-export const story8: StoryData = {
+interface DATA {
+  missing: number
+  a: number
+  b: number
+}
+
+export const story8: StoryData<DATA> = {
   title: 'Winkel',
   x: 510,
   y: 310,
   deps: [10, 27],
-  render: () => (
+  generator: () => {
+    const missing = randomIntBetween(63, 81)
+    const t = 180 - missing
+    const a = randomIntBetween(Math.floor(t * 0.55), Math.ceil(t * 0.65))
+    const b = t - a
+    return { missing, a, b }
+  },
+  render: ({ data }) => (
     <>
       <p>
-        Teo ist erst in der 1. Klasse. Ich konnte ihm bereits beibringen, wie
-        man mit dem Geo-Dreieck Winkel misst. In diesem Dreieck hat er schon
-        zwei Winkel gemessen.
+        Teo fragt mich, was das Wort &quot;Winkel&quot; bedeutet. Ich erkläre
+        das sehr gerne und zeige ihm auch, wie man Winkel mit dem Geodreieck
+        misst. In diesem Dreieck haben wir bereits zwei Winkel gemessen.
       </p>
-      <img src="story8.png" alt="Ein Dreieck mit Innenwinkel 46 und 60 Grad" />
+      <div className="relative mt-4">
+        <img src="story8.png" alt="Ein Dreieck mit Innenwinkel eingezeichnet" />
+        <div className="absolute top-[43px] left-[170px] text-2xl text-blue-700">
+          {data.a}°
+        </div>
+        <div className="absolute top-[222px] left-[50px] text-2xl text-blue-700">
+          {data.b}°
+        </div>
+      </div>
       <p>
         Ich habe in der Schule gelernt, dass die Summe der drei Winkel eines
         Dreiecks immer 180 Grad beträgt. Damit möchte ich ihn überraschen. Ich
@@ -21,13 +43,13 @@ export const story8: StoryData = {
         flüstere ihm das Ergebnis.
       </p>
       <p>
-        Nachdem Teo den Winkel gemessen hat, ist er ganz erstaunt wie genau ich
-        den Winkel geschätzt habe. Dabei habe ich gar nicht schätzen müssen,
+        Nachdem wir den Winkel gemessen haben, ist er ganz erstaunt wie genau
+        ich den Winkel geschätzt habe. Dabei habe ich gar nicht schätzen müssen,
         sondern konnte den Winkel ausrechnen. Wie groß ist der fehlende Winkel?
       </p>
     </>
   ),
-  proof: () => (
+  proof: ({ data }) => (
     <>
       <p>
         In der Aufgabe ist der mathematische Satz angegeben, mit dem du diese
@@ -35,10 +57,27 @@ export const story8: StoryData = {
       </p>
       <p>
         Rechne{' '}
-        <strong>180°&nbsp;-&nbsp;60°&nbsp;-&nbsp;46°&nbsp;=&nbsp;74°</strong>{' '}
+        <strong>
+          180°&nbsp;-&nbsp;{data.a}°&nbsp;-&nbsp;{data.b}°&nbsp;=&nbsp;
+          {data.missing}°
+        </strong>{' '}
         und erhalte das Ergebnis.
       </p>
-      <img src="story8_sol.png" alt="Lösung" />
+      <div className="relative mt-4">
+        <img
+          src="story8_sol.png"
+          alt="Ein Dreieck mit Innenwinkel eingezeichnet"
+        />
+        <div className="absolute top-[43px] left-[170px] text-2xl text-blue-700">
+          {data.a}°
+        </div>
+        <div className="absolute top-[222px] left-[50px] text-2xl text-blue-700">
+          {data.b}°
+        </div>
+        <div className="absolute top-[188px] left-[250px] text-2xl text-pink-700">
+          {data.missing}°
+        </div>
+      </div>
       <p>
         Die Mathematik hat zwei Seiten - erstens kann man vorhandene Sätze
         anwenden und damit Ergebnisse berechnen. Das macht Spaß.
@@ -56,5 +95,9 @@ export const story8: StoryData = {
       </p>
     </>
   ),
-  submit: ignoreCaseSolution('74', ['74°', '74 grad']),
+  submit: ignoreCaseSolutionWithGenData<DATA>((data) => [
+    data.missing.toString(),
+    data.missing.toString() + '°',
+    data.missing.toString() + 'grad',
+  ]),
 }

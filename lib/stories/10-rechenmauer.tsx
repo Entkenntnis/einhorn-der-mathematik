@@ -9,7 +9,7 @@ interface DATA {
   d: number
 }
 
-export const story10: StoryData = {
+export const story10: StoryData<DATA> = {
   title: 'Rechenmauer',
   x: 360,
   y: 320,
@@ -23,8 +23,7 @@ export const story10: StoryData = {
     }
     return data
   },
-  render: ({ genData }) => {
-    const data = genData as DATA
+  render: ({ data }) => {
     return (
       <>
         <p>Teo ist putzig, genauso wie seine Hausaufgaben.</p>
@@ -71,8 +70,7 @@ export const story10: StoryData = {
       </>
     )
   },
-  proof: ({ genData }) => {
-    const data = genData as DATA
+  proof: ({ data }) => {
     return (
       <>
         <p>So sieht die ausgefüllte Mauer aus:</p>

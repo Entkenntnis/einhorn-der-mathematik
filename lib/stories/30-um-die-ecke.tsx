@@ -5,7 +5,7 @@ export const story30: StoryData = {
   title: 'Um die Ecke',
   x: 700,
   y: 80,
-  deps: [23],
+  deps: [24],
   render: () => (
     <>
       <p>

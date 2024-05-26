@@ -1,12 +1,22 @@
-import { ignoreCaseSolution } from '../data'
+import { ignoreCaseSolution, ignoreCaseSolutionWithGenData } from '../data'
+import { randomIntBetween } from '../helper/random-int-between'
 import { StoryData } from '../types'
 
-export const story4: StoryData = {
+interface DATA {
+  start: number
+  end: number
+}
+
+export const story4: StoryData<DATA> = {
   title: 'Telepathie',
-  x: 667,
-  y: 744,
-  deps: [9, 17],
-  render: () => (
+  x: 550,
+  y: 660,
+  deps: [3, 13],
+  generator: () => {
+    const start = randomIntBetween(18, 25) * 2
+    return { start, end: (start / 2 - 11) * 5 }
+  },
+  render: ({ data }) => (
     <>
       <p>
         Leider kann ich nicht Gedanken lesen. Aber mit bisschen Mathematik kann
@@ -15,35 +25,38 @@ export const story4: StoryData = {
       <p>
         Ich sage Teo, dass er sich eine Zahl ausdenken soll. Diese Zahl soll er
         halbieren, davon 11 abziehen und dann das Ergebnis mit 5 multiplizieren.
-        Nach viel Nachdenken kommt er auf die Antwort <strong>50</strong>.
+        Nach viel Nachdenken kommt er auf die Antwort{' '}
+        <strong>{data.end}</strong>.
       </p>
       <p>Welche Zahl hat Teo sich ausgedacht?</p>
     </>
   ),
-  proof: () => (
+  proof: ({ data }) => (
     <>
       <p>
-        Haha, ist ja klar, dass Tina die Antwort auf fast alles als Zahl
-        genommen hat! Um rechnerisch auf dieses Ergebnis zu kommen, würde ich so
-        vorgehen:
+        Das ist ein gutes Beispiel dafür, wie man mit gründlichem
+        Rückwärts-Arbeiten ans Ziel kommt:
       </p>
       <p>
-        Im letzten Schritt hat Teo mit 5 multpliziert und erhält 50. Ich drehe
-        das um und rechne 50 : 5 = 10.
+        Im letzten Schritt hat Teo mit 5 multpliziert und erhält {data.end}. Ich
+        drehe das um und rechne {data.end} : 5 = {data.end / 5}.
       </p>
       <p>
-        Im zweiten Schritt hat Teo 11 abgezogen, ich addiere also 11, d.h. 10 +
-        11 = 21.
+        Im zweiten Schritt hat Teo 11 abgezogen, ich addiere also 11, d.h.{' '}
+        {data.end / 5} + 11 = {data.end / 5 + 11}.
       </p>
       <p>
-        Im ersten Schritt hat Teo die Zahl halbiert, jetzt muss ich die 21
-        verdoppeln und erhalte das Ergebnis <strong>42</strong>.
+        Im ersten Schritt hat Teo die Zahl halbiert, jetzt muss ich die{' '}
+        {data.end / 5 + 11} verdoppeln und erhalte das Ergebnis{' '}
+        <strong>{data.start}</strong>.
       </p>
       <p>
-        Wer das gerne systematisch macht stellt die Gleichung (x : 2 - 11) · 5 =
-        50 auf und löst sie nach x.
+        Wer das gerne systematisch macht stellt die Gleichung (x : 2 - 11) · 5 ={' '}
+        {data.end} auf und löst sie nach x.
       </p>
     </>
   ),
-  submit: ignoreCaseSolution('42'),
+  submit: ignoreCaseSolutionWithGenData<DATA>((data) => [
+    data.start.toString(),
+  ]),
 }

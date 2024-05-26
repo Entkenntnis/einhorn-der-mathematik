@@ -8,19 +8,18 @@ interface DATA {
   clock: number
 }
 
-export const story3: StoryData = {
+export const story3: StoryData<DATA> = {
   title: 'Uhrzeit',
-  x: 260,
-  y: 460,
-  deps: [24, 28],
+  x: 500,
+  y: 551,
+  deps: [2, 35],
   generator: () => {
     const data: DATA = {
       clock: randomIntBetween(49, 48 + 11),
     }
     return data
   },
-  render: ({ onSubmit, feedback, genData }) => {
-    const data = genData as DATA
+  render: ({ onSubmit, feedback, data }) => {
     return (
       <>
         <p>
@@ -45,8 +44,7 @@ export const story3: StoryData = {
       </>
     )
   },
-  proof: ({ genData }) => {
-    const data = genData as DATA
+  proof: ({ data }) => {
     return (
       <>
         <p>

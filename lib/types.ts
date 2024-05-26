@@ -39,7 +39,7 @@ export type State = Immutable<{
   storyGeneratorData: { [key: number]: object }
 }>
 
-export interface StoryData {
+export interface StoryData<T = any> {
   title: string
   x: number
   y: number
@@ -50,7 +50,7 @@ export interface StoryData {
     onSubmit: (val: string) => void
     feedback: ReactNode
     back: () => void
-    genData: object
+    data: T
   }) => JSX.Element
   hideSubmit?: boolean
   submit: (props: {
@@ -58,8 +58,8 @@ export interface StoryData {
     mut: (fn: (draft: Draft<State>) => void) => void
     id: number
     core: State
-    genData: object
+    data: T
   }) => void
-  proof?: (props: { core: State; genData: object }) => JSX.Element
-  generator?: () => object
+  proof?: (props: { core: State; data: T }) => JSX.Element
+  generator?: () => T
 }

@@ -5,7 +5,7 @@ export const story29: StoryData = {
   title: 'Kleiderschrank',
   x: 249,
   y: 649,
-  deps: [2, 3],
+  deps: [2, 26],
   render: () => (
     <>
       <p>
