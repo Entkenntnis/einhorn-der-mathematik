@@ -1,6 +1,6 @@
 # Einhorn der Mathematik
 
-Löse Mathe-Rätsel mit der Einhorn-Dame Tina und ihrem Bruder Teo. Knobel-Spaß für alle Altersgruppen.
+Löse Mathe-Rätsel mit der Einhorn-Dame Tina und ihrem Bruder Teo. Knobel-Spaß für jedes Alter.
 
 https://einhorn.arrrg.de/
 
