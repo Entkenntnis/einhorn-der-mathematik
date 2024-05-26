@@ -38,7 +38,7 @@ import { story36 } from './stories/36-mathe'
 import { story35 } from './stories/35-schnapszahlen'
 import { story37 } from './stories/37-zahlenstrahl'
 import { State, StoryData } from './types'
-import { story38 } from './stories/38-NEU'
+import { story38 } from './stories/38-antwort'
 import { story39 } from './stories/39-rechenvorteil'
 import { story40 } from './stories/40-sirup'
 
