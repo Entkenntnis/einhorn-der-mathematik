@@ -1,11 +1,19 @@
 import { ignoreCaseSolution } from '../data'
 import { StoryData } from '../types'
 
-export const story14: StoryData = {
+interface DATA {
+  missing: number
+  shuffled: number[]
+}
+
+export const story14: StoryData<DATA> = {
   title: 'Bingo',
   x: 580,
   y: 230,
   deps: [27, 32],
+  generator: () => {
+    return { missing: 14, shuffled: [123] }
+  },
   render: () => (
     <>
       <p>

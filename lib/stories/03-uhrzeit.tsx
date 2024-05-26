@@ -8,7 +8,7 @@ interface DATA {
   clock: number
 }
 
-export const story3: StoryData = {
+export const story3: StoryData<DATA> = {
   title: 'Uhrzeit',
   x: 260,
   y: 460,
@@ -19,8 +19,7 @@ export const story3: StoryData = {
     }
     return data
   },
-  render: ({ onSubmit, feedback, genData }) => {
-    const data = genData as DATA
+  render: ({ onSubmit, feedback, data }) => {
     return (
       <>
         <p>
@@ -45,8 +44,7 @@ export const story3: StoryData = {
       </>
     )
   },
-  proof: ({ genData }) => {
-    const data = genData as DATA
+  proof: ({ data }) => {
     return (
       <>
         <p>

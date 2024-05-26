@@ -10,7 +10,7 @@ interface DATA {
   proGondel: number
 }
 
-export const story24: StoryData = {
+export const story24: StoryData<DATA> = {
   title: 'Riesenrad',
   x: 191,
   y: 320,
@@ -23,8 +23,7 @@ export const story24: StoryData = {
     }
     return data
   },
-  render: ({ genData }) => {
-    const data = genData as DATA
+  render: ({ data }) => {
     return (
       <>
         <p>
@@ -45,8 +44,7 @@ export const story24: StoryData = {
       </>
     )
   },
-  proof: ({ genData }) => {
-    const data = genData as DATA
+  proof: ({ data }) => {
     return (
       <>
         <p>

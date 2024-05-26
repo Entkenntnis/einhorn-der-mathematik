@@ -467,7 +467,7 @@ export default function App() {
                   <div className="mt-5 [&>p]:mt-4 [&_code]:text-pink-400 [&_code]:font-bold [&>img]:my-6 [&_a]:underline [&_a]:text-blue-600 [&_a]:hover:text-blue-700 [&_hr]:mt-4">
                     {data.proof({
                       core,
-                      genData: core.storyGeneratorData[core.showStory],
+                      data: core.storyGeneratorData[core.showStory],
                     })}
                   </div>
                 </details>
@@ -502,12 +502,12 @@ export default function App() {
                       mut,
                       id: core.showStory,
                       core,
-                      genData: core.storyGeneratorData[core.showStory],
+                      data: core.storyGeneratorData[core.showStory],
                     })
                   },
                   back,
                   feedback: renderStoryFeedback(core.storyFeedback),
-                  genData: core.storyGeneratorData[core.showStory],
+                  data: core.storyGeneratorData[core.showStory],
                 })}
                 {!data.hideSubmit && (
                   <>
@@ -520,7 +520,7 @@ export default function App() {
                           mut,
                           id: core.showStory,
                           core,
-                          genData: core.storyGeneratorData[core.showStory],
+                          data: core.storyGeneratorData[core.showStory],
                         })
                       }}
                     />
