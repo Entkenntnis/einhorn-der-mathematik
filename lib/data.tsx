@@ -40,7 +40,7 @@ import { story37 } from './stories/37-zahlenstrahl'
 import { State, StoryData } from './types'
 import { story38 } from './stories/38-NEU'
 import { story39 } from './stories/39-rechenvorteil'
-import { story40 } from './stories/40-NEU'
+import { story40 } from './stories/40-sirup'
 
 export const storyData: { [key: number]: StoryData } = {
   1: story1,

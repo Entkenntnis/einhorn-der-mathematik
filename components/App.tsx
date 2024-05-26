@@ -601,7 +601,7 @@ export default function App() {
     return (
       <div
         className={clsx(
-          'flex items-center flex-col w-[64px] cursor-pointer group absolute pointer-events-none',
+          'flex items-center flex-col w-[64px] cursor-pointer group absolute',
           !showTina && 'pt-2'
         )}
         style={{ left: `${x}px`, top: `${y}px` }}
