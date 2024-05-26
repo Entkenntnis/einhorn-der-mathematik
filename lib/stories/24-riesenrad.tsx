@@ -12,9 +12,9 @@ interface DATA {
 
 export const story24: StoryData<DATA> = {
   title: 'Riesenrad',
-  x: 191,
-  y: 320,
-  deps: [7, 37],
+  x: 540,
+  y: 110,
+  deps: [27, 39],
   generator: () => {
     const data: DATA = {
       gondeln: randomIntBetween(12, 25),

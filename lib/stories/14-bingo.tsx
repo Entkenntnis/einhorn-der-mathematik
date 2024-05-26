@@ -12,7 +12,7 @@ export const story14: StoryData<DATA> = {
   title: 'Bingo',
   x: 580,
   y: 230,
-  deps: [27, 32],
+  deps: [27, 39],
   generator: () => {
     const ns = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
     const missing = randomItemFromArray(ns)

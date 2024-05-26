@@ -5,7 +5,7 @@ export const story33: StoryData = {
   title: 'Ungeduld',
   x: 840,
   y: 590,
-  deps: [5, 9, 19],
+  deps: [4, 19, 40],
   render: () => (
     <>
       <p>

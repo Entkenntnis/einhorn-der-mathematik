@@ -2,17 +2,17 @@ import { ignoreCaseSolution } from '../data'
 import { StoryData } from '../types'
 
 export const story35: StoryData = {
-  title: 'Rechenmauer 2',
+  title: 'Schnapszahlen',
   x: 405,
   y: 430,
-  deps: [10, 24],
+  deps: [10, 23],
   render: () => (
     <>
       <p>
         Die Rechenmauer hat Spaß gemacht. Ich bin nun auf eine verrückte Idee
         gekommen, anstatt die Zahlen in der ersten Reihe anzugeben, sie von oben
         nach rechts anzugeben. Und natürlich nur Schnapszahlen, weil ich heute
-        mal lustig bin 🤡
+        mal lustig bin 😄
       </p>
       <img alt="Rechenmauer" src="story35.png" className="w-[300px]" />
       <p>

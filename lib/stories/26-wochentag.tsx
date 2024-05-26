@@ -3,9 +3,9 @@ import { StoryData } from '../types'
 
 export const story26: StoryData = {
   title: 'Wochentag',
-  x: 115,
-  y: 676,
-  deps: [2],
+  x: 120,
+  y: 500,
+  deps: [23, 38],
   render: () => (
     <>
       <p>Wunderbar, dich wieder zu sehen ☺️</p>

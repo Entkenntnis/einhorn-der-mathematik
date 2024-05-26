@@ -35,9 +35,12 @@ import { story32 } from './stories/32-turnier'
 import { story33 } from './stories/33-ungeduld'
 import { story34 } from './stories/34-memory'
 import { story36 } from './stories/36-mathe'
-import { story35 } from './stories/35-rechenmauer-2'
+import { story35 } from './stories/35-schnapszahlen'
 import { story37 } from './stories/37-zahlenstrahl'
 import { State, StoryData } from './types'
+import { story38 } from './stories/38-NEU'
+import { story39 } from './stories/39-NEU'
+import { story40 } from './stories/40-NEU'
 
 export const storyData: { [key: number]: StoryData } = {
   1: story1,
@@ -77,6 +80,9 @@ export const storyData: { [key: number]: StoryData } = {
   35: story35,
   36: story36,
   37: story37,
+  38: story38,
+  39: story39,
+  40: story40,
 }
 
 export function genericSubmitHandler(

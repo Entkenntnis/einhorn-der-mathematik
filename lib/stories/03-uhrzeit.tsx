@@ -10,9 +10,9 @@ interface DATA {
 
 export const story3: StoryData<DATA> = {
   title: 'Uhrzeit',
-  x: 260,
-  y: 460,
-  deps: [24, 28],
+  x: 500,
+  y: 551,
+  deps: [2, 35],
   generator: () => {
     const data: DATA = {
       clock: randomIntBetween(49, 48 + 11),
