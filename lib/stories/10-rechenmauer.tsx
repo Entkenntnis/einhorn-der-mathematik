@@ -9,7 +9,7 @@ interface DATA {
   d: number
 }
 
-export const story10: StoryData = {
+export const story10: StoryData<DATA> = {
   title: 'Rechenmauer',
   x: 360,
   y: 320,
