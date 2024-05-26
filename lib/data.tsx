@@ -39,7 +39,7 @@ import { story35 } from './stories/35-schnapszahlen'
 import { story37 } from './stories/37-zahlenstrahl'
 import { State, StoryData } from './types'
 import { story38 } from './stories/38-NEU'
-import { story39 } from './stories/39-NEU'
+import { story39 } from './stories/39-rechenvorteil'
 import { story40 } from './stories/40-NEU'
 
 export const storyData: { [key: number]: StoryData } = {
