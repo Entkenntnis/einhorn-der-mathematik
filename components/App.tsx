@@ -184,14 +184,14 @@ export default function App() {
     return (
       <div className="overflow-auto h-full" id="map-scroller">
         <div
-          className="min-h-full pt-6 min-w-fit"
+          className="min-h-full pt-4 sm:pt-6 min-w-fit"
           style={{
             backgroundImage: "url('/wallpaper.jpg')",
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
           }}
         >
-          <h1 className="ml-4 sm:ml-24 lg:mx-auto px-4 py-2 rounded-lg bg-pink-400 w-fit text-2xl">
+          <h1 className="ml-4 sm:ml-24 lg:mx-auto px-2 py-1 sm:px-4 sm:py-2 rounded-lg bg-pink-400 w-fit text-lg sm:text-2xl">
             Einhorn der Mathematik
           </h1>
           {core.analyze && (
@@ -246,7 +246,7 @@ export default function App() {
               </p>
             )}
             <p
-              className="ml-2 underline cursor-pointer"
+              className="underline cursor-pointer text-right mr-2"
               onClick={() => {
                 mut((c) => {
                   c.modal = 'highscore'
