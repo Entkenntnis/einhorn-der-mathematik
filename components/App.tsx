@@ -12,6 +12,7 @@ import { makePost } from '../lib/make-post'
 import { median } from '../lib/helper/median'
 import { State, PlayerInfo } from '../lib/types'
 import { CountdownTimer } from './CountdownTimer'
+import { HighscoreModal } from './HighscoreModal'
 
 export default function App() {
   const [core, setCore] = useState<State>({
@@ -238,11 +239,23 @@ export default function App() {
               )}
             </div>
           )}
-          {core.playerData.name && (
-            <div className="fixed top-3 right-5 px-2 py-0.5 bg-white/50 rounded">
-              Name: <strong>{core.playerData.name}</strong>
-            </div>
-          )}
+          <div className="fixed top-3 right-5">
+            {core.playerData.name && (
+              <p className="px-2 py-0.5 bg-white/50 rounded">
+                Name: <strong>{core.playerData.name}</strong>
+              </p>
+            )}
+            <p
+              className="ml-2 underline cursor-pointer"
+              onClick={() => {
+                mut((c) => {
+                  c.modal = 'highscore'
+                })
+              }}
+            >
+              Highscore
+            </p>
+          </div>
           {core.solved.size > 0 &&
             !core.editorMode &&
             (core.persistBannerShown ? (
@@ -411,6 +424,16 @@ export default function App() {
               onClose={() => {
                 mut((c) => {
                   c.modal = null
+                })
+              }}
+            />
+          )}
+          {core.modal == 'highscore' && (
+            <HighscoreModal
+              onClose={() => {
+                mut((c) => {
+                  c.modal = null
+                  c.showStory = -1
                 })
               }}
             />

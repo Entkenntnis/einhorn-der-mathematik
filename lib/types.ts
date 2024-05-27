@@ -15,7 +15,7 @@ export type State = Immutable<{
   showStory: number
   storyFeedback: { correct: boolean; text: string; toWait?: number } | null
   solved: Set<number>
-  modal: 'impressum' | 'name' | 'login' | 'change' | null
+  modal: 'impressum' | 'name' | 'highscore' | null
   userId: string
   analyze?: {
     players: number
