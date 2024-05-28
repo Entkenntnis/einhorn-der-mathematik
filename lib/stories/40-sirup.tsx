@@ -21,7 +21,7 @@ export const story40: StoryData<DATA> = {
         Meine Kola mische ich mir aus Sirup und diese muss das perfekte
         Verhältnis haben. Ich habe viel probiert und bin zu diesem Rezept
         gekommen: In ein Glas mit {250 - data.per250} ml Wasser gebe ich{' '}
-        {data.per250} ml Sirup für das perfekte Getränk.
+        {data.per250} ml Sirup für 0,25 Liter perfektes Getränk.
       </p>
       <p>
         Weil ich mir so viel Mühe beim Mischen gebe, soll ich in Zukunft für die

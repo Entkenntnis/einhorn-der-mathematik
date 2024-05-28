@@ -625,7 +625,8 @@ export default function App() {
       <div
         className={clsx(
           'flex items-center flex-col w-[64px] cursor-pointer group absolute',
-          !showTina && 'pt-2'
+          !showTina && 'pt-2',
+          showTina && !core.playerData.name && 'animate-wiggle'
         )}
         style={{ left: `${x}px`, top: `${y}px` }}
         onClick={() => {

@@ -2,7 +2,7 @@ import { genericSubmitHandler } from '../data'
 import { StoryData } from '../types'
 
 export const story1: StoryData = {
-  title: 'Hallo',
+  title: 'Start',
   x: 100,
   y: 100,
   deps: [],
