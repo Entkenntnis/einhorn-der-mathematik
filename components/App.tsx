@@ -258,56 +258,40 @@ export default function App() {
           </div>
           {core.solved.size > 0 &&
             !core.editorMode &&
-            (core.persistBannerShown ? (
-              <div className="fixed sm:left-6 left-2 text-sm sm:text-base bottom-4 text-white z-10">
-                <label className="cursor-pointer select-none">
-                  <input
-                    type="checkbox"
-                    checked={core.persist}
-                    onChange={(e) => {
-                      mut((c) => {
-                        c.persist = e.target.checked
-                      })
-                      if (!e.target.checked) {
-                        localStorage.removeItem(
-                          'einhorn_der_mathematik_data_v2'
-                        )
-                      }
-                    }}
-                  />{' '}
-                  Fortschritt speichern
-                </label>
+            !core.persistBannerShown && (
+              <div className="lg:flex lg:justify-center mt-6 ml-4 sm:ml-8 lg:ml-0">
+                <div className="flex flex-col sm:flex-row justify-between items-baseline w-fit sm:w-[550px] bg-yellow-100 px-4 py-2 rounded">
+                  <div>Fortschritt auf diesem Gerät speichern?</div>
+                  <div>
+                    <button
+                      className="text-sm text-gray-700 underline mr-8"
+                      onClick={() => {
+                        mut((c) => {
+                          c.persistBannerShown = true
+                        })
+                      }}
+                    >
+                      später
+                    </button>
+                    <button
+                      className="px-2 py-0.5 bg-yellow-300 hover:bg-yellow-400 inline-block rounded animate-wiggle"
+                      onClick={() => {
+                        mut((c) => {
+                          c.persist = true
+                          c.persistBannerShown = true
+                        })
+                        makePost('/event', {
+                          userId: core.playerData.id,
+                          value: 'persist',
+                        })
+                      }}
+                    >
+                      Speichern
+                    </button>
+                  </div>
+                </div>
               </div>
-            ) : (
-              <div className="fixed left-6 bottom-9 sm:bottom-4 max-w-[90%] mr-4 bg-yellow-100 rounded-xl px-4 pb-1 pt-2 z-10">
-                <p>
-                  Möchtest du deinen Fortschritt auf diesem Gerät speichern?
-                </p>
-                <p className="my-2 flex justify-between items-baseline">
-                  <button
-                    className="text-sm text-gray-700 underline ml-4"
-                    onClick={() => {
-                      mut((c) => {
-                        c.persistBannerShown = true
-                      })
-                    }}
-                  >
-                    später
-                  </button>
-                  <button
-                    className="px-2 py-0.5 bg-yellow-300 hover:bg-yellow-400 inline-block rounded mr-4"
-                    onClick={() => {
-                      mut((c) => {
-                        c.persist = true
-                        c.persistBannerShown = true
-                      })
-                    }}
-                  >
-                    Speichern
-                  </button>
-                </p>
-              </div>
-            ))}
+            )}
           <div className="mt-4 mx-auto w-[1200px] h-[1000px] relative z-0">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1000">
               <defs>
@@ -407,7 +391,31 @@ export default function App() {
             )}
           </div>
           <div className="h-48"></div>
-          <div className="fixed right-6 bottom-4 text-sm text-gray-300">
+          <div className="pb-4 ml-4 sm:text-center text-sm text-gray-300">
+            {core.solved.size > 0 &&
+              !core.editorMode &&
+              core.persistBannerShown && (
+                <>
+                  <label className="cursor-pointer select-none">
+                    <input
+                      type="checkbox"
+                      checked={core.persist}
+                      onChange={(e) => {
+                        mut((c) => {
+                          c.persist = e.target.checked
+                        })
+                        if (!e.target.checked) {
+                          localStorage.removeItem(
+                            'einhorn_der_mathematik_data_v2'
+                          )
+                        }
+                      }}
+                    />{' '}
+                    Fortschritt speichern
+                  </label>
+                  &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+                </>
+              )}
             <button
               className="hover:underline"
               onClick={() => {
@@ -484,7 +492,15 @@ export default function App() {
 
               {data.proof && (
                 <details className="mt-8">
-                  <summary className="cursor-pointer select-none">
+                  <summary
+                    className="cursor-pointer select-none"
+                    onClick={() => {
+                      makePost('/event', {
+                        userId: core.playerData.id,
+                        value: 'show_solution',
+                      })
+                    }}
+                  >
                     Lösungsweg anzeigen (mit Tante Tea)
                   </summary>
                   <div className="mt-5 [&>p]:mt-4 [&_code]:text-pink-400 [&_code]:font-bold [&>img]:my-6 [&_a]:underline [&_a]:text-blue-600 [&_a]:hover:text-blue-700 [&_hr]:mt-4">
@@ -626,7 +642,10 @@ export default function App() {
         className={clsx(
           'flex items-center flex-col w-[64px] cursor-pointer group absolute',
           !showTina && 'pt-2',
-          showTina && !core.playerData.name && 'animate-wiggle'
+          showTina &&
+            !core.playerData.name &&
+            !core.editorMode &&
+            'animate-wiggle'
         )}
         style={{ left: `${x}px`, top: `${y}px` }}
         onClick={() => {
