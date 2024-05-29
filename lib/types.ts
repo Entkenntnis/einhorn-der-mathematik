@@ -24,6 +24,7 @@ export type State = Immutable<{
     storyStats: { [key: string]: { reachable: number; solved: number } }
     inputs: { [key: string]: { value: string; correct: boolean }[] }
     playerInfo: PlayerInfo[]
+    events: { value: string; count: number }[]
   }
   editorMode: boolean
   demoMode: boolean

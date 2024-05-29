@@ -84,12 +84,24 @@ export default function App() {
           names: { userId: string; name: string; createdAt: string }[]
           solves: { storyId: number; userId: string; createdAt: string }[]
           logs: {
-            userId: number
+            userId: string
             storyId: number
             value: string
             correct: boolean
             createdAt: string
           }[]
+          events: { userId: string; value: string; createdAt: string }[]
+        }
+
+        const eventSources: any = {}
+
+        for (const event of data.events) {
+          const ts = new Date(event.createdAt).getTime()
+          if (ts < cutOff.getTime()) continue
+          if (!eventSources[event.value]) {
+            eventSources[event.value] = {}
+          }
+          eventSources[event.value][event.userId] = true
         }
 
         const stories = new Set<number>()
@@ -171,6 +183,12 @@ export default function App() {
             storyStats,
             inputs,
             playerInfo,
+            events: Object.entries(eventSources).map((entry) => {
+              return {
+                value: entry[0],
+                count: Object.keys(entry[1] as any).length,
+              }
+            }),
           }
         })
       })()
@@ -213,6 +231,14 @@ export default function App() {
               ) : (
                 <>{core.analyze.medianSeconds}s</>
               )}
+              <br />
+              <br />
+              Ereignisse:{' '}
+              {core.analyze.events.map((event) => (
+                <span key={event.value} className="inline-block mr-4">
+                  {event.value} (x{event.count})
+                </span>
+              ))}
               <br />
               <br />
               Details:{' '}
