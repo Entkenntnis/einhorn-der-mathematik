@@ -5,7 +5,7 @@ export const story34: StoryData = {
   title: 'Memory',
   x: 940,
   y: 520,
-  deps: [16, 40],
+  deps: [32, 40],
   render: () => (
     <>
       <p>

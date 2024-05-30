@@ -3,9 +3,9 @@ import { StoryData } from '../types'
 
 export const story16: StoryData = {
   title: 'Landkarte',
-  x: 800,
-  y: 300,
-  deps: [20, 42],
+  x: 880,
+  y: 240,
+  deps: [42],
   render: () => (
     <>
       <p>
