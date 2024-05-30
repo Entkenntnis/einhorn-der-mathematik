@@ -282,6 +282,10 @@ export default function App() {
                 mut((c) => {
                   c.modal = 'highscore'
                 })
+                makePost('/event', {
+                  userId: core.playerData.id,
+                  value: 'show_highscore',
+                })
               }}
             >
               Highscore
@@ -418,6 +422,10 @@ export default function App() {
                 onClick={() => {
                   mut((c) => {
                     c.showIdeaStory = true
+                  })
+                  makePost('/event', {
+                    userId: core.playerData.id,
+                    value: 'your_story',
                   })
                 }}
               >
