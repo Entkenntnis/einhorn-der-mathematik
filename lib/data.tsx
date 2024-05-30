@@ -41,6 +41,7 @@ import { State, StoryData } from './types'
 import { story38 } from './stories/38-antwort'
 import { story39 } from './stories/39-rechenvorteil'
 import { story40 } from './stories/40-sirup'
+import { story41 } from './stories/41-thermometer'
 
 export const storyData: { [key: number]: StoryData } = {
   1: story1,
@@ -83,6 +84,7 @@ export const storyData: { [key: number]: StoryData } = {
   38: story38,
   39: story39,
   40: story40,
+  41: story41,
 }
 
 export function genericSubmitHandler(

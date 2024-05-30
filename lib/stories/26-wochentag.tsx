@@ -12,7 +12,7 @@ export const story26: StoryData<DATA> = {
   title: 'Wochentag',
   x: 120,
   y: 500,
-  deps: [23, 38],
+  deps: [23, 41],
   generator: () => {
     const [days, answer, answerShort] = randomItemFromArray([
       [6, 'Dienstag', 'di'],

@@ -36,7 +36,7 @@ export default function App() {
     showIdeaStory: false,
   })
 
-  const cutOff = new Date('2024-05-27')
+  const cutOff = new Date('2024-05-31')
 
   const runAnalyse = useRef(false)
 
@@ -289,6 +289,7 @@ export default function App() {
           </div>
           {core.solved.size > 0 &&
             !core.editorMode &&
+            !core.analyze &&
             !core.persistBannerShown && (
               <div className="lg:flex lg:justify-center mt-6 ml-4 sm:ml-8 lg:ml-0">
                 <div className="flex flex-col sm:flex-row justify-between items-baseline w-fit sm:w-[550px] bg-yellow-100 px-4 py-2 rounded">
@@ -411,7 +412,7 @@ export default function App() {
               alt="Regenbogen"
               className="w-[100px] absolute left-[900px] top-[700px]"
             />
-            {core.solved.size > 3 && (
+            {(core.solved.size > 3 || core.demoMode || core.editorMode) && (
               <button
                 className="absolute top-[240px] left-[1020px] w-[120px] block z-10 hover:bg-gray-100/60 rounded-xl transition-colors"
                 onClick={() => {
@@ -544,11 +545,11 @@ export default function App() {
           <div className="mt-8 [&>p]:mt-4 [&_code]:text-pink-400 [&_code]:font-bold [&>img]:my-6 [&_a]:underline [&_a]:text-blue-600 [&_a]:hover:text-blue-700">
             <p>
               Ich mag Mathe, ich mag Rätsel - aber alleine macht es nur halb so
-              viel Spaß. Hier kommst Du ins Spiel:
+              viel Spaß.
             </p>
             <p>
-              Was du ein Lieblingsrätsel? Gibt es Themen aus der Mathematik, die
-              dir Spaß machen? Ich freue mich über jede Person, die mir ihre
+              Hast du ein Lieblingsrätsel? Gibt es Themen aus der Mathematik,
+              die dir Spaß machen? Ich freue mich über jede Person, die mir ihre
               Rätsel oder Ideen schickt. Du kannst das verlinkte Formular
               nutzen. Ich lese mir jede Einsendung durch.
             </p>
@@ -558,14 +559,13 @@ export default function App() {
             </p>
             <p>Liebe Grüße an alle Mathematik-Begeisterten da draußen 💗!</p>
             <p>
-              &gt;&gt;&gt;{' '}
+              -&gt;{' '}
               <a
                 href="https://docs.google.com/forms/d/e/1FAIpQLScoDuazOyILYEAWFZiK5KPOtAP-G-lVE9vTea4O-GTaVukXzw/viewform?usp=sf_link"
                 target="_blank"
               >
                 Formular für dein Rätsel
-              </a>{' '}
-              &lt;&lt;&lt;
+              </a>
             </p>
             <p>&nbsp;</p>
           </div>
