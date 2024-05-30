@@ -19,7 +19,7 @@ interface ExerciseFeedbackProps {
   setExStatus: Dispatch<SetStateAction<ExStatus>>
   isCorrect: boolean
   feedbacks?: {
-    correct?: JSX.Element | Text
+    correct?: JSX.Element | string
     incorrect?: JSX.Element | Text
     followUps?: JSX.Element | Text
     revealed?: JSX.Element | Text
@@ -109,30 +109,40 @@ export function ExerciseFeedback({
   return (
     <>
       <div className="mt-2 flex min-h-[120px] flex-col items-center sm:min-h-[80px] sm:flex-row sm:justify-between">
-        <div className="text-almost-black">
-          <p>
-            {exStatus === 'correct' ? `Das ist der richtige Platz!` : null}
-            {exStatus === 'incorrect' ? (
-              <>
-                {feedbacks?.incorrect ?? 'Das stimmt so noch nicht.'}
-                {feedbacks?.followUps ?? (
+        {noUserInput ? (
+          noUserInputText ?? ''
+        ) : (
+          <>
+            <div className="text-almost-black">
+              <p>
+                {exStatus === 'correct'
+                  ? feedbacks?.correct ?? `Das ist der richtige Platz!`
+                  : null}
+                {exStatus === 'incorrect' ? (
                   <>
-                    <br />
-                    Probiere weiter, oder{' '}
-                    <a className="cursor-pointer" onClick={revealEx}>
-                      zeige dir die Lösung an
-                    </a>
-                    .
+                    {feedbacks?.incorrect ?? 'Das stimmt so noch nicht.'}
+                    {feedbacks?.followUps ?? (
+                      <>
+                        <br />
+                        Probiere weiter, oder{' '}
+                        <a className="cursor-pointer" onClick={revealEx}>
+                          zeige dir die Lösung an
+                        </a>
+                        .
+                      </>
+                    )}
                   </>
-                )}
-              </>
-            ) : null}
-            {exStatus === 'revealed' ? <>{feedbacks?.revealed ?? ''}</> : null}
-          </p>
-        </div>
-        <div className="pt-5 sm:flex sm:justify-between sm:pt-0">
-          {noUserInput ? noUserInputText ?? '' : renderMainButton()}
-        </div>
+                ) : null}
+                {exStatus === 'revealed' ? (
+                  <>{feedbacks?.revealed ?? ''}</>
+                ) : null}
+              </p>
+            </div>
+            <div className="pt-5 sm:flex sm:justify-between sm:pt-0">
+              {noUserInput ? noUserInputText ?? '' : renderMainButton()}
+            </div>
+          </>
+        )}
       </div>
       {hideSkipButton ? null : (
         <div className="text-right">

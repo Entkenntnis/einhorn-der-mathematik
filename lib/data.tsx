@@ -42,6 +42,7 @@ import { story38 } from './stories/38-antwort'
 import { story39 } from './stories/39-rechenvorteil'
 import { story40 } from './stories/40-sirup'
 import { story41 } from './stories/41-thermometer'
+import { story42 } from './stories/42-antike'
 
 export const storyData: { [key: number]: StoryData } = {
   1: story1,
@@ -85,6 +86,7 @@ export const storyData: { [key: number]: StoryData } = {
   39: story39,
   40: story40,
   41: story41,
+  42: story42,
 }
 
 export function genericSubmitHandler(

@@ -5,7 +5,7 @@ export const story16: StoryData = {
   title: 'Landkarte',
   x: 800,
   y: 300,
-  deps: [20, 32],
+  deps: [20, 42],
   render: () => (
     <>
       <p>

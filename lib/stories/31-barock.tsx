@@ -5,7 +5,7 @@ export const story31: StoryData = {
   title: 'Barock',
   x: 820,
   y: 140,
-  deps: [32],
+  deps: [42],
   render: () => (
     <>
       <p>
