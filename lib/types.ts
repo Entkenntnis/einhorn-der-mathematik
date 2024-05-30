@@ -38,6 +38,7 @@ export type State = Immutable<{
   scrollPosTop: number
   scrollPosLeft: number
   storyGeneratorData: { [key: number]: object }
+  showIdeaStory: boolean
 }>
 
 export interface StoryData<T = any> {

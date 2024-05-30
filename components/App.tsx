@@ -33,6 +33,7 @@ export default function App() {
     scrollPosTop: 0,
     scrollPosLeft: 0,
     storyGeneratorData: {},
+    showIdeaStory: false,
   })
 
   const cutOff = new Date('2024-05-27')
@@ -195,6 +196,10 @@ export default function App() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  if (core.showIdeaStory) {
+    return renderIdeaStory()
+  }
 
   return <>{core.showStory == -1 ? renderOverview() : renderStory()}</>
 
@@ -406,6 +411,23 @@ export default function App() {
               alt="Regenbogen"
               className="w-[100px] absolute left-[900px] top-[700px]"
             />
+            {core.solved.size > 3 && (
+              <button
+                className="absolute top-[240px] left-[1020px] w-[120px] block z-10 hover:bg-gray-100/60 rounded-xl transition-colors"
+                onClick={() => {
+                  mut((c) => {
+                    c.showIdeaStory = true
+                  })
+                }}
+              >
+                <p className="text-center text-lg mb-1">Dein Rätsel</p>
+                <img
+                  src="/gluehbirne.png"
+                  alt="Glühbirne"
+                  className="w-[65px] mx-auto mb-2"
+                />
+              </button>
+            )}
             {Object.entries(storyData).map(([id, data]) =>
               data.deps.length == 0 ||
               data.deps.some((d) => core.solved.has(d)) ||
@@ -477,24 +499,84 @@ export default function App() {
     )
   }
 
+  function back() {
+    mut((c) => {
+      c.showStory = -1
+    })
+    function scroll() {
+      const el = document.getElementById('map-scroller')
+      if (el) {
+        el.scrollTop = core.scrollPosTop
+        el.scrollLeft = core.scrollPosLeft
+      } else {
+        requestAnimationFrame(scroll)
+      }
+    }
+    requestAnimationFrame(scroll)
+  }
+
+  function renderIdeaStory() {
+    return (
+      <>
+        <div className="h-6"></div>
+        <h1
+          className="ml-4 sm:ml-24 lg:mx-auto mx-auto px-4 py-2 rounded-lg bg-pink-400 w-fit text-2xl cursor-pointer"
+          onClick={() => {
+            mut((c) => {
+              c.showIdeaStory = false
+            })
+          }}
+        >
+          Einhorn der Mathematik
+        </h1>
+        <div className="max-w-[800px] mx-2 md:mx-auto bg-pink-50 rounded p-3 mt-6 relative">
+          <h2 className="mt-3 text-xl font-bold">Dein Rätsel</h2>
+          <button
+            className="mt-3 text-pink-500 hover:underline hover:text-pink-600"
+            onClick={() => {
+              mut((c) => {
+                c.showIdeaStory = false
+              })
+            }}
+          >
+            zurück
+          </button>
+          <div className="mt-8 [&>p]:mt-4 [&_code]:text-pink-400 [&_code]:font-bold [&>img]:my-6 [&_a]:underline [&_a]:text-blue-600 [&_a]:hover:text-blue-700">
+            <p>
+              Ich mag Mathe, ich mag Rätsel - aber alleine macht es nur halb so
+              viel Spaß. Hier kommst Du ins Spiel:
+            </p>
+            <p>
+              Was du ein Lieblingsrätsel? Gibt es Themen aus der Mathematik, die
+              dir Spaß machen? Ich freue mich über jede Person, die mir ihre
+              Rätsel oder Ideen schickt. Du kannst das verlinkte Formular
+              nutzen. Ich lese mir jede Einsendung durch.
+            </p>
+            <p>
+              Wenn deine Einsendung zu den anderen Rätseln auf der Seite passen,
+              dann baue ich sie auch sehr gerne an passender Stelle ein.
+            </p>
+            <p>Liebe Grüße an alle Mathematik-Begeisterten da draußen 💗!</p>
+            <p>
+              &gt;&gt;&gt;{' '}
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLScoDuazOyILYEAWFZiK5KPOtAP-G-lVE9vTea4O-GTaVukXzw/viewform?usp=sf_link"
+                target="_blank"
+              >
+                Formular für dein Rätsel
+              </a>{' '}
+              &lt;&lt;&lt;
+            </p>
+            <p>&nbsp;</p>
+          </div>
+        </div>
+        <div className="h-32"></div>
+      </>
+    )
+  }
+
   function renderStory() {
     const data = storyData[core.showStory]
-
-    function back() {
-      mut((c) => {
-        c.showStory = -1
-      })
-      function scroll() {
-        const el = document.getElementById('map-scroller')
-        if (el) {
-          el.scrollTop = core.scrollPosTop
-          el.scrollLeft = core.scrollPosLeft
-        } else {
-          requestAnimationFrame(scroll)
-        }
-      }
-      requestAnimationFrame(scroll)
-    }
 
     return (
       <>
