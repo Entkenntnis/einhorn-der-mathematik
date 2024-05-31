@@ -448,7 +448,7 @@ export default function App() {
             )}
           </div>
           <div className="h-48"></div>
-          <div className="pb-4 ml-4 sm:text-center text-sm text-gray-300">
+          <div className="pb-14 lg:pb-4 ml-4 sm:text-center text-sm text-gray-300">
             {core.solved.size > 0 &&
               !core.editorMode &&
               core.persistBannerShown && (
