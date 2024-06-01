@@ -3,7 +3,7 @@ import { StoryData } from '../types'
 
 export const story33: StoryData = {
   title: 'Ungeduld',
-  x: 840,
+  x: 1000,
   y: 590,
   deps: [4, 19, 40],
   render: () => (

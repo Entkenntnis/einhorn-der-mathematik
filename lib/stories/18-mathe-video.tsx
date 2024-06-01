@@ -3,7 +3,7 @@ import { StoryData } from '../types'
 
 export const story18: StoryData = {
   title: 'Mathe-Video',
-  x: 1100,
+  x: 1260,
   y: 580,
   deps: [36],
   render: () => (

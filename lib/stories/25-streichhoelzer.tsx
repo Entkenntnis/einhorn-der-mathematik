@@ -3,9 +3,9 @@ import { StoryData } from '../types'
 
 export const story25: StoryData = {
   title: 'Streichhölzer',
-  x: 230,
-  y: 800,
-  deps: [28, 29],
+  x: 330,
+  y: 820,
+  deps: [5, 29],
   render: () => (
     <>
       <p>

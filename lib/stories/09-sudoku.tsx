@@ -4,7 +4,7 @@ import { StoryData } from '../types'
 
 export const story9: StoryData = {
   title: 'Sudoku',
-  x: 667,
+  x: 827,
   y: 744,
   deps: [4, 17],
   render: ({ onSubmit, feedback }) => (

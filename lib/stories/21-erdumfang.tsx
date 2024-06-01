@@ -3,7 +3,7 @@ import { StoryData } from '../types'
 
 export const story21: StoryData = {
   title: 'Erdumfang',
-  x: 920,
+  x: 1080,
   y: 880,
   deps: [36],
   render: () => (

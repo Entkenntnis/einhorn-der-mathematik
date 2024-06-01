@@ -328,8 +328,8 @@ export default function App() {
                 </div>
               </div>
             )}
-          <div className="mt-4 mx-auto w-[1200px] h-[1000px] relative z-0">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1000">
+          <div className="mt-4 mx-auto w-[1400px] h-[1000px] relative z-0">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1000">
               <defs>
                 <linearGradient
                   id="grad_vertical"
@@ -414,7 +414,7 @@ export default function App() {
             <img
               src="/rainbow.png"
               alt="Regenbogen"
-              className="w-[100px] absolute left-[900px] top-[700px]"
+              className="w-[100px] absolute left-[1060px] top-[700px]"
             />
             {(core.solved.size > 3 || core.demoMode || core.editorMode) && (
               <button
@@ -429,7 +429,7 @@ export default function App() {
                   })
                 }}
               >
-                <p className="text-center text-lg mb-1">Dein Rätsel</p>
+                <p className="text-center mb-1">Dein Rätsel</p>
                 <img
                   src="/gluehbirne.png"
                   alt="Glühbirne"
@@ -779,7 +779,7 @@ export default function App() {
             !core.editorMode &&
             'animate-wiggle'
         )}
-        style={{ left: `${x}px`, top: `${y}px` }}
+        style={{ left: `${x}px`, top: `${y + 10}px` }}
         onClick={() => {
           mut((c) => {
             c.showStory = id
@@ -799,7 +799,7 @@ export default function App() {
         }}
         key={id}
       >
-        <button className="text-lg bg-gray-100/80 px-1 py-0.5 rounded group-hover:bg-white/90 pointer-events-auto whitespace-nowrap">
+        <button className="text-base bg-gray-100/80 px-1 py-0.5 rounded group-hover:bg-white/90 pointer-events-auto whitespace-nowrap">
           {title}
         </button>
         {showTina ? (
@@ -809,13 +809,13 @@ export default function App() {
             className="w-16 pointer-events-auto pt-2"
           ></img>
         ) : showSolved ? (
-          <div className="w-16 pt-3 flex justify-center items-center">
+          <div className="w-16 pt-1.5 flex justify-center items-center">
             <div className="bg-gray-200 rounded-full w-6 h-6 pointer-events-auto">
               <FaIcon icon={faCheck} className="ml-[5px] text-pink-400" />
             </div>
           </div>
         ) : (
-          <div className="w-16 pt-3 flex justify-center items-center">
+          <div className="w-16 pt-1.5 flex justify-center items-center">
             <div className="bg-emerald-500 rounded-full w-6 h-6 pointer-events-auto"></div>
           </div>
         )}

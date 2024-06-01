@@ -9,9 +9,9 @@ interface DATA {
 
 export const story40: StoryData<DATA> = {
   title: 'Sirup',
-  x: 750,
+  x: 910,
   y: 430,
-  deps: [15, 20],
+  deps: [16],
   generator: () => {
     return { per250: randomItemFromArray([10, 15, 20, 25, 30, 35]) }
   },

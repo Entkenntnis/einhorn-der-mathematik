@@ -3,15 +3,15 @@ import { StoryData } from '../types'
 
 export const story36: StoryData = {
   title: 'Mathe',
-  x: 921,
+  x: 1081,
   y: 693,
   deps: [12, 33, 34],
   render: () => (
     <>
       <p>
         Herzlichen Glückwunsch, dass du soweit gekommen bist! Ich hoffe, dass du
-        hier ein wenig Spaß mit Mathematik hattest. Ab hier startet nun der
-        zweite Teil dieses Projekt - weiterhin viel Erfolg beim Knobeln :)
+        hier ein wenig Spaß mit Mathematik hattest. Ab hier startet nun das
+        zweite Kapitel - weiterhin viel Spaß beim Knobeln :)
       </p>
       <p>
         Stelle dir für diese Aufgabe vor, dass A = 1, E = 2, H = 3, M = 4 und T
