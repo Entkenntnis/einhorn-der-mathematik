@@ -483,6 +483,22 @@ export default function App() {
             >
               Impressum/Datenschutz
             </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+            <a
+              href="https://karol.arrrg.de"
+              target="_blank"
+              className="hover:underline"
+            >
+              Robot Karol Online
+            </a>
+            &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+            <a
+              href="https://hack.arrrg.de"
+              target="_blank"
+              className="hover:underline"
+            >
+              Hack The Web
+            </a>
           </div>
           {core.modal == 'impressum' && (
             <AboutModal
