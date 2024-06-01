@@ -328,8 +328,8 @@ export default function App() {
                 </div>
               </div>
             )}
-          <div className="mt-4 mx-auto w-[1400px] h-[1000px] relative z-0">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1000">
+          <div className="mt-4 mx-auto w-[1400px] h-[1100px] relative z-0">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1100">
               <defs>
                 <linearGradient
                   id="grad_vertical"
@@ -418,7 +418,7 @@ export default function App() {
             />
             {(core.solved.size > 3 || core.demoMode || core.editorMode) && (
               <button
-                className="absolute top-[240px] left-[1020px] w-[120px] block z-10 hover:bg-gray-100/60 rounded-xl transition-colors"
+                className="absolute top-[210px] left-[1050px] w-[120px] block z-10 hover:bg-gray-100/60 rounded-xl transition-colors"
                 onClick={() => {
                   mut((c) => {
                     c.showIdeaStory = true
@@ -656,7 +656,7 @@ export default function App() {
           ) : (
             <>
               <button
-                className="mt-3 text-pink-500 hover:underline hover:text-pink-600"
+                className="mt-1 -ml-2 text-pink-500 hover:underline hover:text-pink-600 p-2"
                 onClick={() => {
                   back()
                 }}
