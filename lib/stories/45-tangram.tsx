@@ -147,7 +147,7 @@ function Tangram({ done }: { done: () => void }) {
         <Draggable id="G" state={state} />
         {Object.values(state).every((data: PieceData) => !data.active) && (
           <div className="absolute left-[140px] top-[390px] flex flex-col items-center">
-            <span>Schön!</span>
+            <span>Miau, miau!</span>
             <button
               className="mt-3 px-2 py-0.5 bg-pink-300 hover:bg-pink-400 rounded"
               onClick={() => {
