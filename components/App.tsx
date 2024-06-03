@@ -442,6 +442,7 @@ export default function App() {
               data.deps.some((d) => core.solved.has(d)) ||
               core.analyze ||
               core.editorMode ||
+              core.solved.has(parseInt(id)) ||
               core.demoMode
                 ? renderStoryIcon(data.title, data.x, data.y, parseInt(id))
                 : null
