@@ -10,7 +10,7 @@ interface DATA {
 
 export const story26: StoryData<DATA> = {
   title: 'Wochentag',
-  x: 120,
+  x: 140,
   y: 500,
   deps: [23, 41],
   generator: () => {
