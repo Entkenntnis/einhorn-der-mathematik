@@ -272,9 +272,14 @@ export default function App() {
           )}
           <div className="fixed top-3 right-5">
             {core.playerData.name && (
-              <p className="px-2 py-0.5 bg-white/50 rounded">
-                Name: <strong>{core.playerData.name}</strong>
-              </p>
+              <div className="px-2 py-0.5 bg-white/50 rounded">
+                <p>
+                  <strong>{core.playerData.name}</strong>:{' '}
+                  <span title="gelöste Aufgabe / Gesamtzahl">
+                    {core.solved.size}/{Object.keys(storyData).length}
+                  </span>
+                </p>
+              </div>
             )}
             <p
               className="underline cursor-pointer text-right mr-2"
