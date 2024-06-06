@@ -15,7 +15,7 @@ export type State = Immutable<{
   showStory: number
   storyFeedback: { correct: boolean; text: string; toWait?: number } | null
   solved: Set<number>
-  modal: 'impressum' | 'name' | 'highscore' | null
+  modal: 'impressum' | 'name' | 'highscore' | 'design' | null
   userId: string
   analyze?: {
     players: number
@@ -39,6 +39,7 @@ export type State = Immutable<{
   scrollPosLeft: number
   storyGeneratorData: { [key: number]: object }
   showIdeaStory: boolean
+  background: 'beach' | 'desert' | 'mountains' | 'night-sky' | 'pink-clouds'
 }>
 
 export interface StoryData<T = any> {

@@ -7,12 +7,13 @@ import { AboutModal } from './AboutModal'
 import { InputBox } from './InputBox'
 import { NameModal } from './NameModal'
 import { FaIcon } from './FaIcon'
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faPalette } from '@fortawesome/free-solid-svg-icons'
 import { makePost } from '../lib/make-post'
 import { median } from '../lib/helper/median'
 import { State, PlayerInfo } from '../lib/types'
 import { CountdownTimer } from './CountdownTimer'
 import { HighscoreModal } from './HighscoreModal'
+import { DesignModal } from './DesignModal'
 
 export default function App() {
   const [core, setCore] = useState<State>({
@@ -34,12 +35,15 @@ export default function App() {
     scrollPosLeft: 0,
     storyGeneratorData: {},
     showIdeaStory: false,
+    background: 'pink-clouds',
   })
 
   const cutOff = new Date('2024-05-31')
 
   const runAnalyse = useRef(false)
 
+  const lightBackground =
+    core.background === 'beach' || core.background === 'desert'
   useEffect(() => {
     window.addEventListener('hashchange', () => {
       window.location.reload()
@@ -58,6 +62,7 @@ export default function App() {
         state.playerData.name = data.name
         state.persist = data.persist
         state.persistBannerShown = data.persistBannerShown
+        state.background = data.background ?? 'pink-clouds'
       } catch (e) {
         // probably invalid state
       }
@@ -209,7 +214,7 @@ export default function App() {
         <div
           className="min-h-full pt-4 sm:pt-6 min-w-fit"
           style={{
-            backgroundImage: "url('/wallpaper.jpg')",
+            backgroundImage: `url('/wallpapers/${core.background}.jpg')`,
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
           }}
@@ -282,7 +287,10 @@ export default function App() {
               </div>
             )}
             <p
-              className="underline cursor-pointer text-right mr-2"
+              className={clsx(
+                'underline cursor-pointer text-right mr-2',
+                lightBackground ? 'text-gray-950' : 'text-gray-200'
+              )}
               onClick={() => {
                 mut((c) => {
                   c.modal = 'highscore'
@@ -423,7 +431,12 @@ export default function App() {
             />
             {(core.solved.size > 3 || core.demoMode || core.editorMode) && (
               <button
-                className="absolute top-[210px] left-[1050px] w-[120px] block z-10 hover:bg-gray-100/60 rounded-xl transition-colors"
+                className={clsx(
+                  'absolute top-[210px] left-[1050px] w-[120px] block z-10 rounded-xl transition-colors',
+                  lightBackground
+                    ? 'hover:bg-gray-300/20'
+                    : 'hover:bg-gray-700/20 text-white'
+                )}
                 onClick={() => {
                   mut((c) => {
                     c.showIdeaStory = true
@@ -442,6 +455,31 @@ export default function App() {
                 />
               </button>
             )}
+            <button
+              className={clsx(
+                'absolute top-[860px] left-[80px] w-[76px] block z-10 rounded-xl transition-colors pb-1',
+                lightBackground ? 'hover:bg-white/20' : 'hover:bg-black/20'
+              )}
+              onClick={() => {
+                mut((c) => {
+                  c.modal = 'design'
+                })
+                makePost('/event', {
+                  userId: core.playerData.id,
+                  value: 'show_design',
+                })
+              }}
+            >
+              <p
+                className={clsx(
+                  'text-center mb-1',
+                  lightBackground ? 'text-gray-950' : 'text-white'
+                )}
+              >
+                Aussehen
+              </p>
+              <FaIcon icon={faPalette} className="text-pink-200 text-2xl" />
+            </button>
             {Object.entries(storyData).map(([id, data]) =>
               data.deps.length == 0 ||
               data.deps.some((d) => core.solved.has(d)) ||
@@ -454,7 +492,12 @@ export default function App() {
             )}
           </div>
           <div className="h-48"></div>
-          <div className="pb-14 lg:pb-4 ml-4 sm:text-center text-sm text-gray-300">
+          <div
+            className={clsx(
+              'pb-14 lg:pb-4 ml-4 sm:text-center text-sm',
+              lightBackground ? 'text-gray-800' : 'text-gray-300'
+            )}
+          >
             {core.solved.size > 0 &&
               !core.editorMode &&
               core.persistBannerShown && (
@@ -523,6 +566,18 @@ export default function App() {
                   c.showStory = -1
                 })
               }}
+            />
+          )}
+          {core.modal == 'design' && (
+            <DesignModal
+              onClose={() => {
+                mut((c) => {
+                  c.modal = null
+                  c.showStory = -1
+                })
+              }}
+              core={core}
+              mut={mut}
             />
           )}
         </div>
@@ -850,6 +905,7 @@ export default function App() {
         solved: Array.from(newval.solved),
         id: newval.playerData.id,
         name: newval.playerData.name,
+        background: newval.background,
         persist: newval.persist,
         persistBannerShown: newval.persistBannerShown,
       })
