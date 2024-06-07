@@ -8,9 +8,9 @@ import { CounterContext } from '../../components/math-skills/context/counter-con
 
 export const story42: StoryData = {
   title: 'Antike',
-  x: 700,
-  y: 200,
-  deps: [14, 24],
+  x: 510,
+  y: 310,
+  deps: [39, 41],
   render: ({ back, onSubmit }) => (
     <>
       <p>

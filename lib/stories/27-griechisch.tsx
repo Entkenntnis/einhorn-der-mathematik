@@ -4,9 +4,9 @@ import { StoryData } from '../types'
 
 export const story27: StoryData = {
   title: 'Griechisch',
-  x: 340,
-  y: 200,
-  deps: [6, 7],
+  x: 390,
+  y: 70,
+  deps: [6],
   render: ({ onSubmit, feedback }) => (
     <>
       <p>

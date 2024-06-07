@@ -14,7 +14,7 @@ export const story2: StoryData<DATA> = {
   title: 'Würfel',
   x: 260,
   y: 460,
-  deps: [23, 41],
+  deps: [10, 23],
   generator: () => {
     const data: DATA = {
       entries: [

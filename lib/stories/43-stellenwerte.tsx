@@ -14,7 +14,7 @@ export const story43: StoryData<DATA> = {
   title: 'Stellenwerte',
   x: 810,
   y: 321,
-  deps: [20, 42],
+  deps: [8, 20],
   generator: () => {
     const h = randomItemFromArray([6, 7, 8, 9])
     const z = randomItemFromArray([6, 7, 8, 9])

@@ -10,8 +10,8 @@ interface DATA {
 
 export const story26: StoryData<DATA> = {
   title: 'Wochentag',
-  x: 140,
-  y: 500,
+  x: 405,
+  y: 430,
   deps: [23, 41],
   generator: () => {
     const [days, answer, answerShort] = randomItemFromArray([

@@ -10,9 +10,9 @@ interface DATA {
 
 export const story8: StoryData<DATA> = {
   title: 'Winkel',
-  x: 510,
-  y: 310,
-  deps: [10, 27],
+  x: 700,
+  y: 200,
+  deps: [14, 24],
   generator: () => {
     const missing = randomIntBetween(63, 81)
     const t = 180 - missing

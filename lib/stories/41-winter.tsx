@@ -13,9 +13,9 @@ const negative30 = 496.5
 
 export const story41: StoryData<DATA> = {
   title: 'Winter',
-  x: 66,
-  y: 350,
-  deps: [37],
+  x: 360,
+  y: 320,
+  deps: [7],
   generator: () => {
     const d = randomItemFromArray([1, 2, 3, 4])
     const base = randomItemFromArray([-10, -20, -30])

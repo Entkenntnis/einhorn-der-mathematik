@@ -11,9 +11,9 @@ interface DATA {
 
 export const story10: StoryData<DATA> = {
   title: 'Rechenmauer',
-  x: 360,
-  y: 320,
-  deps: [7],
+  x: 66,
+  y: 350,
+  deps: [37],
   generator: () => {
     const data: DATA = {
       a: randomIntBetween(2, 8),

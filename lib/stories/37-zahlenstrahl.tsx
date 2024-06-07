@@ -18,7 +18,7 @@ export const story37: StoryData = {
         vor. Deshalb mag ich den Zahlenstrahl. Jede Zahl hat darauf ihren festen
         Platz.
       </p>
-      <p>Probiere es aus: Zeige den Zahlen ihren Platz auf dem Zahlenstrahl.</p>
+      <p>Probiere es aus: Zeige der Zahl ihren Platz auf dem Zahlenstrahl.</p>
       <MultistepExercise
         onDone={() => {
           onSubmit('42')
@@ -49,24 +49,10 @@ function MultistepExercise({ onDone }: { onDone: () => void }) {
 }
 
 function numberLineGeneratorLevel1(): [number, number, number] {
-  const kind = randomItemFromArray([0, 1])
-  if (kind === 0) {
-    const maxVal = 40
+  const maxVal = 40
 
-    const labeledPos = randomItemFromArray([0.25, 0.5, 0.75, 1])
-    const searchValues = getIntRange(10, 39, [labeledPos * 40])
-    const searchedVal = randomItemFromArray(searchValues)
-    return [searchedVal, labeledPos, maxVal]
-  } else {
-    const maxVal = randomItemFromArray([8000, 12000, 16000, 20000])
-    const labeledPos = randomItemFromArray([0.25, 0.5, 0.75, 1])
-    const possibleSearchValues = [
-      maxVal / 4,
-      maxVal / 2,
-      (maxVal / 4) * 3,
-      maxVal,
-    ].filter((val) => val !== maxVal * labeledPos)
-    const searchedVal = randomItemFromArray(possibleSearchValues)
-    return [searchedVal, labeledPos, maxVal]
-  }
+  const labeledPos = randomItemFromArray([0.25, 0.5, 0.75, 1])
+  const searchValues = getIntRange(10, 39, [labeledPos * 40])
+  const searchedVal = randomItemFromArray(searchValues)
+  return [searchedVal, labeledPos, maxVal]
 }

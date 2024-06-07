@@ -9,9 +9,9 @@ interface DATA {
 
 export const story28: StoryData<DATA> = {
   title: 'Taschengeld',
-  x: 74,
-  y: 586,
-  deps: [41],
+  x: 140,
+  y: 500,
+  deps: [10, 23],
   generator: () => {
     const teo = randomIntBetween(5, 15)
     return {

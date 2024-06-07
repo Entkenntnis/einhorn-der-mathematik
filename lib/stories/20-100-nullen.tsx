@@ -5,7 +5,7 @@ export const story20: StoryData = {
   title: '100 Nullen',
   x: 680,
   y: 320,
-  deps: [8, 14],
+  deps: [14, 42],
   render: () => (
     <>
       <p>

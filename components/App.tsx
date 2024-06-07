@@ -279,7 +279,8 @@ export default function App() {
             {core.playerData.name && (
               <div className="px-2 py-0.5 bg-white/50 rounded">
                 <p>
-                  <strong>{core.playerData.name}</strong>:{' '}
+                  <strong>{core.playerData.name}</strong>
+                  &nbsp;&nbsp;&nbsp;
                   <span title="gelöste Aufgabe / Gesamtzahl">
                     {core.solved.size}/{Object.keys(storyData).length}
                   </span>
