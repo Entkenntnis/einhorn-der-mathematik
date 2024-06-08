@@ -46,6 +46,28 @@ export function DesignModal({ onClose, core, mut }: AboutModalProps) {
               </select>
             </label>
           </p>
+          <p className="ml-4 mt-4">
+            <label>
+              Linienfarbe:{' '}
+              <select
+                value={core.lineColor}
+                onChange={(e) => {
+                  mut((s) => {
+                    s.lineColor = e.target.value as any
+                  })
+                  makePost('/event', {
+                    userId: core.playerData.id,
+                    value: 'select_linecolor_' + e.target.value,
+                  })
+                }}
+                className="p-2"
+              >
+                <option value="rainbow">Regenbogen</option>
+                <option value="gray">grau</option>
+                <option value="pink">pink</option>
+              </select>
+            </label>
+          </p>
         </div>
         <p className="text-center mb-5 mt-3">
           <button

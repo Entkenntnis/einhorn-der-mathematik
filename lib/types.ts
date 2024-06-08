@@ -40,6 +40,7 @@ export type State = Immutable<{
   storyGeneratorData: { [key: number]: object }
   showIdeaStory: boolean
   background: 'beach' | 'desert' | 'mountains' | 'night-sky' | 'pink-clouds'
+  lineColor: 'rainbow' | 'gray' | 'pink'
 }>
 
 export interface StoryData<T = any> {

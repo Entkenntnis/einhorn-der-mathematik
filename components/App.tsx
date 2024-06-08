@@ -36,6 +36,7 @@ export default function App() {
     storyGeneratorData: {},
     showIdeaStory: false,
     background: 'pink-clouds',
+    lineColor: 'rainbow',
   })
 
   const cutOff = new Date('2024-05-31')
@@ -63,6 +64,7 @@ export default function App() {
         state.persist = data.persist
         state.persistBannerShown = data.persistBannerShown
         state.background = data.background ?? 'pink-clouds'
+        state.lineColor = data.lineColor ?? 'rainbow'
       } catch (e) {
         // probably invalid state
       }
@@ -393,7 +395,7 @@ export default function App() {
                             ) /
                               Math.PI) *
                             180
-                          const stroke =
+                          const rainbowStroke =
                             angle < -135 ||
                             angle > 135 ||
                             (angle > -45 && angle < 45)
@@ -412,7 +414,13 @@ export default function App() {
                               x2={storyData[dep].x + 32}
                               y2={storyData[dep].y + 64}
                               strokeWidth="9"
-                              stroke={stroke}
+                              stroke={
+                                core.lineColor === 'rainbow'
+                                  ? rainbowStroke
+                                  : core.lineColor === 'pink'
+                                  ? '#f472b6'
+                                  : 'gray'
+                              }
                             />
                           )
                         } else {
@@ -907,6 +915,7 @@ export default function App() {
         id: newval.playerData.id,
         name: newval.playerData.name,
         background: newval.background,
+        lineColor: newval.lineColor,
         persist: newval.persist,
         persistBannerShown: newval.persistBannerShown,
       })
