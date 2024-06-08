@@ -46,7 +46,7 @@ import { story42 } from './stories/42-antike'
 import { story43 } from './stories/43-stellenwerte'
 import { story44 } from './stories/44-NEU'
 import { story45 } from './stories/45-tangram'
-import { story46 } from './stories/46-NEU'
+import { story46 } from './stories/46-queer'
 import { story47 } from './stories/47-primzahlen'
 import { story48 } from './stories/48-NEU'
 
