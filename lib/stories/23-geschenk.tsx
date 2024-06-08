@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { ignoreCaseSolution } from '../data'
 import { StoryData } from '../types'
+import { ChoiceInput } from '../../components/ChoiceInput'
 
 export const story23: StoryData = {
   title: 'Geschenk',
@@ -26,7 +27,25 @@ export const story23: StoryData = {
         In welcher Reihenfolge muss ich das machen? Wähle die passenden
         Antworten.
       </p>
-      <ChoiceInput onSubmit={onSubmit} feedback={feedback} />
+      <ChoiceInput
+        onSubmit={onSubmit}
+        feedback={feedback}
+        choices={[
+          'das blaue Band',
+          'das violette Band',
+          'das rote Band',
+          'das grüne Band',
+        ]}
+        getShort={(i) => 'BVRG'.charAt(i)}
+        renderContent={(renderSelect) => (
+          <>
+            <p>Entferne zuerst {renderSelect(0)},</p>
+            <p>dann {renderSelect(1)},</p>
+            <p>dann {renderSelect(2)},</p>
+            <p>und als letztes {renderSelect(3)}.</p>
+          </>
+        )}
+      />
     </>
   ),
   proof: () => {
@@ -64,85 +83,4 @@ export const story23: StoryData = {
   },
   hideSubmit: true,
   submit: ignoreCaseSolution('R G B V'),
-}
-
-interface ChoiceInputProps {
-  onSubmit: (val: string) => void
-  feedback: React.ReactNode
-}
-
-function ChoiceInput({ onSubmit, feedback }: ChoiceInputProps) {
-  const choices = [
-    'das blaue Band',
-    'das violette Band',
-    'das rote Band',
-    'das grüne Band',
-  ]
-  const short = 'BVRG'
-
-  const [showFeedback, setShowFeedback] = useState(false)
-  const [selection, setSelection] = useState([-1, -1, -1, -1])
-  return (
-    <>
-      <div className="mt-2 bg-white/70 rounded pl-3 pt-1 pb-2 [&>p]:my-4">
-        <p>Entferne zuerst {renderSelect(0)},</p>
-        <p>dann {renderSelect(1)},</p>
-        <p>dann {renderSelect(2)},</p>
-        <p>und als letztes {renderSelect(3)}.</p>
-        {showFeedback && feedback}
-        <button
-          className="px-3 py-1 rounded bg-pink-300 hover:bg-pink-400 disabled:bg-gray-300 mt-4"
-          disabled={selection.includes(-1)}
-          onClick={() => {
-            onSubmit(selection.map((i) => short.charAt(i)).join(' '))
-            setShowFeedback(true)
-          }}
-        >
-          Los
-        </button>
-      </div>
-    </>
-  )
-
-  function renderSelect(index: number) {
-    if (selection[index] >= 0) {
-      return (
-        <button
-          onClick={() => {
-            const newSelection = selection.slice()
-            newSelection[index] = -1
-            setSelection(newSelection)
-            setShowFeedback(false)
-          }}
-          className="px-2 py-0.5 bg-pink-200 rounded"
-          title="Auswahl zurücksetzen"
-        >
-          {choices[selection[index]]}
-        </button>
-      )
-    }
-    return (
-      <select
-        className="px-2 py-0.5"
-        value={selection[index]}
-        onChange={(e) => {
-          const newSelection = selection.slice()
-          newSelection[index] = parseInt(e.target.value)
-          setSelection(newSelection)
-        }}
-      >
-        <option value={-1}>---</option>
-        {choices.map((c, i) => {
-          if (selection.includes(i) && selection[index] !== i) {
-            return null
-          }
-          return (
-            <option key={c} value={i}>
-              {c}
-            </option>
-          )
-        })}
-      </select>
-    )
-  }
 }
