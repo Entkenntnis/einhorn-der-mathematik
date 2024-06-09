@@ -61,6 +61,190 @@ export const story46: StoryData<DATA> = {
       />
     </>
   ),
+  proof: ({ data }) => {
+    return (
+      <>
+        <p>
+          Ich habe früher viele von solchen logischen Rätsel gelöst. Meine
+          Strategie dabei ist es, Schritt für Schritt vorzugehen und alle
+          Informationen in einer Tabelle zu notieren.
+        </p>
+        <p>
+          Ich trage als erstes den Hinweis &quot;{data.friends[2][0]} ist
+          schwul&quot; ein:
+        </p>
+        <table className="border-collapse [&_td]:border [&_th]:border [&_td]:border-black [&_th]:border-black [&_td]:px-1 [&_th]:px-1 my-6 [&_td]:text-center">
+          <thead>
+            <th>&nbsp;</th>
+            <th>lesbisch</th>
+            <th>nicht-binär</th>
+            <th>schwul</th>
+            <th>trans</th>
+          </thead>
+          <tr>
+            <td>{data.friends[0][0]}</td>
+            <td></td>
+            <td></td>
+            <td>--</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>{data.friends[1][0]}</td>
+            <td></td>
+            <td></td>
+            <td>--</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>{data.friends[2][0]}</td>
+            <td>--</td>
+            <td>--</td>
+            <td>✓</td>
+            <td>--</td>
+          </tr>
+          <tr>
+            <td>{data.friends[3][0]}</td>
+            <td></td>
+            <td></td>
+            <td>--</td>
+            <td></td>
+          </tr>
+        </table>
+        <p>
+          Danach trage ich den zweiten Hinweis &quot;{data.friends[1][0]} ist
+          nicht lesbisch und {data.friends[0][0]} ist nicht trans&quot; ein:
+        </p>
+        <table className="border-collapse [&_td]:border [&_th]:border [&_td]:border-black [&_th]:border-black [&_td]:px-1 [&_th]:px-1 my-6 [&_td]:text-center">
+          <thead>
+            <th>&nbsp;</th>
+            <th>lesbisch</th>
+            <th>nicht-binär</th>
+            <th>schwul</th>
+            <th>trans</th>
+          </thead>
+          <tr>
+            <td>{data.friends[0][0]}</td>
+            <td></td>
+            <td></td>
+            <td>--</td>
+            <td>--</td>
+          </tr>
+          <tr>
+            <td>{data.friends[1][0]}</td>
+            <td>--</td>
+            <td></td>
+            <td>--</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>{data.friends[2][0]}</td>
+            <td>--</td>
+            <td>--</td>
+            <td>✓</td>
+            <td>--</td>
+          </tr>
+          <tr>
+            <td>{data.friends[3][0]}</td>
+            <td></td>
+            <td></td>
+            <td>--</td>
+            <td></td>
+          </tr>
+        </table>
+        <p>
+          Der letzte Hinweis lautet &quot;{data.friends[0][0]} und{' '}
+          {data.friends[2][0]} sind ein Pärchen&quot;. Weil {data.friends[2][0]}{' '}
+          schwul ist, kann {data.friends[0][0]} nicht lesbisch sein, daher ist{' '}
+          {data.friends[0][0]} nicht-binär*.
+        </p>
+        <table className="border-collapse [&_td]:border [&_th]:border [&_td]:border-black [&_th]:border-black [&_td]:px-1 [&_th]:px-1 my-6 [&_td]:text-center">
+          <thead>
+            <th>&nbsp;</th>
+            <th>lesbisch</th>
+            <th>nicht-binär</th>
+            <th>schwul</th>
+            <th>trans</th>
+          </thead>
+          <tr>
+            <td>{data.friends[0][0]}</td>
+            <td>--</td>
+            <td>✓</td>
+            <td>--</td>
+            <td>--</td>
+          </tr>
+          <tr>
+            <td>{data.friends[1][0]}</td>
+            <td>--</td>
+            <td>--</td>
+            <td>--</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>{data.friends[2][0]}</td>
+            <td>--</td>
+            <td>--</td>
+            <td>✓</td>
+            <td>--</td>
+          </tr>
+          <tr>
+            <td>{data.friends[3][0]}</td>
+            <td></td>
+            <td>--</td>
+            <td>--</td>
+            <td></td>
+          </tr>
+        </table>
+        <p>
+          Für {data.friends[1][0]} bleibt nur noch trans, für{' '}
+          {data.friends[3][0]} schließlich lesbisch. Damit ist die Tabelle
+          vollständig und ich habe meine Lösung:
+        </p>
+        <table className="border-collapse [&_td]:border [&_th]:border [&_td]:border-black [&_th]:border-black [&_td]:px-1 [&_th]:px-1 mt-6 [&_td]:text-center">
+          <thead>
+            <th>&nbsp;</th>
+            <th>lesbisch</th>
+            <th>nicht-binär</th>
+            <th>schwul</th>
+            <th>trans</th>
+          </thead>
+          <tr>
+            <td>{data.friends[0][0]}</td>
+            <td>--</td>
+            <td>✓</td>
+            <td>--</td>
+            <td>--</td>
+          </tr>
+          <tr>
+            <td>{data.friends[1][0]}</td>
+            <td>--</td>
+            <td>--</td>
+            <td>--</td>
+            <td>✓</td>
+          </tr>
+          <tr>
+            <td>{data.friends[2][0]}</td>
+            <td>--</td>
+            <td>--</td>
+            <td>✓</td>
+            <td>--</td>
+          </tr>
+          <tr>
+            <td>{data.friends[3][0]}</td>
+            <td>✓</td>
+            <td>--</td>
+            <td>--</td>
+            <td>--</td>
+          </tr>
+        </table>
+        <p className="text-gray-600 mt-6">
+          <small>
+            * Nicht-binäre Menschen können sich (auch) als männlich
+            identifizieren und damit Teil eines schwulen Pärchen sein.
+          </small>
+        </p>
+      </>
+    )
+  },
   submit: ignoreCaseSolutionWithGenData<DATA>((data) => {
     const result = ['x', 'x', 'x', 'x']
     data.friends.forEach(([, index], i) => {
