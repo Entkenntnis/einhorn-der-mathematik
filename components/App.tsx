@@ -39,7 +39,7 @@ export default function App() {
     lineColor: 'rainbow',
   })
 
-  const cutOff = new Date('2024-05-31')
+  const cutOff = new Date('2024-06-11')
 
   const runAnalyse = useRef(false)
 
