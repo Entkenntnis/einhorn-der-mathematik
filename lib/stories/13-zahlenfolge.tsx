@@ -14,7 +14,7 @@ export const story13: StoryData<DATA> = {
   deps: [2, 26, 28],
   generator: () => {
     const start = randomItemFromArray([1, 2, 3, 4])
-    const incr = randomItemFromArray([1, 2, 3, 4, 5, 6])
+    const incr = randomItemFromArray([1, 2, 3])
     return { start, incr }
   },
   render: ({ data }) => {

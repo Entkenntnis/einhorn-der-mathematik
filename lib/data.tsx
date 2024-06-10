@@ -48,7 +48,7 @@ import { story44 } from './stories/44-NEU'
 import { story45 } from './stories/45-tangram'
 import { story46 } from './stories/46-queer'
 import { story47 } from './stories/47-primzahlen'
-import { story48 } from './stories/48-NEU'
+import { story48 } from './stories/48-monster'
 
 export const storyData: { [key: number]: StoryData } = {
   1: story1,
