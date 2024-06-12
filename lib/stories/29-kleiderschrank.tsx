@@ -8,9 +8,9 @@ interface DATA {
 
 export const story29: StoryData<DATA> = {
   title: 'Kleiderschrank',
-  x: 249,
-  y: 649,
-  deps: [2, 35, 37],
+  x: 330,
+  y: 820,
+  deps: [5, 25],
   generator: () => {
     return { socks: randomItemFromArray([5, 6, 7, 8, 9, 10]) }
   },

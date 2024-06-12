@@ -8,37 +8,38 @@ export const story7: StoryData = {
   deps: [1],
   render: () => (
     <>
-      <p>Bei uns Zuhause hängt dieses Bild an der Wand.</p>
-      <img src="story7.png" alt="viele Hufeisen" className="w-[400px]" />
       <p>
-        Als Teo die Hufeisen zählt, fängt er oben links an und geht Reihe für
-        Reihe durch.
+        &quot;Eins, zwei, drei, ...&quot;, murmelt Teo. Er möchte mir zeigen,
+        dass er gut mit Zahlen umgehen kann. Dazu zählt er die Hufeisen in
+        diesem Bild.
+      </p>
+      <img src="story7.png" alt="viele Hufeisen" className="w-[300px]" />
+      <p>
+        Er muss sich wirklich konzentrieren, um keine Hufeisen doppelt zu
+        zählen. Stolz sagt er mir sein Ergebnis. Er schaut mich voller Erwartung
+        an.
       </p>
       <p>
-        Wenn du die Struktur des Bilds nutzt, kannst du dir die Arbeit ein wenig
-        erleichtern. Wie viele Hufeisen sind im Bild zu sehen?
+        Ich zähle schnell selbst nach und sage ihm, dass sein Ergebnis richtig
+        ist. Das macht ihn glücklich. Wie viele Hufeisen sind im Bild zu sehen?
       </p>
     </>
   ),
   proof: () => (
     <>
       <p>
-        Es gibt viele Möglichkeiten, die Struktur des Bildes zu nutzen. Ich
-        möchte zwei Varianten zeigen.
+        Ich nutze die Struktur des Bilds, um mir die Arbeit etwas zu
+        erleichtern:
       </p>
-      <img src="story7_sol1.png" alt="viele Hufeisen" className="w-[200px]" />
+      <img src="story7_sol1.png" alt="viele Hufeisen" className="w-[300px]" />
       <p>
-        In der ersten Variante nehme ich 4er-Gruppen und rechne 7 mal 4 = 28.
-      </p>
-      <img src="story7_sol2.png" alt="viele Hufeisen" className="w-[200px]" />
-      <p>
-        Auch schön ist es, die Symmetrie des Bildes zu nutzen und sich die
-        Arbeit zumindest zu halbieren.
+        Ich unterteile das Bild in 4er-Gruppen und rechne 7 · 4 ={' '}
+        <strong>28</strong>.
       </p>
       <p>
         In der Mathematik gibt es zwar oft nur eine Lösung, aber viele Wege,
-        dahin zu kommen. Ohne diesen Platz für Kreativität hätte ich
-        wahrscheinlich keinen so großen Spaß an Mathe.
+        dahin zu kommen. Diese Kreativität macht mir an Mathe so viel Spaß und
+        ich löse gerne Aufgaben, die mir bisschen Freiheit erlauben.
       </p>
     </>
   ),

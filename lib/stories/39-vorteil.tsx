@@ -11,7 +11,7 @@ interface DATA {
 }
 
 export const story39: StoryData<DATA> = {
-  title: 'Rechenvorteil',
+  title: 'Vorteil',
   x: 75,
   y: 226,
   deps: [1],
@@ -37,7 +37,7 @@ export const story39: StoryData<DATA> = {
         zeige ihr, was uns die Lehrerin gerade erklärt hat und wie man hier
         vorteilhaft rechnen kann.
       </p>
-      <p>Nutze auch du den Vorteil. Wie lautet das Ergebnis der Rechnung?</p>
+      <p>Wie lautet das Ergebnis der Rechnung?</p>
     </>
   ),
   proof: ({ data }) => {
@@ -45,7 +45,7 @@ export const story39: StoryData<DATA> = {
       <>
         <p>
           Mit solchen Vorteilen beschäftigen sich Mathematiker gerne, weil sie
-          viele Probleme etwas leichter machen.
+          viele Probleme leichter machen.
         </p>
         <p>
           In diesem Fall kann ich bei der Addition die Reihenfolge der Summanden

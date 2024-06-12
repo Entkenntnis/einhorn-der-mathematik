@@ -5,7 +5,7 @@ export const story17: StoryData = {
   title: 'Pizza',
   x: 630,
   y: 750,
-  deps: [25, 46, 47],
+  deps: [29, 46, 47],
   render: () => (
     <>
       <p>

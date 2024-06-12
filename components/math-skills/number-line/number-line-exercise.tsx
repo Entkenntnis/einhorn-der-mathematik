@@ -59,7 +59,9 @@ export function NumberLineExercise({
   }, [selectedValue, searchedValue, exStatus])
 
   const noInputText = (
-    <span className="text-gray-700">Bewege den Marker auf dem Zeitstrahl</span>
+    <span className="text-gray-700">
+      Bewege den Marker auf dem Zahlenstrahl
+    </span>
   )
 
   const isIncorrectText = (

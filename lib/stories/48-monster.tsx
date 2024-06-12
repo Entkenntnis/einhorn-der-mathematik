@@ -16,13 +16,13 @@ export const story48: StoryData = {
         helfen uns bei der Programmierung. Die Grafiken gestalten wir.
       </p>
       <p>
-        In unserem Spiel kommen verschiedene Monster vor. Wir sind keine
-        Design-Profis. Um uns etwas Arbeit zu sparen, wollen wir die Monster
-        achsensymmetrisch zeichen. Hier haben wir die erste Hälfte fertig.
+        In unserem Spiel kommen verschiedene Monster vor. Wir wollen, dass
+        unsere Monster achsensymmetrisch sind. Die Symmetrieachse verläuft
+        senkrecht durch die Mitte. Die erste Hälfte ist geschafft.
       </p>
       <p>
-        Vervollständige die zweite Hälfte des Monster. Klicke auf eine Zelle, um
-        die Farbe zu wechseln.
+        Mache mit! Zeichne die zweite Hälfte des Monsters. Klicke auf eine
+        Zelle, um ihre Farbe zu ändern.
       </p>
       <InteractiveGrid
         handleDone={() => {

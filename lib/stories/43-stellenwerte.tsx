@@ -12,9 +12,9 @@ interface DATA {
 
 export const story43: StoryData<DATA> = {
   title: 'Stellenwerte',
-  x: 810,
-  y: 321,
-  deps: [8, 20],
+  x: 710,
+  y: 660,
+  deps: [45, 46],
   generator: () => {
     const h = randomItemFromArray([6, 7, 8, 9])
     const z = randomItemFromArray([6, 7, 8, 9])

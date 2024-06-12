@@ -22,7 +22,7 @@ export const story6: StoryData = {
       </p>
       <p>
         Ich schmunzle, denn es sind viel mehr als zwei Dreiecke. Wie viele
-        Dreiecke kannst du sehen?
+        Dreiecke siehst du?
       </p>
     </>
   ),

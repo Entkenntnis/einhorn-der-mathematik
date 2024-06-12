@@ -6,7 +6,7 @@ export const story9: StoryData = {
   title: 'Sudoku',
   x: 827,
   y: 754,
-  deps: [4, 17, 28],
+  deps: [17, 28, 43],
   render: ({ onSubmit, feedback }) => (
     <>
       <p>

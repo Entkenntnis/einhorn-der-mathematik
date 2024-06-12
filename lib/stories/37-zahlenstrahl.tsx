@@ -8,17 +8,16 @@ import { StoryData } from '../types'
 
 export const story37: StoryData = {
   title: 'Zahlenstrahl',
-  x: 140,
-  y: 500,
+  x: 260,
+  y: 460,
   deps: [10, 23],
   render: ({ back, onSubmit }) => (
     <>
       <p>
-        Ich bin eine sehr bildliche Person und stelle mir Dinge gerne graphisch
-        vor. Deshalb mag ich den Zahlenstrahl. Jede Zahl hat darauf ihren festen
-        Platz.
+        Ich liebe es, wenn man Dinge aufzeichnen kann, dann kann ich sie mir
+        viel besser vorstellen. Ich bin sehr froh, dass es auch mit Zahlen geht.
+        Auf dem Zahlenstrahl hat jede Zahl ihren festen Platz.
       </p>
-      <p>Probiere es aus: Zeige der Zahl ihren Platz auf dem Zahlenstrahl.</p>
       <MultistepExercise
         onDone={() => {
           onSubmit('42')

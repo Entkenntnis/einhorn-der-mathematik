@@ -9,9 +9,9 @@ interface DATA {
 
 export const story4: StoryData<DATA> = {
   title: 'Telepathie',
-  x: 710,
-  y: 660,
-  deps: [45, 46],
+  x: 810,
+  y: 321,
+  deps: [8, 20],
   generator: () => {
     const start = randomIntBetween(18, 25) * 2
     return { start, end: (start / 2 - 11) * 5 }

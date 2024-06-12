@@ -13,7 +13,7 @@ export const story47: StoryData<DATA> = {
   title: 'Primzahlen',
   x: 430,
   y: 731,
-  deps: [13, 29],
+  deps: [13, 25],
   generator: () => {
     const correct = shuffleArray([3, 5, 7, 11, 13, 17, 19, 23, 29]).slice(0, 7)
     const d = randomItemFromArray([9, 15, 21, 25])

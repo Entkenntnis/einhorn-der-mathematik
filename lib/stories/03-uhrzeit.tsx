@@ -12,7 +12,7 @@ export const story3: StoryData<DATA> = {
   title: 'Uhrzeit',
   x: 500,
   y: 551,
-  deps: [2, 26],
+  deps: [26, 37],
   generator: () => {
     const data: DATA = {
       clock: randomIntBetween(49, 48 + 11),

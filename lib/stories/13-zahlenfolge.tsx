@@ -13,8 +13,8 @@ export const story13: StoryData<DATA> = {
   y: 620,
   deps: [2, 26, 37],
   generator: () => {
-    const start = randomItemFromArray([1, 2, 3, 4])
-    const incr = randomItemFromArray([1, 2, 3])
+    const start = randomItemFromArray([10, 20, 30, 40, 50, 60, 70])
+    const incr = randomItemFromArray([1])
     return { start, incr }
   },
   render: ({ data }) => {

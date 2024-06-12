@@ -10,7 +10,7 @@ export const story33: StoryData<DATA> = {
   title: 'Ungeduld',
   x: 1000,
   y: 590,
-  deps: [4, 19, 40],
+  deps: [19, 40, 43],
   generator: () => {
     return { mins: randomIntBetween(29, 38) }
   },

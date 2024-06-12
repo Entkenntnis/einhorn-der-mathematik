@@ -12,8 +12,8 @@ const letters = ['A', 'B', 'C', 'D']
 
 export const story2: StoryData<DATA> = {
   title: 'Würfel',
-  x: 260,
-  y: 460,
+  x: 140,
+  y: 500,
   deps: [10, 23],
   generator: () => {
     const data: DATA = {
