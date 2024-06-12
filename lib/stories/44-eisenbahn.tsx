@@ -1,33 +1,31 @@
 import { ignoreCaseSolution, ignoreCaseSolutionWithGenData } from '../data'
 import { randomIntBetween } from '../helper/random-int-between'
+import { randomItemFromArray } from '../helper/random-item-from-array'
 import { StoryData } from '../types'
 
 interface DATA {
-  v_m: number
-  v_r: number
+  n: number
 }
 
-export const story44: StoryData = {
+export const story44: StoryData<DATA> = {
   title: 'Eisenbahn',
   x: 760,
   y: 421,
   deps: [15, 20],
   generator: () => {
-    let v_m = randomIntBetween(65, 77)
-    if (v_m === 69) {
-      v_m += 1
-    }
-    const v_r = Math.round((v_m / 100) * 87 * 3.6)
-    return { v_m, v_r }
+    return { n: randomItemFromArray([70, 80, 90, 100, 110]) }
   },
   render: ({ data }) => (
     <>
       <p>
         Wir sind heute bei unserem Onkel zu besuchen. Das ist immer was
-        Besonderes, weil er im Keller eine große Modell-Eisenbahn-Landschaft
-        hat. Die Züge sind viel kleiner als die Wirklichkeit. Er erklärt uns
-        stolz: &quot;Meine Züge sind im Maßstab 1:87, d.h. sie sind um 87-fach
-        kleiner als die Wirklichkeit.&quot;
+        Besonderes. Er besitzt im Keller eine große Modell-Eisenbahn-Landschaft.
+        Dort verbringen wir viel Zeit.
+      </p>
+      <p>
+        Zwei lange Reisezüge sind neu. Wir messen nach und jeder Zug hat eine
+        Länge von {data.n}&nbsp;cm. Unser Onkel erzählt uns, dass die Züge im
+        Maßstab 1:80 gebaut sind.
       </p>
       <img
         src="/story44.jpg"
@@ -46,48 +44,22 @@ export const story44: StoryData = {
         </small>
       </p>
       <p>
-        Wir lassen die Züge fahren und sie sind echt schnell. In einer Sekunde
-        schafft der Zug eine Strecke von {data.v_m}&nbsp;cm. Wie viel km/h
-        entspricht das in der Wirklichkeit? Runde dein Ergebnis auf eine ganze
-        Zahl.
-      </p>
-      <p>
-        <small className="text-gray-700">
-          Mit dem Faktor 3,6 kommst du von m/s auf km/h.
-        </small>
+        Welche Länge hat der Zug in der Wirklichkeit? Gib dein Ergebnis mit
+        Einheit an.
       </p>
     </>
   ),
-  proof: ({ data }) => {
+  proof: () => {
     return (
       <>
-        <p>
-          Meine Physik-Kenntnisse sind etwas eingerostet. Das Umrechnen der
-          Einheiten hat daher etwas gedauert.
-        </p>
-        <p>
-          Zuerst habe ich die cm/s in m/s umgerechnet, dazu teile ich durch 100.
-          Die Züge fahren mit 0,{data.v_m}&nbsp;m/s. Als nächstes berücksichtige
-          ich den Maßstab und multipliziere mit 87. Die Züge würden in der
-          Realität mit{' '}
-          {(Math.round(data.v_m * 87) / 100).toLocaleString('de-De')}&nbsp;m/s
-          fahren.
-        </p>
-        <p>
-          Als letztes multipliziere ich mit 3,6 und komme gerundet auf{' '}
-          <strong>{data.v_r}&nbsp;km/h.</strong>
-        </p>
-        <p>
-          Der Umrechnungsfaktor 3,6 ergibt sich daraus, dass eine Stunde 3600
-          Sekunden und ein Kilometer 1000 Meter hat. Wenn man alle Variablen auf
-          die richtigen Seiten stellt, bleibt der Faktor 3600/1000 = 3,6 stehen.
-        </p>
+        <p></p>
       </>
     )
   },
   submit: ignoreCaseSolutionWithGenData<DATA>((data) => [
-    `${data.v_r}`,
-    `${data.v_r}kmh`,
-    `${data.v_r}km/h`,
+    `${data.n * 80}zentimeter`,
+    `${data.n * 80}cm`,
+    `${(data.n * 80) / 100}m`,
+    `${(data.n * 80) / 100}meter`,
   ]),
 }
