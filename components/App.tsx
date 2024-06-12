@@ -212,7 +212,10 @@ export default function App() {
 
   function renderOverview() {
     return (
-      <div className="overflow-auto h-full" id="map-scroller">
+      <div
+        className={clsx('overflow-auto', !core.analyze && 'h-full')}
+        id="map-scroller"
+      >
         <div
           className="min-h-full pt-4 sm:pt-6 min-w-fit"
           style={{
