@@ -13,6 +13,7 @@ export const story38: StoryData = {
         zufällig als Ergebnis einer Rechnung auf. Dann kann ich mir ein Lächeln
         nicht verkneifen.
       </p>
+      <p className="text-2xl">66 - 6 · 6 + 6 + 6 = ______</p>
       <p>
         Viele Leute schauen mich dann an und fragen: Was findest du denn an der
         Zahl so lustig? Aber ich kann das nicht beschreiben. Wie soll ich auch
