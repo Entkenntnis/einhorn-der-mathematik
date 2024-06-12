@@ -84,6 +84,12 @@ export const story41: StoryData<DATA> = {
   },
   submit: ignoreCaseSolutionWithGenData<DATA>((data) => {
     const t = data.base + data.d
-    return [`${t}`, `${t}°`, `${t}°c`]
+    const output = []
+    for (const prefix of ['‐', '−', '–', '—', '-', 'minus']) {
+      for (const postfix of ['', '°', '°c', 'grad', 'grad celcius']) {
+        output.push(`${prefix} ${Math.abs(t)} ${postfix}`)
+      }
+    }
+    return output
   }),
 }
