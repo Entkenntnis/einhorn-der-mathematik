@@ -11,7 +11,7 @@ export const story13: StoryData<DATA> = {
   title: 'Zahlenfolge',
   x: 390,
   y: 620,
-  deps: [2, 26, 28],
+  deps: [2, 26, 37],
   generator: () => {
     const start = randomItemFromArray([1, 2, 3, 4])
     const incr = randomItemFromArray([1, 2, 3])

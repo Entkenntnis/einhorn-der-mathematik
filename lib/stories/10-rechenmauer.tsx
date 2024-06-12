@@ -13,7 +13,7 @@ export const story10: StoryData<DATA> = {
   title: 'Rechenmauer',
   x: 66,
   y: 350,
-  deps: [37],
+  deps: [39],
   generator: () => {
     const data: DATA = {
       a: randomIntBetween(2, 8),

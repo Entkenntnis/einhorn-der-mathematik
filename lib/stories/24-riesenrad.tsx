@@ -14,7 +14,7 @@ export const story24: StoryData<DATA> = {
   title: 'Riesenrad',
   x: 540,
   y: 110,
-  deps: [27, 39],
+  deps: [27, 48],
   generator: () => {
     const data: DATA = {
       gondeln: randomIntBetween(12, 25),

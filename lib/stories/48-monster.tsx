@@ -6,9 +6,9 @@ import { randomItemFromArray } from '../helper/random-item-from-array'
 
 export const story48: StoryData = {
   title: 'Monster',
-  x: 656,
-  y: 840,
-  deps: [38, 47],
+  x: 340,
+  y: 200,
+  deps: [6, 7],
   render: ({ onSubmit, back }) => (
     <>
       <p>

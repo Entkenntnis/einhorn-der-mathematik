@@ -10,7 +10,7 @@ export const story29: StoryData<DATA> = {
   title: 'Kleiderschrank',
   x: 249,
   y: 649,
-  deps: [2, 28, 35],
+  deps: [2, 35, 37],
   generator: () => {
     return { socks: randomItemFromArray([5, 6, 7, 8, 9, 10]) }
   },

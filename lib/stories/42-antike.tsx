@@ -10,7 +10,7 @@ export const story42: StoryData = {
   title: 'Antike',
   x: 510,
   y: 310,
-  deps: [39, 41],
+  deps: [41, 48],
   render: ({ back, onSubmit }) => (
     <>
       <p>

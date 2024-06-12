@@ -8,9 +8,9 @@ import { StoryData } from '../types'
 
 export const story37: StoryData = {
   title: 'Zahlenstrahl',
-  x: 75,
-  y: 226,
-  deps: [1],
+  x: 140,
+  y: 500,
+  deps: [10, 23],
   render: ({ back, onSubmit }) => (
     <>
       <p>
