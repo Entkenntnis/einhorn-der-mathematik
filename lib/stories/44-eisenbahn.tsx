@@ -49,10 +49,15 @@ export const story44: StoryData<DATA> = {
       </p>
     </>
   ),
-  proof: () => {
+  proof: ({ data }) => {
     return (
       <>
-        <p></p>
+        <p>
+          Der Maßstab 1:80 bedeutet, dass die Wirlichkeit um 80-fach größer ist
+          als das Modell. Ich multipliziere die Länge {data.n}&nbsp;cm mit 80
+          und erhalte das Ergebnis <strong>{data.n * 80}&nbsp;cm</strong> oder{' '}
+          <strong>{(data.n * 80) / 100}&nbsp;m</strong>.
+        </p>
       </>
     )
   },
