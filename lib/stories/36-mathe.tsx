@@ -19,11 +19,15 @@ export const story36: StoryData<DATA> = {
   },
   render: ({ data }) => (
     <>
+      <p>Herzlichen Glückwunsch, dass du so weit gekommen bist!</p>
       <p>
-        Herzlichen Glückwunsch, dass du soweit gekommen bist! Ich hoffe, dass du
-        hier ein wenig Spaß mit Mathematik hattest. Ab hier startet nun das
-        zweite Kapitel - weiterhin viel Spaß beim Knobeln :)
+        Ab hier startet das zweite Kapitel. Im zweiten Kapitel hast du die
+        Auswahl: Wenn du nach dieser Aufgabe nach rechts weitergehst, findest du
+        entspannte Aufgaben ähnlich wie bisher. Wenn du bereit bist für eine
+        Herausforderung kannst du den Pfad nach unten folgen. Stelle dort dein
+        Können unter Beweis.
       </p>
+      <p>Viel Spaß beim Knobeln :)</p>
       <p>
         Stelle dir für diese Aufgabe vor, dass A = {data.ns[0]}, E ={' '}
         {data.ns[1]}, H = {data.ns[2]}, M = {data.ns[3]} und T = {data.ns[4]}.
