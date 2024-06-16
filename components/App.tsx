@@ -183,6 +183,15 @@ export default function App() {
           return res
         }, {} as { [key: string]: { value: string; correct: boolean }[] })
 
+        const events = Object.entries(eventSources).map((entry) => {
+          return {
+            value: entry[0],
+            count: Object.keys(entry[1] as any).length,
+          }
+        })
+
+        events.sort((a, b) => b.count - a.count)
+
         mut((state) => {
           state.analyze = {
             players: playerInfo.length,
@@ -191,12 +200,7 @@ export default function App() {
             storyStats,
             inputs,
             playerInfo,
-            events: Object.entries(eventSources).map((entry) => {
-              return {
-                value: entry[0],
-                count: Object.keys(entry[1] as any).length,
-              }
-            }),
+            events,
           }
         })
       })()
