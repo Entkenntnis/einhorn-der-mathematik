@@ -11,7 +11,7 @@ export const story28: StoryData<DATA> = {
   title: 'Taschengeld',
   x: 656,
   y: 840,
-  deps: [38, 47],
+  deps: [12, 38],
   generator: () => {
     const teo = randomIntBetween(5, 15)
     return {

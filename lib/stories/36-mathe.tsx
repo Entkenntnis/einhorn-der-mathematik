@@ -11,7 +11,7 @@ export const story36: StoryData<DATA> = {
   title: 'Mathe',
   x: 1081,
   y: 693,
-  deps: [12, 33, 34],
+  deps: [33, 34, 47],
   generator: () => {
     const ns = shuffleArray([1, 2, 3, 4, 5])
     const r = (ns[3] + ns[0]) * (ns[4] + ns[2]) - ns[1]

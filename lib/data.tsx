@@ -49,6 +49,14 @@ import { story45 } from './stories/45-tangram'
 import { story46 } from './stories/46-queer'
 import { story47 } from './stories/47-primzahlen'
 import { story48 } from './stories/48-monster'
+import { story49 } from './stories/49-NEU'
+import { story50 } from './stories/50-NEU'
+import { story51 } from './stories/51-NEU'
+import { story52 } from './stories/52-NEU'
+import { story53 } from './stories/53-NEU'
+import { story54 } from './stories/54-NEU'
+import { story55 } from './stories/55-NEU'
+import { story56 } from './stories/56-NEU'
 
 export const storyData: { [key: number]: StoryData } = {
   1: story1,
@@ -99,6 +107,14 @@ export const storyData: { [key: number]: StoryData } = {
   46: story46,
   47: story47,
   48: story48,
+  49: story49,
+  50: story50,
+  51: story51,
+  52: story52,
+  53: story53,
+  54: story54,
+  55: story55,
+  56: story56,
 }
 
 export function genericSubmitHandler(

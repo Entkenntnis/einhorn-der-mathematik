@@ -351,8 +351,8 @@ export default function App() {
                 </div>
               </div>
             )}
-          <div className="mt-4 mx-auto w-[1400px] h-[1100px] relative z-0">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1100">
+          <div className="mt-4 mx-auto w-[1720px] h-[1400px] relative z-0 border border-lime-500">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1720 1400">
               <defs>
                 <linearGradient
                   id="grad_vertical"
@@ -445,6 +445,16 @@ export default function App() {
               alt="Regenbogen"
               className="w-[100px] absolute left-[1060px] top-[700px]"
             />
+            {(core.solved.has(36) ||
+              core.analyze ||
+              core.editorMode ||
+              core.demoMode) && (
+              <img
+                src="/wegweiser.png"
+                alt="Wegweiser Chill / Challenge"
+                className="w-[130px] absolute left-[1210px] top-[830px]"
+              />
+            )}
             {(core.solved.size > 3 || core.demoMode || core.editorMode) && (
               <button
                 className={clsx(
