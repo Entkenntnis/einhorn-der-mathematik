@@ -20,7 +20,8 @@ export const story7: StoryData = {
         an.
       </p>
       <p>
-        Ich zähle schnell selbst nach und sage ihm, dass sein Ergebnis richtig
+        Ich zähle schnell selbst nach. Das muss schnell gehen, zum Glück kann
+        ich das Muster im Bild nutzen. Ich sage ihm, dass sein Ergebnis richtig
         ist. Das macht ihn glücklich. Wie viele Hufeisen sind im Bild zu sehen?
       </p>
     </>
