@@ -455,22 +455,25 @@ export default function App() {
                 className="w-[130px] absolute left-[1210px] top-[830px]"
               />
             )}
-            {!core.solved.has(1) && (
-              <div className="absolute left-4 sm:left-[100px] top-[400px] sm:w-[530px] w-[calc(100vw-32px)] bg-white/50 p-3 rounded">
-                <h2 className="mb-3 font-bold">Beschreibung</h2>
-                <p>
-                  Gehe mit der Einhorn-Dame Tina auf eine abwechslungsreiche
-                  Tour durch die Mathematik. In kleinen Geschichten begegnen dir
-                  vielfältige mathematische Themen, die dich zum Mitmachen
-                  einladen. Du wirst viel Bekanntes sehen und auch so manche
-                  Knobelei. Der Einstieg ist sehr sanft und für alle ohne
-                  Vorwissen geeignet. Für Fortgeschrittene finden sich einige
-                  anspruchsvolle Rätsel.
-                </p>
-                <p className="mt-2 italic">Empfohlen ab der 5. Klasse</p>
-                <p className="italic">45 - 90 Minuten Spielzeit</p>
-              </div>
-            )}
+            {!core.solved.has(1) &&
+              !core.editorMode &&
+              !core.demoMode &&
+              !core.analyze && (
+                <div className="absolute left-4 sm:left-[100px] top-[400px] sm:w-[530px] w-[calc(100vw-32px)] bg-white/50 p-3 rounded">
+                  <h2 className="mb-3 font-bold">Beschreibung</h2>
+                  <p>
+                    Gehe mit der Einhorn-Dame Tina auf eine abwechslungsreiche
+                    Tour durch die Mathematik. In kleinen Geschichten begegnen
+                    dir vielfältige mathematische Themen, die dich zum Mitmachen
+                    einladen. Du wirst viel Bekanntes sehen und auch so manche
+                    Knobelei. Der Einstieg ist sehr sanft und für alle ohne
+                    Vorwissen geeignet. Für Fortgeschrittene finden sich einige
+                    anspruchsvolle Rätsel.
+                  </p>
+                  <p className="mt-2 italic">Empfohlen ab der 5. Klasse</p>
+                  <p className="italic">45 - 90 Minuten Spielzeit</p>
+                </div>
+              )}
             {(core.solved.size > 3 || core.demoMode || core.editorMode) && (
               <button
                 className={clsx(

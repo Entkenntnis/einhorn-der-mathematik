@@ -55,7 +55,7 @@ import { story51 } from './stories/51-NEU'
 import { story52 } from './stories/52-NEU'
 import { story53 } from './stories/53-NEU'
 import { story54 } from './stories/54-NEU'
-import { story55 } from './stories/55-NEU'
+import { story55 } from './stories/55-einhorn-maus'
 import { story56 } from './stories/56-NEU'
 
 export const storyData: { [key: number]: StoryData } = {
