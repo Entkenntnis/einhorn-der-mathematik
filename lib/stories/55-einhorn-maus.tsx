@@ -14,12 +14,13 @@ export const story55: StoryData = {
     <>
       <p>
         &quot;Das ist das Haus der Einhorn-Maus&quot; - hinter diesem Reim
-        steckt ein altes Kinderrätsel. Das Ziel dabei ist es, die fünf Punkte
-        ohne Absetzen des Stifts zu einem Haus zu verbinden.
+        steckt ein altes Kinderrätsel. Verbinde ohne Absetzen des Stifts die
+        fünf Punkte zu einem Haus.
       </p>
       <p>
-        Es gibt viele Möglichkeiten, das Rätsel zu lösen, aber auch viele
-        Irrwege. Probiere es hier aus.
+        Einhorn-Mäuse sind sehr süße Wesen. Ich habe letztens im Zoo welche
+        gesehen. Sie verstecken sich gerne in kleinen Öffnungen und würden sich
+        in einem solchen Haus sehr wohl fühlen.
       </p>
       <p>
         Klicke nacheinander auf die Punkte und zeichne das Haus der
