@@ -9,9 +9,9 @@ interface DATA {
 
 export const story44: StoryData<DATA> = {
   title: 'Eisenbahn',
-  x: 760,
-  y: 421,
-  deps: [15, 20],
+  x: 506,
+  y: 860,
+  deps: [12, 29],
   generator: () => {
     return { n: randomItemFromArray([70, 80, 90, 100, 110]) }
   },

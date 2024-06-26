@@ -3,9 +3,9 @@ import { StoryData } from '../types'
 
 export const story38: StoryData = {
   title: 'Antwort',
-  x: 506,
-  y: 860,
-  deps: [12, 29],
+  x: 760,
+  y: 421,
+  deps: [15, 20],
   render: () => (
     <>
       <p>
@@ -30,9 +30,9 @@ export const story38: StoryData = {
       <p>
         Natürlich kennt Tina diese Zahl und baut sie hier ein! Die Zahl{' '}
         <strong>42</strong> stammt aus &quot;Per Anhalter durch die
-        Galaxis&quot; und ist ein Witz auf vielen Ebenen. Trotz vieler möglicher
-        Deutungen hat der der Autor klar gemacht: Es gibt dahinter keine geheime
-        botschaft, die Zahl ist einfach das: eine gewöhnliche Zahl.
+        Galaxis&quot;. Ein Supercomputer soll die „endgültige Frage nach dem
+        Leben, dem Universum und dem ganzen Rest“ berechnen - und liefert als
+        Ergebnis 42. Da hätte man die Frage doch etwas präziser stellen sollen.
       </p>
     </>
   ),
