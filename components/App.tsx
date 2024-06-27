@@ -459,16 +459,14 @@ export default function App() {
               !core.editorMode &&
               !core.demoMode &&
               !core.analyze && (
-                <div className="absolute left-4 sm:left-[100px] top-[400px] sm:w-[530px] w-[calc(100vw-32px)] bg-white/50 p-3 rounded">
+                <div className="absolute left-4 sm:left-[100px] top-[400px] sm:w-[530px] w-[calc(100vw-32px)] bg-white/50 p-3 rounded-xl">
                   <h2 className="mb-3 font-bold">Beschreibung</h2>
-                  <p>
-                    Gehe mit der Einhorn-Dame Tina auf eine abwechslungsreiche
-                    Tour durch die Mathematik. In kleinen Geschichten begegnen
-                    dir vielfältige mathematische Themen, die dich zum Mitmachen
-                    einladen. Du wirst viel Bekanntes sehen und auch so manche
-                    Knobelei. Der Einstieg ist sehr sanft und für alle ohne
-                    Vorwissen geeignet. Für Fortgeschrittene finden sich einige
-                    anspruchsvolle Rätsel.
+                  <p className="hyphens-auto">
+                    Gehe mit der Einhorn-Dame Tina auf eine Tour durch die
+                    Mathematik. In bunten Geschichten begegnen dir viele Themen,
+                    die dich zum Mitmachen einladen. Der Einstieg ist sehr sanft
+                    und für alle ohne Vorwissen geeignet. Für Fortgeschrittene
+                    finden sich auch anspruchsvolle Rätsel.
                   </p>
                   <p className="mt-2 italic">Empfohlen ab der 5. Klasse</p>
                   <p className="italic">45 - 90 Minuten Spielzeit</p>
