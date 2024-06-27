@@ -284,7 +284,7 @@ export default function App() {
               )}
             </div>
           )}
-          <div className="fixed top-3 right-5">
+          <div className="fixed top-3 right-5 z-20">
             {core.playerData.name && (
               <div className="px-2 py-0.5 bg-white/50 rounded">
                 <p>
