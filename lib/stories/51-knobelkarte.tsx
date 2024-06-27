@@ -1,4 +1,4 @@
-import { ignoreCaseSolution, ignoreCaseSolutionWithGenData } from '../data'
+import { ignoreCaseSolutionWithGenData } from '../data'
 import { shuffleArray } from '../helper/shuffle-array'
 import { StoryData } from '../types'
 

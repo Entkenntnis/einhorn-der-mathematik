@@ -1,33 +1,56 @@
-import { ignoreCaseSolution } from '../data'
+import { ignoreCaseSolutionWithGenData } from '../data'
+import { randomItemFromArray } from '../helper/random-item-from-array'
 import { StoryData } from '../types'
 
-export const story53: StoryData = {
+interface DATA {
+  n: number
+}
+
+export const story53: StoryData<DATA> = {
   title: 'Hochwasser',
   x: 1440,
   y: 700,
   deps: [50, 51],
-  render: () => (
+  render: ({ data }) => (
     <>
-      <p>REFACTOR BEFORE FLIGHT</p>
       <p>
-        Sturm, Starkregen, Eltern kümmern sich um das Haus, ich und Teo sollen
-        draußen Sandsäcke platzieren.
+        Es regnet schon den ganzen Tag und es ist kein Ende in Sicht. Der Himmel
+        ist grau und die Sonne ist nicht zu sehen.
       </p>
       <p>
-        Ich schaffe pro Minute zwei Säcke, Teo braucht für einen Sack 2 Minuten.
+        Der Regen ist ein großes Problem. Unser Haus steht in der Nähe eines
+        Fluss und der läuft gerade über. Es soll auch in der Nacht weiterregnen.
+        Wir nutzen die Zeit, um unser Haus mit Sandsäcken zu schützen.
       </p>
-      <p>Wie lange brauchen wir um alle 100 Säcke zu platzieren?</p>
+      <p>
+        Teo und ich dichten die Garagen ab. Dazu brauchen wir {data.n}{' '}
+        Sandsäcke. Ich bin stark und kann in einer Minute zwei Säcke aufstellen,
+        Teo braucht für einen Sack zwei Minuten. Wir arbeiten ohne Pause, bis
+        alle Sandsäcke aufgestellt sind.
+      </p>
+      <p>Wie viele Minuten brauchen wir zusammen, um die Garage abzudichten?</p>
     </>
   ),
-  proof: () => {
+  generator: () => {
+    return { n: randomItemFromArray([20, 25, 30, 35, 40, 45, 50]) }
+  },
+  proof: ({ data }) => {
     return (
       <>
         <p>
-          In zwei Minuten schafft Tina 4 Säcke, beide zuammen also 5 Sandsäcke.
-          100 : 5 * 2= 40 Minuten.
+          Teo braucht für einen Sandsack zwei Minuten, in der Zeit kann Tina
+          vier Säcke aufstellen, zusammen sind das 5 Säcke in 2 Minuten.
         </p>
+        <p>
+          Ich rechne ({data.n} : 5) · 2 Minuten und erhalte das Ergebnis{' '}
+          <strong>{(data.n / 5) * 2} Minuten</strong>.
+        </p>
+        <p>Ich hoffe, dass sie die Nacht gut überstehen 😟</p>
       </>
     )
   },
-  submit: ignoreCaseSolution('42'),
+  submit: ignoreCaseSolutionWithGenData<DATA>((data) => {
+    const n = (data.n / 5) * 2
+    return [`${n}`, `${n} min`, `${n} Minuten`, `${n} m`]
+  }),
 }
