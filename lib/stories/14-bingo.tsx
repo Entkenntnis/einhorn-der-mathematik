@@ -1,4 +1,4 @@
-import { ignoreCaseSolution, ignoreCaseSolutionWithGenData } from '../data'
+import { ignoreCaseSolutionWithGenData } from '../data'
 import { randomItemFromArray } from '../helper/random-item-from-array'
 import { shuffleArray } from '../helper/shuffle-array'
 import { StoryData } from '../types'
@@ -12,7 +12,7 @@ export const story14: StoryData<DATA> = {
   title: 'Bingo',
   x: 580,
   y: 230,
-  deps: [27, 48],
+  deps: [39, 48],
   generator: () => {
     const ns = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
     const missing = randomItemFromArray(ns)
@@ -109,9 +109,8 @@ export const story14: StoryData<DATA> = {
       </p>
     </>
   ),
-  submit: ignoreCaseSolutionWithGenData<DATA>((data) => [
-    data.missing.toString(),
-  ]),
+  submit: ({ data }) =>
+    ignoreCaseSolutionWithGenData([data.missing.toString()]),
 }
 
 function renderCell(val: number) {

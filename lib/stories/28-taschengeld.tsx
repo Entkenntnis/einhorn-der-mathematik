@@ -58,9 +58,10 @@ export const story28: StoryData<DATA> = {
       </>
     )
   },
-  submit: ignoreCaseSolutionWithGenData<DATA>((data) => [
-    `${data.tina}`,
-    `${data.tina}€`,
-    `${data.tina}euro`,
-  ]),
+  submit: ({ data }) =>
+    ignoreCaseSolutionWithGenData([
+      `${data.tina}`,
+      `${data.tina}€`,
+      `${data.tina}euro`,
+    ]),
 }

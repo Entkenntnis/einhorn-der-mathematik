@@ -59,7 +59,6 @@ export const story29: StoryData<DATA> = {
       </p>
     </>
   ),
-  submit: ignoreCaseSolutionWithGenData<DATA>((data) => [
-    (data.socks * 6).toString(),
-  ]),
+  submit: ({ data }) =>
+    ignoreCaseSolutionWithGenData([(data.socks * 6).toString()]),
 }

@@ -95,9 +95,10 @@ export const story8: StoryData<DATA> = {
       </p>
     </>
   ),
-  submit: ignoreCaseSolutionWithGenData<DATA>((data) => [
-    data.missing.toString(),
-    data.missing.toString() + '°',
-    data.missing.toString() + 'grad',
-  ]),
+  submit: ({ data }) =>
+    ignoreCaseSolutionWithGenData([
+      data.missing.toString(),
+      data.missing.toString() + '°',
+      data.missing.toString() + 'grad',
+    ]),
 }

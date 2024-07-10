@@ -61,10 +61,11 @@ export const story44: StoryData<DATA> = {
       </>
     )
   },
-  submit: ignoreCaseSolutionWithGenData<DATA>((data) => [
-    `${data.n * 80}zentimeter`,
-    `${data.n * 80}cm`,
-    `${(data.n * 80) / 100}m`,
-    `${(data.n * 80) / 100}meter`,
-  ]),
+  submit: ({ data }) =>
+    ignoreCaseSolutionWithGenData([
+      `${data.n * 80}zentimeter`,
+      `${data.n * 80}cm`,
+      `${(data.n * 80) / 100}m`,
+      `${(data.n * 80) / 100}meter`,
+    ]),
 }

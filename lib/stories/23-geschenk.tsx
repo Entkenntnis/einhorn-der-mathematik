@@ -7,7 +7,7 @@ export const story23: StoryData = {
   title: 'Geschenk',
   x: 191,
   y: 320,
-  deps: [7, 39],
+  deps: [7, 27],
   render: ({ onSubmit, feedback }) => (
     <>
       <p>

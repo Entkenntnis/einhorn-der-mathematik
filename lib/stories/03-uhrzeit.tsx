@@ -60,9 +60,8 @@ export const story3: StoryData<DATA> = {
     )
   },
   hideSubmit: true,
-  submit: ignoreCaseSolutionWithGenData<DATA>((data) => [
-    `${data.clock % 24} Uhr`,
-  ]),
+  submit: ({ data }) =>
+    ignoreCaseSolutionWithGenData([`${data.clock % 24} Uhr`]),
 }
 
 interface ClockInputProps {

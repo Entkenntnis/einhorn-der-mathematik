@@ -82,7 +82,7 @@ export const story41: StoryData<DATA> = {
       </>
     )
   },
-  submit: ignoreCaseSolutionWithGenData<DATA>((data) => {
+  submit: ({ data }) => {
     const t = data.base + data.d
     const output = []
     for (const prefix of ['‐', '−', '–', '—', '-', 'minus']) {
@@ -90,6 +90,6 @@ export const story41: StoryData<DATA> = {
         output.push(`${prefix} ${Math.abs(t)} ${postfix}`)
       }
     }
-    return output
-  }),
+    return ignoreCaseSolutionWithGenData(output)
+  },
 }

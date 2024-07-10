@@ -49,8 +49,13 @@ export const story53: StoryData<DATA> = {
       </>
     )
   },
-  submit: ignoreCaseSolutionWithGenData<DATA>((data) => {
+  submit: ({ data }) => {
     const n = (data.n / 5) * 2
-    return [`${n}`, `${n} min`, `${n} Minuten`, `${n} m`]
-  }),
+    return ignoreCaseSolutionWithGenData([
+      `${n}`,
+      `${n} min`,
+      `${n} Minuten`,
+      `${n} m`,
+    ])
+  },
 }

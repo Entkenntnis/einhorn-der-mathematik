@@ -37,7 +37,7 @@ import { story34 } from './stories/34-quadrat'
 import { story36 } from './stories/36-mathe'
 import { story35 } from './stories/35-rechenmauer-2'
 import { story37 } from './stories/37-zahlenstrahl'
-import { State, StoryData } from './types'
+import { State, StoryData, SubmitProps } from './types'
 import { story38 } from './stories/38-antwort'
 import { story39 } from './stories/39-vorteil'
 import { story40 } from './stories/40-sirup'
@@ -58,7 +58,7 @@ import { story54 } from './stories/54-NEU'
 import { story55 } from './stories/55-einhorn-maus'
 import { story56 } from './stories/56-NEU'
 
-export const storyData: { [key: number]: StoryData } = {
+export const storyData: { [key: number]: StoryData<any> } = {
   1: story1,
   2: story2,
   3: story3,
@@ -174,11 +174,9 @@ export function genericSubmitHandler(
   }
 }
 
-export function ignoreCaseSolutionWithGenData<T>(f: (data: T) => string[]) {
-  return (props: Parameters<StoryData['submit']>[0]) => {
+export function ignoreCaseSolutionWithGenData(answers: string[]) {
+  return (props: SubmitProps) => {
     const value = props.value.trim().toLowerCase().replace(/\s/g, '')
-    const data = props.data as T
-    const answers = f(data)
     const isCorrect = answers.some(
       (answer) => answer.toLowerCase().trim().replace(/\s/g, '') == value
     )
@@ -193,7 +191,7 @@ export function ignoreCaseSolutionWithGenData<T>(f: (data: T) => string[]) {
 }
 
 export function ignoreCaseSolution(answer: string, alternatives?: string[]) {
-  return (props: Parameters<StoryData['submit']>[0]) => {
+  return () => (props: SubmitProps) => {
     const value = props.value.trim().toLowerCase().replace(/\s/g, '')
     const isCorrect =
       (answer.toLowerCase().trim().replace(/\s/g, '') == value ||

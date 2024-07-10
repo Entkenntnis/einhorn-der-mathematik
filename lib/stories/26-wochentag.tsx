@@ -51,8 +51,6 @@ export const story26: StoryData<DATA> = {
       </p>
     </>
   ),
-  submit: ignoreCaseSolutionWithGenData<DATA>((data) => [
-    data.answer,
-    data.answerShort,
-  ]),
+  submit: ({ data }) =>
+    ignoreCaseSolutionWithGenData([data.answer, data.answerShort]),
 }

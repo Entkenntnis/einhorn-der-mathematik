@@ -94,7 +94,6 @@ export const story13: StoryData<DATA> = {
       </>
     )
   },
-  submit: ignoreCaseSolutionWithGenData<DATA>((data) => [
-    `${data.start + data.incr * 5 + 10}`,
-  ]),
+  submit: ({ data }) =>
+    ignoreCaseSolutionWithGenData([`${data.start + data.incr * 5 + 10}`]),
 }

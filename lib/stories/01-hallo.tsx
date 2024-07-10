@@ -61,15 +61,17 @@ export const story1: StoryData = {
       <p>Bis gleich bei der nächsten Aufgabe :)</p>
     </>
   ),
-  submit: ({ value, mut, id, core }) => {
-    genericSubmitHandler(
-      value,
-      parseInt(value) == countCodePoints(core.playerData.name),
-      mut,
-      id,
-      core
-    )
-  },
+  submit:
+    () =>
+    ({ value, mut, id, core }) => {
+      genericSubmitHandler(
+        value,
+        parseInt(value) == countCodePoints(core.playerData.name),
+        mut,
+        id,
+        core
+      )
+    },
 }
 
 function countCodePoints(str: string) {

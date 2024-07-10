@@ -1,4 +1,4 @@
-import { ignoreCaseSolution, ignoreCaseSolutionWithGenData } from '../data'
+import { ignoreCaseSolutionWithGenData } from '../data'
 import { randomIntBetween } from '../helper/random-int-between'
 import { randomItemFromArray } from '../helper/random-item-from-array'
 import { StoryData } from '../types'
@@ -12,9 +12,9 @@ interface DATA {
 
 export const story39: StoryData<DATA> = {
   title: 'Vorteil',
-  x: 75,
-  y: 226,
-  deps: [1],
+  x: 390,
+  y: 70,
+  deps: [6],
   generator: () => {
     const A = randomItemFromArray([200, 300, 400, 500, 600, 700])
     const a1 = randomIntBetween(6, 9) * 10 + A - 100
@@ -63,7 +63,8 @@ export const story39: StoryData<DATA> = {
       </>
     )
   },
-  submit: ignoreCaseSolutionWithGenData<DATA>((data) => [
-    (data.a1 + data.a2 + data.b1 + data.b2).toString(),
-  ]),
+  submit: ({ data }) =>
+    ignoreCaseSolutionWithGenData([
+      (data.a1 + data.a2 + data.b1 + data.b2).toString(),
+    ]),
 }

@@ -47,9 +47,7 @@ export const story40: StoryData<DATA> = {
       </p>
     </>
   ),
-  submit: ignoreCaseSolutionWithGenData<DATA>((data) => [
-    `${data.per250 * 4}ml`,
-  ]),
+  submit: ({ data }) => ignoreCaseSolutionWithGenData([`${data.per250 * 4}ml`]),
   hideSubmit: true,
 }
 

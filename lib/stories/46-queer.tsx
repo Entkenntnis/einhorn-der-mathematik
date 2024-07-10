@@ -245,12 +245,12 @@ export const story46: StoryData<DATA> = {
       </>
     )
   },
-  submit: ignoreCaseSolutionWithGenData<DATA>((data) => {
+  submit: ({ data }) => {
     const result = ['x', 'x', 'x', 'x']
     data.friends.forEach(([, index], i) => {
       result[index] = solution[i]
     })
-    return [result.join(' ')]
-  }),
+    return ignoreCaseSolutionWithGenData([result.join(' ')])
+  },
   hideSubmit: true,
 }

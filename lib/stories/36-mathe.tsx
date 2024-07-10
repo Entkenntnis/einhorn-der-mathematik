@@ -48,5 +48,5 @@ export const story36: StoryData<DATA> = {
       </p>
     </>
   ),
-  submit: ignoreCaseSolutionWithGenData<DATA>((data) => [data.r.toString()]),
+  submit: ({ data }) => ignoreCaseSolutionWithGenData([data.r.toString()]),
 }

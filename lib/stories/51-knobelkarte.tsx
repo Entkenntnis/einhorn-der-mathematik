@@ -89,7 +89,8 @@ export const story51: StoryData<DATA> = {
       </>
     )
   },
-  submit: ignoreCaseSolutionWithGenData<DATA>((data) => [
-    `${data.numbers[5]}${data.numbers[3]}${data.numbers[6]}${data.numbers[0]}`,
-  ]),
+  submit: ({ data }) =>
+    ignoreCaseSolutionWithGenData([
+      `${data.numbers[5]}${data.numbers[3]}${data.numbers[6]}${data.numbers[0]}`,
+    ]),
 }

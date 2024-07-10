@@ -58,8 +58,8 @@ export const story16: StoryData<DATA> = {
       </p>
     </>
   ),
-  submit: ignoreCaseSolutionWithGenData<DATA>((data) => {
+  submit: ({ data }) => {
     const result = (data.sum - data.diff) / 2
-    return [`${result}`, `${result} städte`]
-  }),
+    return ignoreCaseSolutionWithGenData([`${result}`, `${result} städte`])
+  },
 }

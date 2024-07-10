@@ -37,9 +37,13 @@ export const story33: StoryData<DATA> = {
       </p>
     </>
   ),
-  submit: ignoreCaseSolutionWithGenData<DATA>((data) => {
+  submit: ({ data }) => {
     // ('840', ['840s', '840 sekunden'])
     const res = (45 - data.mins) * 60
-    return [`${res}`, `${res}s`, `${res}sekunden`]
-  }),
+    return ignoreCaseSolutionWithGenData([
+      `${res}`,
+      `${res}s`,
+      `${res}sekunden`,
+    ])
+  },
 }

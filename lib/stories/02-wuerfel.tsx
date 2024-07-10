@@ -92,12 +92,13 @@ export const story2: StoryData<DATA> = {
     </>
   ),
   hideSubmit: true,
-  submit: ignoreCaseSolutionWithGenData<DATA>((data) => [
-    data.entries
-      .map((e, i) => (e.correct ? letters[i] : null))
-      .filter((e) => e)
-      .join(' '),
-  ]),
+  submit: ({ data }) =>
+    ignoreCaseSolutionWithGenData([
+      data.entries
+        .map((e, i) => (e.correct ? letters[i] : null))
+        .filter((e) => e)
+        .join(' '),
+    ]),
 }
 
 interface DiceInputProps {

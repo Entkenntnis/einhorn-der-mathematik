@@ -41,9 +41,20 @@ export type State = Immutable<{
   showIdeaStory: boolean
   background: 'beach' | 'desert' | 'mountains' | 'night-sky' | 'pink-clouds'
   lineColor: 'rainbow' | 'gray' | 'pink'
+  storyEvents: {
+    submitted: Set<number>
+    additionalEvents: { [key: number]: string[] }
+  }
 }>
 
-export interface StoryData<T = any> {
+export interface SubmitProps {
+  value: string
+  mut: (fn: (draft: Draft<State>) => void) => void
+  id: number
+  core: State
+}
+
+export interface StoryData<T = unknown> {
   title: string
   x: number
   y: number
@@ -57,13 +68,7 @@ export interface StoryData<T = any> {
     data: T
   }) => JSX.Element
   hideSubmit?: boolean
-  submit: (props: {
-    value: string
-    mut: (fn: (draft: Draft<State>) => void) => void
-    id: number
-    core: State
-    data: T
-  }) => void
+  submit: ({ data }: { data: T }) => (props: SubmitProps) => void
   proof?: (props: { core: State; data: T }) => JSX.Element
   generator?: () => T
 }

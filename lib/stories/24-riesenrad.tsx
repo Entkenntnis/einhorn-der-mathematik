@@ -14,7 +14,7 @@ export const story24: StoryData<DATA> = {
   title: 'Riesenrad',
   x: 540,
   y: 110,
-  deps: [27, 48],
+  deps: [39, 48],
   generator: () => {
     const data: DATA = {
       gondeln: randomIntBetween(12, 25),
@@ -62,7 +62,8 @@ export const story24: StoryData<DATA> = {
       </>
     )
   },
-  submit: ignoreCaseSolutionWithGenData<DATA>((data) => [
-    `${(data.gondeln - data.defekt) * data.proGondel}`,
-  ]),
+  submit: ({ data }) =>
+    ignoreCaseSolutionWithGenData([
+      `${(data.gondeln - data.defekt) * data.proGondel}`,
+    ]),
 }

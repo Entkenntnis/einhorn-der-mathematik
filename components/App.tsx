@@ -37,6 +37,10 @@ export default function App() {
     showIdeaStory: false,
     background: 'pink-clouds',
     lineColor: 'rainbow',
+    storyEvents: {
+      submitted: new Set(),
+      additionalEvents: {},
+    },
   })
 
   const cutOff = new Date('2024-06-13')
@@ -628,7 +632,10 @@ export default function App() {
     )
   }
 
-  function back() {
+  function back(solved: boolean = false) {
+    if (solved) {
+      submitStoryEvent()
+    }
     mut((c) => {
       c.showStory = -1
     })
@@ -751,7 +758,7 @@ export default function App() {
               <button
                 className="mt-8 text-pink-500 hover:underline hover:text-pink-600"
                 onClick={() => {
-                  back()
+                  back(true)
                 }}
               >
                 weiter
@@ -773,14 +780,15 @@ export default function App() {
                   mut,
                   onSubmit: (value) => {
                     data.submit({
+                      data: core.storyGeneratorData[core.showStory],
+                    })({
                       value,
                       mut,
                       id: core.showStory,
                       core,
-                      data: core.storyGeneratorData[core.showStory],
                     })
                   },
-                  back,
+                  back: () => back(true),
                   feedback: renderStoryFeedback(core.storyFeedback),
                   data: core.storyGeneratorData[core.showStory],
                 })}
@@ -791,11 +799,12 @@ export default function App() {
                       className="mt-8 -ml-1"
                       submit={(value) => {
                         data.submit({
+                          data: core.storyGeneratorData[core.showStory],
+                        })({
                           value,
                           mut,
                           id: core.showStory,
                           core,
-                          data: core.storyGeneratorData[core.showStory],
                         })
                       }}
                     />
@@ -897,7 +906,7 @@ export default function App() {
 
             const data = storyData[id]
             if (data.generator && !c.storyGeneratorData[id]) {
-              c.storyGeneratorData[id] = data.generator()
+              c.storyGeneratorData[id] = data.generator() as object
             }
           })
         }}
@@ -974,5 +983,18 @@ export default function App() {
       core.editorMode ||
       core.demoMode
     )
+  }
+
+  function submitStoryEvent() {
+    const id = core.showStory
+    if (core.storyEvents.submitted.has(id)) return
+    mut((core) => {
+      core.storyEvents.submitted.add(id)
+    })
+    const events = core.storyEvents.additionalEvents[id] ?? []
+    makePost('/event', {
+      userId: core.playerData.id,
+      value: `story_${id}_${events.join('_')}`,
+    })
   }
 }
