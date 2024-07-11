@@ -9,7 +9,17 @@ export const story52: StoryData = {
   deps: [49, 50],
   render: ({ onSubmit, back }) => (
     <>
-      <p>TODO</p>
+      <p>
+        Ich mache heute einen Tag Praktikum in der Krippe. Es ist sehr süß, wie
+        die 2-jährigen Mandalas ausmalen. Wir müssen aber gut darauf aufpassen,
+        dass die Kinder die Stifte nicht essen.
+      </p>
+      <p>
+        Ich schnappe mir auch ein Mandala. Hier ist eine Mini-Herausforderung:
+        Wähle die Farben so, dass zwei benachbarte Flächen unterschiedliche
+        Farben haben. Verwende so <strong>wenige Farben</strong> wie möglich.
+      </p>
+      <p>Klicke auf die Flächen, um die Farbe zu wechseln.</p>
       <Mandala
         handleDone={() => {
           onSubmit('42')
@@ -27,7 +37,7 @@ function Mandala(props: { handleDone: () => void }) {
   const [solved, setSolved] = useState(false)
   return (
     <>
-      <div>
+      <div className="mt-6">
         <svg width="300" height="300" className="bg-white rounded">
           <circle
             className="cursor-pointer"
@@ -165,7 +175,7 @@ function Mandala(props: { handleDone: () => void }) {
     ]
     for (const pair of adj) {
       if (colors[pair[0]] == colors[pair[1]]) {
-        alert('Benachbarte Flächen sollen unterschiedliche Farben haben.')
+        alert('Benachbarte Flächen haben die gleiche Farbe.')
         return false
       }
     }
