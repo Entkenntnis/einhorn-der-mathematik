@@ -14,9 +14,10 @@ import { State, PlayerInfo } from '../lib/types'
 import { CountdownTimer } from './CountdownTimer'
 import { HighscoreModal } from './HighscoreModal'
 import { DesignModal } from './DesignModal'
+import { onOpen, onSolution, submitStoryEvent } from '../lib/story-events'
 
 export default function App() {
-  const [core, setCore] = useState<State>({
+  const [__core, setCore] = useState<State>({
     showStory: -1,
     storyFeedback: null,
     solved: new Set(),
@@ -39,16 +40,25 @@ export default function App() {
     lineColor: 'rainbow',
     storyEvents: {
       submitted: new Set(),
-      additionalEvents: {},
+      events: {},
     },
   })
+
+  const coreRef = useRef(__core)
+
+  const app = {
+    get state() {
+      return coreRef.current
+    },
+    mut,
+  }
 
   const cutOff = new Date('2024-06-13')
 
   const runAnalyse = useRef(false)
 
   const lightBackground =
-    core.background === 'beach' || core.background === 'desert'
+    app.state.background === 'beach' || app.state.background === 'desert'
   useEffect(() => {
     window.addEventListener('hashchange', () => {
       window.location.reload()
@@ -212,22 +222,22 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  if (core.showIdeaStory) {
+  if (app.state.showIdeaStory) {
     return renderIdeaStory()
   }
 
-  return <>{core.showStory == -1 ? renderOverview() : renderStory()}</>
+  return <>{app.state.showStory == -1 ? renderOverview() : renderStory()}</>
 
   function renderOverview() {
     return (
       <div
-        className={clsx('overflow-auto', !core.analyze && 'h-full')}
+        className={clsx('overflow-auto', !app.state.analyze && 'h-full')}
         id="map-scroller"
       >
         <div
           className="min-h-full pt-4 sm:pt-6 min-w-fit"
           style={{
-            backgroundImage: `url('/wallpapers/${core.background}.jpg')`,
+            backgroundImage: `url('/wallpapers/${app.state.background}.jpg')`,
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
           }}
@@ -235,29 +245,29 @@ export default function App() {
           <h1 className="ml-4 sm:ml-24 lg:mx-auto px-2 py-1 sm:px-4 sm:py-2 rounded-lg bg-pink-400 w-fit text-lg sm:text-2xl">
             Einhorn der Mathematik
           </h1>
-          {core.analyze && (
+          {app.state.analyze && (
             <div className="my-4 bg-white p-3">
               Daten ab {cutOff.toISOString().substring(0, 10)}
               <br />
               <br />
-              Anzahl SpielerInnen: {core.analyze.players}
+              Anzahl SpielerInnen: {app.state.analyze.players}
               <br />
               <br />
               Median Spielzeit (
               <span className="text-gray-600">
                 ab einer gelösten Aufgabe, Zeit ab Namenseingabe,{' '}
-                {core.analyze.medianPlayers} Personen
+                {app.state.analyze.medianPlayers} Personen
               </span>
               ):{' '}
-              {isNaN(core.analyze.medianSeconds) ? (
+              {isNaN(app.state.analyze.medianSeconds) ? (
                 '---'
               ) : (
-                <>{core.analyze.medianSeconds}s</>
+                <>{app.state.analyze.medianSeconds}s</>
               )}
               <br />
               <br />
               Ereignisse:{' '}
-              {core.analyze.events.map((event) => (
+              {app.state.analyze.events.map((event) => (
                 <span key={event.value} className="inline-block mr-4">
                   {event.value} (x{event.count})
                 </span>
@@ -265,7 +275,7 @@ export default function App() {
               <br />
               <br />
               Details:{' '}
-              {core.analyze.playerInfo.map(
+              {app.state.analyze.playerInfo.map(
                 ({ name, solved, id, createdAt, mins }) =>
                   solved == 0 ? (
                     <span key={id} className="inline-block mr-4 text-gray-400">
@@ -289,13 +299,13 @@ export default function App() {
             </div>
           )}
           <div className="fixed top-3 right-5 z-20">
-            {core.playerData.name && (
+            {app.state.playerData.name && (
               <div className="px-2 py-0.5 bg-white/50 rounded">
                 <p>
-                  <strong>{core.playerData.name}</strong>
+                  <strong>{app.state.playerData.name}</strong>
                   &nbsp;&nbsp;&nbsp;
                   <span title="gelöste Aufgabe / Gesamtzahl">
-                    {core.solved.size}/{Object.keys(storyData).length}
+                    {app.state.solved.size}/{Object.keys(storyData).length}
                   </span>
                 </p>
               </div>
@@ -310,7 +320,7 @@ export default function App() {
                   c.modal = 'highscore'
                 })
                 makePost('/event', {
-                  userId: core.playerData.id,
+                  userId: app.state.playerData.id,
                   value: 'show_highscore',
                 })
               }}
@@ -318,10 +328,10 @@ export default function App() {
               Highscore
             </p>
           </div>
-          {core.solved.size > 0 &&
-            !core.editorMode &&
-            !core.analyze &&
-            !core.persistBannerShown && (
+          {app.state.solved.size > 0 &&
+            !app.state.editorMode &&
+            !app.state.analyze &&
+            !app.state.persistBannerShown && (
               <div className="lg:flex lg:justify-center mt-6 ml-4 sm:ml-8 lg:ml-0">
                 <div className="flex flex-col sm:flex-row justify-between items-baseline w-fit sm:w-[550px] bg-yellow-100 px-4 py-2 rounded">
                   <div>Fortschritt auf diesem Gerät speichern?</div>
@@ -344,7 +354,7 @@ export default function App() {
                           c.persistBannerShown = true
                         })
                         makePost('/event', {
-                          userId: core.playerData.id,
+                          userId: app.state.playerData.id,
                           value: 'persist',
                         })
                       }}
@@ -394,10 +404,10 @@ export default function App() {
                     <Fragment key={id}>
                       {data.deps.map((dep) => {
                         if (
-                          core.solved.has(dep) ||
-                          core.analyze ||
-                          core.editorMode ||
-                          core.demoMode
+                          app.state.solved.has(dep) ||
+                          app.state.analyze ||
+                          app.state.editorMode ||
+                          app.state.demoMode
                         ) {
                           const angle =
                             (Math.atan2(
@@ -426,9 +436,9 @@ export default function App() {
                               y2={storyData[dep].y + 64}
                               strokeWidth="9"
                               stroke={
-                                core.lineColor === 'rainbow'
+                                app.state.lineColor === 'rainbow'
                                   ? rainbowStroke
-                                  : core.lineColor === 'pink'
+                                  : app.state.lineColor === 'pink'
                                   ? '#f472b6'
                                   : 'gray'
                               }
@@ -449,20 +459,20 @@ export default function App() {
               alt="Regenbogen"
               className="w-[100px] absolute left-[1060px] top-[700px]"
             />
-            {(core.solved.has(36) ||
-              core.analyze ||
-              core.editorMode ||
-              core.demoMode) && (
+            {(app.state.solved.has(36) ||
+              app.state.analyze ||
+              app.state.editorMode ||
+              app.state.demoMode) && (
               <img
                 src="/wegweiser.png"
                 alt="Wegweiser Chill / Challenge"
                 className="w-[130px] absolute left-[1210px] top-[830px]"
               />
             )}
-            {!core.solved.has(1) &&
-              !core.editorMode &&
-              !core.demoMode &&
-              !core.analyze && (
+            {!app.state.solved.has(1) &&
+              !app.state.editorMode &&
+              !app.state.demoMode &&
+              !app.state.analyze && (
                 <div className="absolute left-4 sm:left-[100px] top-[400px] sm:w-[530px] w-[calc(100vw-32px)] bg-white/50 p-3 rounded-xl">
                   <h2 className="mb-3 font-bold">Beschreibung</h2>
                   <p className="hyphens-auto">
@@ -476,7 +486,9 @@ export default function App() {
                   <p className="italic">45 - 90 Minuten Spielzeit</p>
                 </div>
               )}
-            {(core.solved.size > 3 || core.demoMode || core.editorMode) && (
+            {(app.state.solved.size > 3 ||
+              app.state.demoMode ||
+              app.state.editorMode) && (
               <button
                 className={clsx(
                   'absolute top-[210px] left-[1050px] w-[120px] block z-10 rounded-xl transition-colors',
@@ -489,7 +501,7 @@ export default function App() {
                     c.showIdeaStory = true
                   })
                   makePost('/event', {
-                    userId: core.playerData.id,
+                    userId: app.state.playerData.id,
                     value: 'your_story',
                   })
                 }}
@@ -512,7 +524,7 @@ export default function App() {
                   c.modal = 'design'
                 })
                 makePost('/event', {
-                  userId: core.playerData.id,
+                  userId: app.state.playerData.id,
                   value: 'show_design',
                 })
               }}
@@ -529,11 +541,11 @@ export default function App() {
             </button>
             {Object.entries(storyData).map(([id, data]) =>
               data.deps.length == 0 ||
-              data.deps.some((d) => core.solved.has(d)) ||
-              core.analyze ||
-              core.editorMode ||
-              core.solved.has(parseInt(id)) ||
-              core.demoMode
+              data.deps.some((d) => app.state.solved.has(d)) ||
+              app.state.analyze ||
+              app.state.editorMode ||
+              app.state.solved.has(parseInt(id)) ||
+              app.state.demoMode
                 ? renderStoryIcon(data.title, data.x, data.y, parseInt(id))
                 : null
             )}
@@ -545,14 +557,14 @@ export default function App() {
               lightBackground ? 'text-gray-800' : 'text-gray-300'
             )}
           >
-            {core.solved.size > 0 &&
-              !core.editorMode &&
-              core.persistBannerShown && (
+            {app.state.solved.size > 0 &&
+              !app.state.editorMode &&
+              app.state.persistBannerShown && (
                 <>
                   <label className="cursor-pointer select-none">
                     <input
                       type="checkbox"
-                      checked={core.persist}
+                      checked={app.state.persist}
                       onChange={(e) => {
                         mut((c) => {
                           c.persist = e.target.checked
@@ -596,7 +608,7 @@ export default function App() {
               Hack The Web
             </a>
           </div>
-          {core.modal == 'impressum' && (
+          {app.state.modal == 'impressum' && (
             <AboutModal
               onClose={() => {
                 mut((c) => {
@@ -605,7 +617,7 @@ export default function App() {
               }}
             />
           )}
-          {core.modal == 'highscore' && (
+          {app.state.modal == 'highscore' && (
             <HighscoreModal
               onClose={() => {
                 mut((c) => {
@@ -615,7 +627,7 @@ export default function App() {
               }}
             />
           )}
-          {core.modal == 'design' && (
+          {app.state.modal == 'design' && (
             <DesignModal
               onClose={() => {
                 mut((c) => {
@@ -623,8 +635,7 @@ export default function App() {
                   c.showStory = -1
                 })
               }}
-              core={core}
-              mut={mut}
+              app={app}
             />
           )}
         </div>
@@ -634,7 +645,7 @@ export default function App() {
 
   function back(solved: boolean = false) {
     if (solved) {
-      submitStoryEvent()
+      submitStoryEvent(app)
     }
     mut((c) => {
       c.showStory = -1
@@ -642,8 +653,8 @@ export default function App() {
     function scroll() {
       const el = document.getElementById('map-scroller')
       if (el) {
-        el.scrollTop = core.scrollPosTop
-        el.scrollLeft = core.scrollPosLeft
+        el.scrollTop = app.state.scrollPosTop
+        el.scrollLeft = app.state.scrollPosLeft
       } else {
         requestAnimationFrame(scroll)
       }
@@ -711,7 +722,7 @@ export default function App() {
   }
 
   function renderStory() {
-    const data = storyData[core.showStory]
+    const data = storyData[app.state.showStory]
 
     return (
       <>
@@ -729,17 +740,18 @@ export default function App() {
         <div className="max-w-[800px] mx-2 md:mx-auto bg-pink-50 rounded p-3 mt-6 relative">
           <h2 className="mt-3 text-xl font-bold">{data.title}</h2>
 
-          {core.storyFeedback && core.storyFeedback.correct ? (
+          {app.state.storyFeedback && app.state.storyFeedback.correct ? (
             <>
-              {renderStoryFeedback(core.storyFeedback)}
+              {renderStoryFeedback(app.state.storyFeedback)}
 
               {data.proof && (
                 <details className="mt-8">
                   <summary
                     className="cursor-pointer select-none"
                     onClick={() => {
+                      onSolution(app)
                       makePost('/event', {
-                        userId: core.playerData.id,
+                        userId: app.state.playerData.id,
                         value: 'show_solution',
                       })
                     }}
@@ -748,8 +760,8 @@ export default function App() {
                   </summary>
                   <div className="mt-5 [&>p]:mt-4 [&_code]:text-pink-400 [&_code]:font-bold [&>img]:my-6 [&_a]:underline [&_a]:text-blue-600 [&_a]:hover:text-blue-700 [&_hr]:mt-4">
                     {data.proof({
-                      core,
-                      data: core.storyGeneratorData[core.showStory],
+                      app,
+                      data: app.state.storyGeneratorData[app.state.showStory],
                     })}
                   </div>
                 </details>
@@ -776,35 +788,34 @@ export default function App() {
               </button>
               <div className="mt-8 [&>p]:mt-4 [&_code]:text-pink-400 [&_code]:font-bold [&>img]:my-6 [&_a]:underline [&_a]:text-blue-600 [&_a]:hover:text-blue-700">
                 {data.render({
-                  core,
-                  mut,
+                  app,
                   onSubmit: (value) => {
                     data.submit({
-                      data: core.storyGeneratorData[core.showStory],
+                      data: app.state.storyGeneratorData[app.state.showStory],
                     })({
                       value,
-                      mut,
-                      id: core.showStory,
-                      core,
+                      id: app.state.showStory,
+                      app,
                     })
                   },
                   back: () => back(true),
-                  feedback: renderStoryFeedback(core.storyFeedback),
-                  data: core.storyGeneratorData[core.showStory],
+                  feedback: renderStoryFeedback(app.state.storyFeedback),
+                  data: app.state.storyGeneratorData[app.state.showStory],
                 })}
                 {!data.hideSubmit && (
                   <>
-                    {renderStoryFeedback(core.storyFeedback)}
+                    {renderStoryFeedback(app.state.storyFeedback)}
                     <InputBox
                       className="mt-8 -ml-1"
                       submit={(value) => {
                         data.submit({
-                          data: core.storyGeneratorData[core.showStory],
+                          data: app.state.storyGeneratorData[
+                            app.state.showStory
+                          ],
                         })({
                           value,
-                          mut,
-                          id: core.showStory,
-                          core,
+                          id: app.state.showStory,
+                          app,
                         })
                       }}
                     />
@@ -814,19 +825,21 @@ export default function App() {
                   <img src="/einhorn.png" alt="Glühbirne" className="h-16" />
                   <em className="mt-1">Tina</em>
                 </div>
-                {core.analyze && (
+                {app.state.analyze && (
                   <div className="mt-3 text-gray-500">
                     Eingaben:{' '}
-                    {core.analyze.inputs[core.showStory]?.map((val, i) => {
-                      return (
-                        <span
-                          key={i}
-                          className={val.correct ? 'text-green-500' : ''}
-                        >
-                          {val.value},{' '}
-                        </span>
-                      )
-                    })}
+                    {app.state.analyze.inputs[app.state.showStory]?.map(
+                      (val, i) => {
+                        return (
+                          <span
+                            key={i}
+                            className={val.correct ? 'text-green-500' : ''}
+                          >
+                            {val.value},{' '}
+                          </span>
+                        )
+                      }
+                    )}
                   </div>
                 )}
               </div>
@@ -835,7 +848,7 @@ export default function App() {
         </div>
         <div className="h-32"></div>
 
-        {core.modal == 'name' && (
+        {app.state.modal == 'name' && (
           <NameModal
             onClose={() => {
               mut((c) => {
@@ -848,7 +861,7 @@ export default function App() {
                 c.playerData.name = name
                 c.modal = null
               })
-              makePost('/name', { name, userId: core.playerData.id })
+              makePost('/name', { name, userId: app.state.playerData.id })
             }}
           />
         )}
@@ -867,7 +880,7 @@ export default function App() {
           {feedback.toWait && (
             <CountdownTimer
               toWait={feedback.toWait}
-              key={core.rateLimit.lockedUntil}
+              key={app.state.rateLimit.lockedUntil}
             />
           )}
         </>
@@ -880,7 +893,8 @@ export default function App() {
 
   function renderStoryIcon(title: string, x: number, y: number, id: number) {
     const showSolved =
-      (core.solved.has(id) || core.analyze || core.demoMode) && !core.editorMode
+      (app.state.solved.has(id) || app.state.analyze || app.state.demoMode) &&
+      !app.state.editorMode
     const showTina = id == 1 && !showSolved
     return (
       <div
@@ -888,8 +902,8 @@ export default function App() {
           'flex items-center flex-col w-[64px] cursor-pointer group absolute',
           !showTina && 'pt-2',
           showTina &&
-            !core.playerData.name &&
-            !core.editorMode &&
+            !app.state.playerData.name &&
+            !app.state.editorMode &&
             'animate-wiggle'
         )}
         style={{ left: `${x}px`, top: `${y + 10}px` }}
@@ -909,6 +923,8 @@ export default function App() {
               c.storyGeneratorData[id] = data.generator() as object
             }
           })
+          console.log('after click show', app.state.showStory)
+          onOpen(app)
         }}
         key={id}
       >
@@ -932,13 +948,13 @@ export default function App() {
             <div className="bg-emerald-500 rounded-full w-6 h-6 pointer-events-auto"></div>
           </div>
         )}
-        {core.analyze && core.analyze.storyStats[id] && (
+        {app.state.analyze && app.state.analyze.storyStats[id] && (
           <small>
-            {core.analyze.storyStats[id].solved} /{' '}
+            {app.state.analyze.storyStats[id].solved} /{' '}
             <strong>
               {Math.round(
-                (core.analyze.storyStats[id].solved /
-                  core.analyze.storyStats[id].reachable) *
+                (app.state.analyze.storyStats[id].solved /
+                  app.state.analyze.storyStats[id].reachable) *
                   100
               )}
               %
@@ -950,51 +966,37 @@ export default function App() {
   }
 
   function mut(fn: (draft: Draft<State>) => void) {
-    setCore((core) => {
-      const newval = produce(core, fn)
+    const newval = produce(coreRef.current, fn)
+    coreRef.current = newval
 
-      const data = JSON.stringify({
-        solved: Array.from(newval.solved),
-        id: newval.playerData.id,
-        name: newval.playerData.name,
-        background: newval.background,
-        lineColor: newval.lineColor,
-        persist: newval.persist,
-        persistBannerShown: newval.persistBannerShown,
-      })
-
-      if (newval.persist) {
-        localStorage.setItem('einhorn_der_mathematik_data_v2', data)
-        sessionStorage.removeItem('einhorn_der_mathematik_data_v2')
-      } else {
-        sessionStorage.setItem('einhorn_der_mathematik_data_v2', data)
-        localStorage.removeItem('einhorn_der_mathematik_data_v2')
-      }
-
-      return newval
+    const data = JSON.stringify({
+      solved: Array.from(newval.solved),
+      id: newval.playerData.id,
+      name: newval.playerData.name,
+      background: newval.background,
+      lineColor: newval.lineColor,
+      persist: newval.persist,
+      persistBannerShown: newval.persistBannerShown,
     })
+
+    if (newval.persist) {
+      localStorage.setItem('einhorn_der_mathematik_data_v2', data)
+      sessionStorage.removeItem('einhorn_der_mathematik_data_v2')
+    } else {
+      sessionStorage.setItem('einhorn_der_mathematik_data_v2', data)
+      localStorage.removeItem('einhorn_der_mathematik_data_v2')
+    }
+
+    setCore(newval)
   }
 
   function isVisible(id: number) {
     return (
       storyData[id].deps.length == 0 ||
-      storyData[id].deps.some((d) => core.solved.has(d)) ||
-      core.analyze ||
-      core.editorMode ||
-      core.demoMode
+      storyData[id].deps.some((d) => app.state.solved.has(d)) ||
+      app.state.analyze ||
+      app.state.editorMode ||
+      app.state.demoMode
     )
-  }
-
-  function submitStoryEvent() {
-    const id = core.showStory
-    if (core.storyEvents.submitted.has(id)) return
-    mut((core) => {
-      core.storyEvents.submitted.add(id)
-    })
-    const events = core.storyEvents.additionalEvents[id] ?? []
-    makePost('/event', {
-      userId: core.playerData.id,
-      value: `story_${id}_${events.join('_')}`,
-    })
   }
 }

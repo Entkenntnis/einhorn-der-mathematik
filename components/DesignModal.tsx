@@ -1,14 +1,12 @@
-import { Draft } from 'immer'
-import { State } from '../lib/types'
+import { App } from '../lib/types'
 import { makePost } from '../lib/make-post'
 
 interface AboutModalProps {
   onClose: () => void
-  core: State
-  mut: (fn: (draft: Draft<State>) => void) => void
+  app: App
 }
 
-export function DesignModal({ onClose, core, mut }: AboutModalProps) {
+export function DesignModal({ onClose, app }: AboutModalProps) {
   return (
     <div
       className="bg-black/20 fixed inset-0 flex justify-center items-center z-[150]"
@@ -26,13 +24,13 @@ export function DesignModal({ onClose, core, mut }: AboutModalProps) {
             <label>
               Hintergrundbild:{' '}
               <select
-                value={core.background}
+                value={app.state.background}
                 onChange={(e) => {
-                  mut((s) => {
+                  app.mut((s) => {
                     s.background = e.target.value as any
                   })
                   makePost('/event', {
-                    userId: core.playerData.id,
+                    userId: app.state.playerData.id,
                     value: 'select_wallpaper_' + e.target.value,
                   })
                 }}
@@ -50,13 +48,13 @@ export function DesignModal({ onClose, core, mut }: AboutModalProps) {
             <label>
               Linienfarbe:{' '}
               <select
-                value={core.lineColor}
+                value={app.state.lineColor}
                 onChange={(e) => {
-                  mut((s) => {
+                  app.mut((s) => {
                     s.lineColor = e.target.value as any
                   })
                   makePost('/event', {
-                    userId: core.playerData.id,
+                    userId: app.state.playerData.id,
                     value: 'select_linecolor_' + e.target.value,
                   })
                 }}

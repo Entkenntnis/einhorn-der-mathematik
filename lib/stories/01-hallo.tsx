@@ -6,18 +6,28 @@ export const story1: StoryData = {
   x: 100,
   y: 100,
   deps: [],
-  render: ({ core, mut }) => {
-    if (!core.playerData.name && core.modal != 'name' && !core.analyze) {
-      mut((c) => {
+  render: ({ app }) => {
+    if (
+      !app.state.playerData.name &&
+      app.state.modal != 'name' &&
+      !app.state.analyze
+    ) {
+      app.mut((c) => {
         c.modal = 'name'
       })
     }
-    const nameIsAlphabetical = /^[a-zA-ZäöüÄÜÖß()]+$/.test(core.playerData.name)
+    const nameIsAlphabetical = /^[a-zA-ZäöüÄÜÖß()]+$/.test(
+      app.state.playerData.name
+    )
     return (
       <>
         <p>
           Hallo
-          {core.playerData.name ? <strong> {core.playerData.name}</strong> : ''}
+          {app.state.playerData.name ? (
+            <strong> {app.state.playerData.name}</strong>
+          ) : (
+            ''
+          )}
           ! Schön, dass du hier bist :)
         </p>
         <p>
@@ -63,13 +73,12 @@ export const story1: StoryData = {
   ),
   submit:
     () =>
-    ({ value, mut, id, core }) => {
+    ({ value, id, app }) => {
       genericSubmitHandler(
         value,
-        parseInt(value) == countCodePoints(core.playerData.name),
-        mut,
+        parseInt(value) == countCodePoints(app.state.playerData.name),
         id,
-        core
+        app
       )
     },
 }

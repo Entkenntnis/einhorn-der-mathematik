@@ -43,15 +43,19 @@ export type State = Immutable<{
   lineColor: 'rainbow' | 'gray' | 'pink'
   storyEvents: {
     submitted: Set<number>
-    additionalEvents: { [key: number]: string[] }
+    events: { [key: number]: string[] }
   }
 }>
 
 export interface SubmitProps {
   value: string
-  mut: (fn: (draft: Draft<State>) => void) => void
   id: number
-  core: State
+  app: App
+}
+
+export interface App {
+  state: State
+  mut: (fn: (draft: Draft<State>) => void) => void
 }
 
 export interface StoryData<T = unknown> {
@@ -60,8 +64,7 @@ export interface StoryData<T = unknown> {
   y: number
   deps: number[]
   render: (props: {
-    core: State
-    mut: (fn: (draft: Draft<State>) => void) => void
+    app: App
     onSubmit: (val: string) => void
     feedback: ReactNode
     back: () => void
@@ -69,6 +72,6 @@ export interface StoryData<T = unknown> {
   }) => JSX.Element
   hideSubmit?: boolean
   submit: ({ data }: { data: T }) => (props: SubmitProps) => void
-  proof?: (props: { core: State; data: T }) => JSX.Element
+  proof?: (props: { app: App; data: T }) => JSX.Element
   generator?: () => T
 }

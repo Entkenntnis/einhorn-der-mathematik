@@ -37,7 +37,7 @@ import { story34 } from './stories/34-quadrat'
 import { story36 } from './stories/36-mathe'
 import { story35 } from './stories/35-rechenmauer-2'
 import { story37 } from './stories/37-zahlenstrahl'
-import { State, StoryData, SubmitProps } from './types'
+import { App, State, StoryData, SubmitProps } from './types'
 import { story38 } from './stories/38-antwort'
 import { story39 } from './stories/39-vorteil'
 import { story40 } from './stories/40-sirup'
@@ -57,6 +57,7 @@ import { story53 } from './stories/53-hochwasser'
 import { story54 } from './stories/54-NEU'
 import { story55 } from './stories/55-einhorn-maus'
 import { story56 } from './stories/56-NEU'
+import { onTry } from './story-events'
 
 export const storyData: { [key: number]: StoryData<any> } = {
   1: story1,
@@ -120,54 +121,55 @@ export const storyData: { [key: number]: StoryData<any> } = {
 export function genericSubmitHandler(
   value: string,
   isCorrect: boolean,
-  mut: (fn: (draft: Draft<State>) => void) => void,
   id: number,
-  core: State
+  app: App
 ) {
   const ts = new Date().getTime()
   const isLocked =
-    core.rateLimit.lockedUntil !== null && ts < core.rateLimit.lockedUntil
+    app.state.rateLimit.lockedUntil !== null &&
+    ts < app.state.rateLimit.lockedUntil
 
   if (isLocked) {
     return
   } else {
-    if (core.rateLimit.lockedUntil !== null) {
-      mut((c) => {
+    if (app.state.rateLimit.lockedUntil !== null) {
+      app.mut((c) => {
         c.rateLimit.lockedUntil = null
       })
     }
   }
 
-  if (core.rateLimit.freeTries > 0) {
-    mut((c) => {
+  if (app.state.rateLimit.freeTries > 0) {
+    app.mut((c) => {
       c.rateLimit.freeTries--
     })
   }
 
   if (value) {
+    onTry(app)
     makePost('/log', {
       storyId: id,
-      userId: core.playerData.id,
+      userId: app.state.playerData.id,
       value,
       correct: isCorrect,
     })
   }
   if (isCorrect) {
-    mut((c) => {
+    app.mut((c) => {
       c.storyFeedback = {
         correct: true,
         text: `"${value}" ist richtig`,
       }
     })
-    addSolved(mut, id, core.playerData.id)
+    addSolved(app.mut, id, app.state.playerData.id)
   } else {
-    mut((c) => {
+    app.mut((c) => {
       c.storyFeedback = {
         correct: false,
         text: `"${value}" ist falsch`,
-        toWait: core.rateLimit.freeTries === 0 ? 10000 : undefined,
+        toWait: app.state.rateLimit.freeTries === 0 ? 10000 : undefined,
       }
-      if (core.rateLimit.freeTries === 0) {
+      if (app.state.rateLimit.freeTries === 0) {
         c.rateLimit.lockedUntil = new Date().getTime() + 10000
       }
     })
@@ -180,13 +182,7 @@ export function ignoreCaseSolutionWithGenData(answers: string[]) {
     const isCorrect = answers.some(
       (answer) => answer.toLowerCase().trim().replace(/\s/g, '') == value
     )
-    genericSubmitHandler(
-      props.value.trim(),
-      isCorrect,
-      props.mut,
-      props.id,
-      props.core
-    )
+    genericSubmitHandler(props.value.trim(), isCorrect, props.id, props.app)
   }
 }
 
@@ -199,13 +195,7 @@ export function ignoreCaseSolution(answer: string, alternatives?: string[]) {
           (alt) => alt.toLowerCase().trim().replace(/\s/g, '') == value
         )) ??
       false
-    genericSubmitHandler(
-      props.value.trim(),
-      isCorrect,
-      props.mut,
-      props.id,
-      props.core
-    )
+    genericSubmitHandler(props.value.trim(), isCorrect, props.id, props.app)
   }
 }
 
