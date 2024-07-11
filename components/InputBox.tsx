@@ -29,7 +29,7 @@ export function InputBox({ className, submit }: InputBoxProps) {
         }}
       />
       <button
-        className="ml-4 px-3 py-1 rounded bg-pink-300 hover:bg-pink-400"
+        className="ml-4 go-btn"
         onClick={() => {
           submit(value)
         }}

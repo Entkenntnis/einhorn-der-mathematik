@@ -3,6 +3,7 @@ import { Metadata } from 'next'
 import 'tailwindcss/tailwind.css'
 import 'react-clock/dist/Clock.css'
 import './faicon.css'
+import './components.css'
 
 export const metadata: Metadata = {
   title: 'Einhorn der Mathematik',

@@ -116,9 +116,10 @@ function HausDerEinhornmaus({ done }: { done: () => void }) {
       <p className="mt-3">
         {isDone ? (
           <>
-            <span className="ml-6 inline-block">Piep, piep!</span>{' '}
+            <span className="ml-6 inline-block">Piep, piep!</span>
+            <br />
             <button
-              className="inline-block ml-3 px-2 py-0.5 bg-pink-300 hover:bg-pink-400 rounded"
+              className="inline-block ml-6 mt-4 go-btn"
               onClick={() => {
                 done()
               }}

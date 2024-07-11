@@ -152,7 +152,7 @@ export function InteractiveGrid({ handleDone }: { handleDone: () => void }) {
         <div className={clsx('my-6 ml-2', !done && 'invisible')}>
           <p>Grrrh :)</p>
           <button
-            className="mt-3 px-2 py-0.5 bg-pink-300 hover:bg-pink-400 rounded"
+            className="mt-3 go-btn"
             onClick={() => {
               handleDone()
             }}

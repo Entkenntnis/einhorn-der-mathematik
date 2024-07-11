@@ -52,11 +52,11 @@ import { story48 } from './stories/48-monster'
 import { story49 } from './stories/49-NEU'
 import { story50 } from './stories/50-NEU'
 import { story51 } from './stories/51-knobelkarte'
-import { story52 } from './stories/52-NEU'
+import { story52 } from './stories/52-mandala'
 import { story53 } from './stories/53-hochwasser'
 import { story54 } from './stories/54-NEU'
 import { story55 } from './stories/55-einhorn-maus'
-import { story56 } from './stories/56-NEU'
+import { story56 } from './stories/56-hobbys'
 import { onTry } from './story-events'
 
 export const storyData: { [key: number]: StoryData<any> } = {
