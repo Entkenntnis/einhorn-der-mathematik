@@ -921,7 +921,6 @@ export default function App() {
               c.storyGeneratorData[id] = data.generator() as object
             }
           })
-          console.log('after click show', app.state.showStory)
           onOpen(app)
         }}
         key={id}
