@@ -9,12 +9,12 @@ import { NameModal } from './NameModal'
 import { FaIcon } from './FaIcon'
 import { faCheck, faPalette } from '@fortawesome/free-solid-svg-icons'
 import { makePost } from '../lib/make-post'
-import { median } from '../lib/helper/median'
-import { State, PlayerInfo } from '../lib/types'
+import { State } from '../lib/types'
 import { CountdownTimer } from './CountdownTimer'
 import { HighscoreModal } from './HighscoreModal'
 import { DesignModal } from './DesignModal'
 import { onOpen, onSolution, submitStoryEvent } from '../lib/story-events'
+import { analyze, cutOff } from '../lib/analyze'
 
 export default function App() {
   const [__core, setCore] = useState<State>({
@@ -42,6 +42,7 @@ export default function App() {
       submitted: new Set(),
       events: {},
     },
+    showAnalyzeDetails: false,
   })
 
   const coreRef = useRef(__core)
@@ -52,8 +53,6 @@ export default function App() {
     },
     mut,
   }
-
-  const cutOff = new Date('2024-06-13')
 
   const runAnalyse = useRef(false)
 
@@ -95,129 +94,7 @@ export default function App() {
     }
     if (window.location.hash == '#analyze' && !runAnalyse.current) {
       runAnalyse.current = true
-      const password =
-        sessionStorage.getItem('einhorn_der_mathematik_analyze_pw') ||
-        prompt('Passwort') ||
-        '0'
-      void (async () => {
-        const data = (await makePost('/export', {
-          password,
-        })) as {
-          names: { userId: string; name: string; createdAt: string }[]
-          solves: { storyId: number; userId: string; createdAt: string }[]
-          logs: {
-            userId: string
-            storyId: number
-            value: string
-            correct: boolean
-            createdAt: string
-          }[]
-          events: { userId: string; value: string; createdAt: string }[]
-        }
-
-        const eventSources: any = {}
-
-        for (const event of data.events) {
-          const ts = new Date(event.createdAt).getTime()
-          if (ts < cutOff.getTime()) continue
-          if (!eventSources[event.value]) {
-            eventSources[event.value] = {}
-          }
-          eventSources[event.value][event.userId] = true
-        }
-
-        const stories = new Set<number>()
-        const solvedBy = data.solves.reduce((res, obj) => {
-          const ts = new Date(obj.createdAt).getTime()
-          if (ts < cutOff.getTime()) return res
-          const key = obj.userId
-          const entry = (res[key] = res[key] || {
-            solved: new Set(),
-            solvedTs: [],
-          })
-          entry.solved.add(obj.storyId)
-          stories.add(obj.storyId)
-          entry.solvedTs.push(ts)
-          return res
-        }, {} as { [key: string]: { solved: Set<number>; solvedTs: number[] } })
-        // alert(JSON.stringify(jsonResp))
-        sessionStorage.setItem('einhorn_der_mathematik_analyze_pw', password)
-        const playerInfo: PlayerInfo[] = data.names
-          .map((user) => {
-            const createdAt = new Date(user.createdAt).getTime()
-            return {
-              id: user.userId.toString(),
-              createdAt,
-              name: user.name,
-              solved: solvedBy[user.userId]?.solved.size ?? 0,
-              solvedTs: solvedBy[user.userId]?.solvedTs ?? [],
-              nameTs: createdAt,
-            }
-          })
-          .filter((x) => x.createdAt >= cutOff.getTime())
-        playerInfo.sort((a, b) => a.createdAt - b.createdAt)
-
-        const times = playerInfo
-          .map((player) => {
-            if (player.solvedTs.length == 0) {
-              return -1
-            }
-            const minTime = Math.min(...player.solvedTs, player.nameTs)
-            const maxTime = Math.max(...player.solvedTs)
-            if (player) {
-              player.mins = ((maxTime - minTime) / 1000 / 60).toFixed(0)
-            }
-            return maxTime - minTime
-          })
-          .filter((time) => time >= 0)
-        times.sort((a, b) => a - b)
-
-        const storyStats: {
-          [key: number]: { reachable: number; solved: number }
-        } = {}
-        Array.from(stories).forEach((storyId) => {
-          const reachable = Object.values(playerInfo).filter(
-            (user) =>
-              storyId == 1 ||
-              storyData[storyId as number].deps.some((dep) =>
-                solvedBy[user.id]?.solved.has(dep)
-              )
-          ).length
-          const solved = Object.values(playerInfo).filter((user) =>
-            solvedBy[user.id]?.solved.has(storyId as number)
-          ).length
-          storyStats[storyId] = { reachable, solved }
-        })
-
-        const inputs = data.logs.reduce((res, obj) => {
-          if (new Date(obj.createdAt).getTime() < cutOff.getTime()) return res
-          const key = obj.storyId
-          const entry = (res[key] = res[key] || [])
-          entry.push({ value: obj.value, correct: !!obj.correct })
-          return res
-        }, {} as { [key: string]: { value: string; correct: boolean }[] })
-
-        const events = Object.entries(eventSources).map((entry) => {
-          return {
-            value: entry[0],
-            count: Object.keys(entry[1] as any).length,
-          }
-        })
-
-        events.sort((a, b) => b.count - a.count)
-
-        mut((state) => {
-          state.analyze = {
-            players: playerInfo.length,
-            medianSeconds: Math.round(median(times) / 1000),
-            medianPlayers: times.length,
-            storyStats,
-            inputs,
-            playerInfo,
-            events,
-          }
-        })
-      })()
+      analyze(app)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -275,26 +152,42 @@ export default function App() {
               <br />
               <br />
               Details:{' '}
-              {app.state.analyze.playerInfo.map(
-                ({ name, solved, id, createdAt, mins }) =>
-                  solved == 0 ? (
-                    <span key={id} className="inline-block mr-4 text-gray-400">
-                      <i>{name}</i>
-                    </span>
-                  ) : (
-                    <span
-                      key={id}
-                      className="inline-block mr-4"
-                      title={
-                        new Date(createdAt).toString() + ' / ' + mins + 'min'
-                      }
-                    >
-                      {name}{' '}
-                      <span className="text-gray-600">
-                        ({solved} / {mins}min)
+              {app.state.showAnalyzeDetails ? (
+                app.state.analyze.playerInfo.map(
+                  ({ name, solved, id, createdAt, mins }) =>
+                    solved == 0 ? (
+                      <span
+                        key={id}
+                        className="inline-block mr-4 text-gray-400"
+                      >
+                        <i>{name}</i>
                       </span>
-                    </span>
-                  )
+                    ) : (
+                      <span
+                        key={id}
+                        className="inline-block mr-4"
+                        title={
+                          new Date(createdAt).toString() + ' / ' + mins + 'min'
+                        }
+                      >
+                        {name}{' '}
+                        <span className="text-gray-600">
+                          ({solved} / {mins}min)
+                        </span>
+                      </span>
+                    )
+                )
+              ) : (
+                <button
+                  className="ml-2 inline-block px-2 py-0.5 bg-gray-200 hover:bg-gray-300 rounded"
+                  onClick={() => {
+                    app.mut((state) => {
+                      state.showAnalyzeDetails = true
+                    })
+                  }}
+                >
+                  alle anzeigen
+                </button>
               )}
             </div>
           )}

@@ -45,6 +45,7 @@ export type State = Immutable<{
     submitted: Set<number>
     events: { [key: number]: string[] }
   }
+  showAnalyzeDetails: boolean
 }>
 
 export interface SubmitProps {

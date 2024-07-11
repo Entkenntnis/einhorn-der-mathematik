@@ -54,7 +54,7 @@ export function submitStoryEvent(app: App) {
     events.push('solution')
   }
   makePost('/event', {
-    userId: app.state.playerData.id,
+    userId: '--story-event--',
     value: `story_${id}_${events.join('_')}`,
   })
 }
