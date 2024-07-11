@@ -730,9 +730,7 @@ export default function App() {
         <h1
           className="ml-4 sm:ml-24 lg:mx-auto mx-auto px-4 py-2 rounded-lg bg-pink-400 w-fit text-2xl cursor-pointer"
           onClick={() => {
-            mut((c) => {
-              c.showStory = -1
-            })
+            back()
           }}
         >
           Einhorn der Mathematik
@@ -750,10 +748,10 @@ export default function App() {
                     className="cursor-pointer select-none"
                     onClick={() => {
                       onSolution(app)
-                      makePost('/event', {
+                      /*makePost('/event', {
                         userId: app.state.playerData.id,
                         value: 'show_solution',
-                      })
+                      })*/
                     }}
                   >
                     Lösungsweg anzeigen (mit Tante Tea)
