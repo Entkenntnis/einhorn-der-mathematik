@@ -37,7 +37,7 @@ import { story34 } from './stories/34-quadrat'
 import { story36 } from './stories/36-mathe'
 import { story35 } from './stories/35-rechenmauer-2'
 import { story37 } from './stories/37-zahlenstrahl'
-import { App, State, StoryData, SubmitProps } from './types'
+import { App, Feedback, State, StoryData, SubmitProps } from './types'
 import { story38 } from './stories/38-antwort'
 import { story39 } from './stories/39-vorteil'
 import { story40 } from './stories/40-sirup'
@@ -57,7 +57,7 @@ import { story53 } from './stories/53-hochwasser'
 import { story54 } from './stories/54-NEU'
 import { story55 } from './stories/55-einhorn-maus'
 import { story56 } from './stories/56-hobbys'
-import { onTry } from './story-events'
+import { onCloseCallFeedback, onTry } from './story-events'
 
 export const storyData: { [key: number]: StoryData<any> } = {
   1: story1,
@@ -122,7 +122,8 @@ export function genericSubmitHandler(
   value: string,
   isCorrect: boolean,
   id: number,
-  app: App
+  app: App,
+  feedback?: Feedback
 ) {
   const ts = new Date().getTime()
   const isLocked =
@@ -163,15 +164,26 @@ export function genericSubmitHandler(
     })
     addSolved(app.mut, id, app.state.playerData.id)
   } else {
+    const text = buildFeedback(app, value, feedback)
     app.mut((c) => {
       c.storyFeedback = {
         correct: false,
-        text: `"${value}" ist falsch`,
+        text,
         toWait: app.state.rateLimit.freeTries === 0 ? 10000 : undefined,
       }
       if (app.state.rateLimit.freeTries === 0) {
         c.rateLimit.lockedUntil = new Date().getTime() + 10000
       }
+    })
+  }
+}
+
+export function naturalNumberSolution(n: number, closeCallDiff: number) {
+  return (props: SubmitProps) => {
+    const num = parseInt(props.value)
+    const isCorrect = !isNaN(num) && num === n
+    genericSubmitHandler(props.value.trim(), isCorrect, props.id, props.app, {
+      closeCall: { correct: n, diff: closeCallDiff },
     })
   }
 }
@@ -208,4 +220,25 @@ function addSolved(
     c.solved.add(storyId)
   })
   makePost('/solve', { storyId, userId })
+}
+
+function buildFeedback(app: App, value: string, feedback?: Feedback) {
+  if (feedback) {
+    if (feedback.closeCall) {
+      // check if value is numeric
+      if (!/^\d+$/.test(value)) {
+        return `"${value}" ist keine natürliche Zahl, erwarte als Eingabe eine natürliche Zahl.`
+      }
+
+      const num = parseInt(value)
+      const diff = feedback.closeCall.diff
+
+      if (Math.abs(num - feedback.closeCall.correct) <= diff) {
+        onCloseCallFeedback(app)
+        console.log('add close call event')
+        return `"${value}" ist nahe dran! Probiere es nochmal.`
+      }
+    }
+  }
+  return `"${value}" ist falsch`
 }

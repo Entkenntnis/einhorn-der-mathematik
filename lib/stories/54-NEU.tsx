@@ -2,7 +2,7 @@ import { ignoreCaseSolution } from '../data'
 import { StoryData } from '../types'
 
 export const story54: StoryData = {
-  title: 'F',
+  title: 'Obst',
   x: 1130,
   y: 900,
   deps: [36],

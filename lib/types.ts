@@ -76,3 +76,7 @@ export interface StoryData<T = unknown> {
   proof?: (props: { app: App; data: T }) => JSX.Element
   generator?: () => T
 }
+
+export interface Feedback {
+  closeCall?: { correct: number; diff: number }
+}

@@ -18,7 +18,7 @@ export const story39: StoryData<DATA> = {
   generator: () => {
     const A = randomItemFromArray([200, 300, 400, 500, 600, 700])
     const a1 = randomIntBetween(6, 9) * 10 + A - 100
-    const b1 = randomIntBetween(6, 9) * 10
+    const b1 = randomIntBetween(6, 9) * 10 - 5
     return { a1, b1, a2: A - a1, b2: 100 - b1 }
   },
   render: ({ data }) => (

@@ -1,4 +1,8 @@
-import { ignoreCaseSolution, ignoreCaseSolutionWithGenData } from '../data'
+import {
+  ignoreCaseSolution,
+  ignoreCaseSolutionWithGenData,
+  naturalNumberSolution,
+} from '../data'
 import { capitalize } from '../helper/capitalize'
 import { numberToWord } from '../helper/number-to-word'
 import { randomIntBetween } from '../helper/random-int-between'
@@ -63,7 +67,5 @@ export const story24: StoryData<DATA> = {
     )
   },
   submit: ({ data }) =>
-    ignoreCaseSolutionWithGenData([
-      `${(data.gondeln - data.defekt) * data.proGondel}`,
-    ]),
+    naturalNumberSolution((data.gondeln - data.defekt) * data.proGondel, 5),
 }

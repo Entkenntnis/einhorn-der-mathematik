@@ -1,4 +1,8 @@
-import { ignoreCaseSolution, ignoreCaseSolutionWithGenData } from '../data'
+import {
+  ignoreCaseSolution,
+  ignoreCaseSolutionWithGenData,
+  naturalNumberSolution,
+} from '../data'
 import { randomIntBetween } from '../helper/random-int-between'
 import { StoryData } from '../types'
 
@@ -127,7 +131,5 @@ export const story10: StoryData<DATA> = {
     )
   },
   submit: ({ data }) =>
-    ignoreCaseSolutionWithGenData([
-      `${data.a + 3 * data.b + 3 * data.c + data.d}`,
-    ]),
+    naturalNumberSolution(data.a + 3 * data.b + 3 * data.c + data.d, 5),
 }

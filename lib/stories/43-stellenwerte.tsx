@@ -1,5 +1,5 @@
 import { PlaceValueChart } from '../../components/math-skills/implementations/place-value-chart'
-import { ignoreCaseSolutionWithGenData } from '../data'
+import { ignoreCaseSolutionWithGenData, naturalNumberSolution } from '../data'
 import { randomItemFromArray } from '../helper/random-item-from-array'
 import { StoryData } from '../types'
 
@@ -58,5 +58,5 @@ export const story43: StoryData<DATA> = {
       </p>
     </>
   ),
-  submit: ({ data }) => ignoreCaseSolutionWithGenData([data.n.toString()]),
+  submit: ({ data }) => naturalNumberSolution(data.n, 50),
 }

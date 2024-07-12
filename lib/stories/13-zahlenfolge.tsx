@@ -1,4 +1,8 @@
-import { ignoreCaseSolution, ignoreCaseSolutionWithGenData } from '../data'
+import {
+  ignoreCaseSolution,
+  ignoreCaseSolutionWithGenData,
+  naturalNumberSolution,
+} from '../data'
 import { randomItemFromArray } from '../helper/random-item-from-array'
 import { StoryData } from '../types'
 
@@ -95,5 +99,5 @@ export const story13: StoryData<DATA> = {
     )
   },
   submit: ({ data }) =>
-    ignoreCaseSolutionWithGenData([`${data.start + data.incr * 5 + 10}`]),
+    naturalNumberSolution(data.start + data.incr * 5 + 10, 5),
 }

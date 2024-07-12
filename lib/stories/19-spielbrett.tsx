@@ -1,4 +1,4 @@
-import { ignoreCaseSolution } from '../data'
+import { ignoreCaseSolution, naturalNumberSolution } from '../data'
 import { StoryData } from '../types'
 
 export const story19: StoryData = {
@@ -33,5 +33,5 @@ export const story19: StoryData = {
       </p>
     </>
   ),
-  submit: ignoreCaseSolution('19'),
+  submit: () => naturalNumberSolution(19, 2),
 }
