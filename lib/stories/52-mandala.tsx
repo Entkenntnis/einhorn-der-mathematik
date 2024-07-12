@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { ignoreCaseSolution } from '../data'
 import { StoryData } from '../types'
+import { shuffleArray } from '../helper/shuffle-array'
 
 export const story52: StoryData = {
   title: 'Mandala',
@@ -33,7 +34,7 @@ export const story52: StoryData = {
 }
 
 function Mandala(props: { handleDone: () => void }) {
-  const [colors, setColors] = useState([0, 1, 2, 3, 4, 5])
+  const [colors, setColors] = useState(shuffleArray([0, 1, 2, 3, 4, 5]))
   const [solved, setSolved] = useState(false)
   return (
     <>
