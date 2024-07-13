@@ -13,11 +13,15 @@ export const story49: StoryData = {
         rein. Während meine Eltern arbeiten, mache ich mich sehr nützlich
         (nicht) und vermesse verschiedene Schüsselstapel.
       </p>
-      <img
-        src="/story49.jpg"
-        alt="Zwei Stapeln mit Schüsseln"
-        className="w-[420px]"
-      />
+      <div className="relative my-6">
+        <img
+          src="/story49.jpg"
+          alt="Zwei Stapeln mit Schüsseln"
+          className="w-[440px]"
+        />
+        <div className="absolute left-3 top-24 text-lg">11 cm</div>
+        <div className="absolute left-[375px] top-16 text-lg">27 cm</div>
+      </div>
       <p>
         Ein Stapel mit zwei Schüsseln ist 11 cm hoch, ein Stapel mit sieben
         Schüsseln ist 26 cm hoch. Das sind die wichtigen Erkenntnisse!

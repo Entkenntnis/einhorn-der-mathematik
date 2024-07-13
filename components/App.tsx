@@ -649,6 +649,25 @@ export default function App() {
                   >
                     Lösungsweg anzeigen (mit Tante Tea)
                   </summary>
+
+                  {!data.hideSubmit && (
+                    <details className="my-6 mx-3 p-2 rounded-lg bg-gray-200">
+                      <summary className="cursor-pointer select-none">
+                        Aufgabenstellung
+                      </summary>
+                      <div className="mt-8 [&>p]:mt-4 [&_code]:text-pink-400 [&_code]:font-bold [&>img]:my-6 [&_a]:underline [&_a]:text-blue-600 [&_a]:hover:text-blue-700">
+                        {data.render({
+                          app,
+                          onSubmit: () => {},
+                          back: () => {},
+                          feedback: null,
+                          data: app.state.storyGeneratorData[
+                            app.state.showStory
+                          ],
+                        })}
+                      </div>
+                    </details>
+                  )}
                   <div className="mt-5 [&>p]:mt-4 [&_code]:text-pink-400 [&_code]:font-bold [&>img]:my-6 [&_a]:underline [&_a]:text-blue-600 [&_a]:hover:text-blue-700 [&_hr]:mt-4">
                     {data.proof({
                       app,
@@ -713,7 +732,7 @@ export default function App() {
                   </>
                 )}
                 <div className="absolute right-3 top-2 flex items-center flex-col">
-                  <img src="/einhorn.png" alt="Glühbirne" className="h-16" />
+                  <img src="/einhorn.png" alt="Einhorn" className="h-16" />
                   <em className="mt-1">Tina</em>
                 </div>
                 {app.state.analyze && (

@@ -38,7 +38,7 @@ export const story40: StoryData<DATA> = {
       <p>
         Zurück zum Mischverhältnis: Tinas Rezept ergibt mit {250 - data.per250}{' '}
         ml Wasser plus {data.per250} ml Sirup insgesamt 250 ml Getränk, das ist
-        genau ein Viertel-Liter. Ich brauche als nur das Rezept mal vier zu
+        genau ein Viertel-Liter. Ich brauche also nur das Rezept mal vier zu
         nehmen für den Liter.
       </p>
       <p>
