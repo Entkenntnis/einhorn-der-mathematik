@@ -3,7 +3,7 @@ import { median } from './helper/median'
 import { makePost } from './make-post'
 import { App, PlayerInfo } from './types'
 
-export const cutOff = new Date('2024-06-13')
+export const cutOff = new Date('2024-07-14')
 
 export function analyze(app: App) {
   const password =
