@@ -376,7 +376,7 @@ export default function App() {
                     finden sich auch anspruchsvolle Rätsel.
                   </p>
                   <p className="mt-2 italic">Empfohlen ab der 5. Klasse</p>
-                  <p className="italic">45 - 90 Minuten Spielzeit</p>
+                  <p className="italic">30 - 90 Minuten Spielzeit</p>
                 </div>
               )}
             {(app.state.solved.size > 3 ||

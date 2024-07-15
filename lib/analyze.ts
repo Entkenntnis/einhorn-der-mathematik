@@ -5,6 +5,12 @@ import { App, PlayerInfo } from './types'
 
 export const cutOff = new Date('2024-07-14')
 
+interface Event {
+  userId: string
+  value: string
+  createdAt: string
+}
+
 export function analyze(app: App) {
   const password =
     sessionStorage.getItem('einhorn_der_mathematik_analyze_pw') ||
@@ -23,7 +29,7 @@ export function analyze(app: App) {
         correct: boolean
         createdAt: string
       }[]
-      events: { userId: string; value: string; createdAt: string }[]
+      events: Event[]
     }
 
     const eventSources: any = {}
@@ -44,7 +50,7 @@ export function analyze(app: App) {
     }
 
     // TODO: implement proper analytics, but just dump data for now
-    console.log(storyEvents)
+    analyzeStoryEvents(storyEvents)
 
     const stories = new Set<number>()
     const solvedBy = data.solves.reduce((res, obj) => {
@@ -138,4 +144,23 @@ export function analyze(app: App) {
       }
     })
   })()
+}
+
+function analyzeStoryEvents(events: Event[]) {
+  const storyMap: { [key: string]: { name: string; events: string[][] } } = {}
+  for (const key in storyData) {
+    storyMap[key] = { name: storyData[key].title, events: [] }
+  }
+  const storyEvents = events.forEach((e) => {
+    const parts = e.value.split('_')
+    const story = parseInt(parts[1])
+    const modifier = parts.slice(2).filter((x) => x)
+    storyMap[story].events.push(modifier)
+  })
+
+  for (const key in storyMap) {
+    console.log(
+      `${storyMap[key].name}: ${JSON.stringify(storyMap[key].events)}`
+    )
+  }
 }
