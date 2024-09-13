@@ -379,7 +379,7 @@ export default function App() {
                   <p className="italic">30 - 90 Minuten Spielzeit</p>
                 </div>
               )}
-            {(app.state.solved.size > 3 ||
+            {(app.state.solved.size > 4 ||
               app.state.demoMode ||
               app.state.editorMode) && (
               <button
@@ -399,7 +399,7 @@ export default function App() {
                   })
                 }}
               >
-                <p className="text-center mb-1">Dein Rätsel</p>
+                <p className="text-center mb-1">Dein Feedback</p>
                 <img
                   src="/gluehbirne.png"
                   alt="Glühbirne"
@@ -570,7 +570,7 @@ export default function App() {
           Einhorn der Mathematik
         </h1>
         <div className="max-w-[800px] mx-2 md:mx-auto bg-pink-50 rounded p-3 mt-6 relative">
-          <h2 className="mt-3 text-xl font-bold">Dein Rätsel</h2>
+          <h2 className="mt-3 text-xl font-bold">Dein Feedback</h2>
           <button
             className="mt-3 text-pink-500 hover:underline hover:text-pink-600"
             onClick={() => {
@@ -583,27 +583,26 @@ export default function App() {
           </button>
           <div className="mt-8 [&>p]:mt-4 [&_code]:text-pink-400 [&_code]:font-bold [&>img]:my-6 [&_a]:underline [&_a]:text-blue-600 [&_a]:hover:text-blue-700">
             <p>
-              Ich mag Mathe, ich mag Rätsel - aber alleine macht es nur halb so
-              viel Spaß.
+              Hey! Schön, dass du bei der Mathe-Tour mit der Einhorn-Dame Tina
+              dabei bist!
             </p>
+
             <p>
-              Hast du ein Lieblingsrätsel? Gibt es Themen aus der Mathematik,
-              die dir Spaß machen? Ich freue mich über jede Person, die mir ihre
-              Rätsel oder Ideen schickt. Du kannst das verlinkte Formular
-              nutzen. Ich lese mir jede Einsendung durch.
+              Wir möchten wissen, wie dir die Aufgaben und Geschichten gefallen
+              haben. Deine Meinung hilft uns, alles noch besser zu machen.
             </p>
+
             <p>
-              Wenn deine Einsendung zu den anderen Rätseln auf der Seite passen,
-              dann baue ich sie auch sehr gerne an passender Stelle ein.
+              Die Umfrage dauert nur ein paar Minuten. Es gibt Fragen mit
+              Auswahl und zwei, bei denen du selbst etwas schreiben kannst.
+              Alles bleibt anonym.
             </p>
-            <p>Liebe Grüße an alle Mathematik-Begeisterten da draußen 💗!</p>
+
+            <p>Danke für dein Feedback!</p>
             <p>
               -&gt;{' '}
-              <a
-                href="https://docs.google.com/forms/d/e/1FAIpQLScoDuazOyILYEAWFZiK5KPOtAP-G-lVE9vTea4O-GTaVukXzw/viewform?usp=sf_link"
-                target="_blank"
-              >
-                Formular für dein Rätsel
+              <a href="https://forms.gle/HFwtEUUkMbkedRbk7" target="_blank">
+                Formular für dein Feedback
               </a>
             </p>
             <p>&nbsp;</p>
